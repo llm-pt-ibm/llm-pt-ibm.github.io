@@ -21,7 +21,7 @@ Este é o segundo post de uma série de tutoriais que vamos mostrar o passo-a-pa
 - O desafio maior é encontrar versões compatíveis com a arquitetura das máquinas Power.
 
 ## Configurando Conda
-Vamos começar com a instalação do **Conda**. Em sistemas Power, a arquitetura usada é a ppc64le (PowerPC 64 bits little-endian), por isso é essencial que a versão baixada seja para esta arquitetura. Para isso, vamos utilizar o **miniconda**, uma versão mais leve e direta para setups customizados como o servidor Power9.
+Vamos começar com a instalação do **Conda**. Em sistemas Power, a arquitetura usada é a `ppc64le` (PowerPC 64 bits little-endian), por isso é essencial que a versão baixada seja para esta arquitetura. Para isso, vamos utilizar o **miniconda**, uma versão mais leve e direta para setups customizados como o servidor Power9.
 
 1. Para baixar e instalar a versão mais atualizada do miniconda:
 
@@ -132,6 +132,8 @@ Ao executar esse arquivo, saberemos:
 - Se a utilização da GPU está acontecendo de forma correta
 - Disponibilidade do CUDNN
 - Se os arquivos .so foram compilados corretamentes
+
+Esse arquivo apenas checa algumas informações do CUDA e PyTorch e executa uma operação de soma utilizando tensores em GPU.
 
 5. Vamos executar o arquivo com o comando:
 ```

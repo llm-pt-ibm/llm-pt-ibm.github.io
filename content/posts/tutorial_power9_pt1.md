@@ -3,12 +3,12 @@ title: "Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9
 date: 2025-06-29 # ano-mês-dia
 authors: ["Caio Silva"] # Pode ser uma lista
 tags: ["LLM", "Power9", "Drivers", "CUDA", "NVIDIA"]
-summary: "Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o sistema operacional, drivers NVIDIA, CUDA e CUDNN."
+summary: "Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o sistema operacional, instalar drivers NVIDIA, CUDA e CUDNN."
 draft: false # Mude para true se quiser que o post fique como rascunho
 ---
 
 ## Contexto
-Este é o primeiro post de uma série de tutoriais que vamos mostrar o passo-a-passo de como construir uma API de Modelos de Linguagem em um servidor Power9, desde da configuração do Sistema Operacional, até a API executando inferências de forma remota. 
+Este é o primeiro post de uma série de tutoriais sobre como construir uma API de Modelos de Linguagem em um servidor Power9, desde da configuração do Sistema Operacional, até a API executando inferências de forma remota. 
 Esta etapa do tutorial mostra como configurar o Sistema Operacional, instalar os drivers da NVIDIA, CUDA e CUDNN em máquinas com processador IBM Power9 AC922. O foco é garantir que tudo funcione corretamente em arquiteturas ```ppc64le```, comuns em ambientes de alto desempenho.
 
 **IBM Power9**: A IBM Power9 AC922 é uma máquina de alto desempenho usada em tarefas pesadas como inteligência artificial e processamento científico. Ela usa processadores Power9 e trabalha bem com GPUs NVIDIA, oferecendo alta velocidade de comunicação entre CPU e GPU.
@@ -25,8 +25,10 @@ Esta etapa do tutorial mostra como configurar o Sistema Operacional, instalar os
 
 ## Configurando Sistema Operacional
 Vamos começar com a instalação do **Red Hat Enterprise Linux 8.10 (Ootpa)**. Em sistemas Power, a arquitetura usada é a ```ppc64le``` (PowerPC 64 bits little-endian), por isso é essencial que a imagem .iso seja compatível com essa arquitetura. Caso contrário, o petitboot da Power9 não reconhecerá a mídia e a instalação não poderá continuar.
-Você pode baixar a imagem correta pelo [link](https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software) indicado. Neste tutorial, usaremos a opção **Boot ISO** e seguiremos as instruções da [documentação oficial da Red Hat](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer) para criar uma mídia USB inicializável.
-Após inserir a mídia de instalação no servidor Power 9 e reiniciar a máquina, o sistema deve iniciar automaticamente no petitboot. A partir desta etapa, basta seguir o [guia de instalação](https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf) oficial para concluir a configuração do sistema. 
+1. Você pode baixar a imagem correta pelo [link](https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software) indicado. 
+2. Neste tutorial, usaremos a opção **Boot ISO** e seguiremos as instruções da [documentação oficial da Red Hat](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer) para criar uma mídia USB inicializável.
+3. Após inserir a mídia de instalação no servidor Power 9 e reiniciar a máquina, o sistema deve iniciar automaticamente no petitboot. 
+4. A partir desta etapa, basta seguir o [guia de instalação](https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf) oficial para concluir a configuração do sistema. 
 
 
 ## Configurando Driver NVIDIA e CUDA
@@ -57,6 +59,10 @@ A saída esperada é:
 #### Evitando interferências
 
 Para evitar algumas interferências, é recomendável desativar o driver ```nouveau``` e ```SELinux```.
+
+O ```noveau``` é um driver de código aberto para GPUs NVIDIA que subsitui o driver proprietário quando o usuário quer apenas usar o software livre, sem necessidade de de alto desempenho.
+
+O ```SELinux=enable``` restringe alguns processos de aplicarem mudanças no sistema, podendo conflitar com as instalações que vamos fazer neste tutorial.
 
 1. Desative o driver ```nouveau```: 
 ```
@@ -110,7 +116,7 @@ sudo subscription-manager repos --enable=codeready-builder-for-rhel-8-ppc64le-rp
 ```
 
 #### Baixando e instalando repositórios dos pacotes CUDA
-1. Vamos baixar a versão 12.2 do CUDA e o Driver NVIDIA 535.54.03-1 com o comando seguinte: 
+1. Vamos baixar a versão **12.2 do CUDA** e o **Driver NVIDIA 535.54.03-1** com o comando seguinte: 
 
 ```
 wget https://developer.download.nvidia.com/compute/cuda/12.2.0/local_installers/cuda-repo-rhel8-12-2-local-12.2.0_535.54.03-1.ppc64le.rpm
@@ -217,4 +223,4 @@ echo 'export CUDNN_LIBRARY=/usr/lib64' >> ~/.bashrc
 
 Após isso, o processo de instalação do CUDNN está finalizado. 
 
-Esta é a primeira parte do nosso tutorial. Uma vez que todas as etapas mostradas neste post foram finalizadas, o servidor está pronto para ter o gerenciador de pacotes ```conda``` e a biblioteca ```pytorch``` instaladas. 
+Esta é a primeira parte do nosso tutorial. Uma vez que todas as etapas mostradas neste post foram finalizadas, o servidor está pronto para ter o gerenciador de pacotes ```conda``` e a biblioteca ```pytorch``` instaladas, você pode acessar a segunda parte deste tutorial neste [link]({{< relref "tutorial_power9_pt2.md" >}}).
