@@ -209,6 +209,7 @@ curl -X POST "http://<power9_ip_server>:8000/generate_apikey" \
 ```
 
 - It is important that the HuggingFace Token is set as an environment variable in the location where the inference will run.
+- The user in the username field must be enclosed in quotation marks (" ") 
 - After running the request above, the returned API key should be saved as an environment variable to make future executions easier. To save it, copy the returned API key and run the command:
 
 
@@ -220,10 +221,10 @@ export API_KEY_P9=<returned_api_key>
 ```bash
 curl -X POST "http://<power9_ip_server>:8000/load_model" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: "$API_KEY" \
+  -H "x-api-key: $API_KEY" \
   -d '{
         "model_name":"ibm-granite/granite-3.3-8b-instruct",
-        "hf_token":"$HUGGINGFACE_TOKEN"
+        "hf_token":"'"$HUGGINGFACE_TOKEN"'"
       }'
 ```
 
@@ -231,11 +232,11 @@ curl -X POST "http://<power9_ip_server>:8000/load_model" \
 ```bash
 curl -X POST "http://<power9_ip_server>:8000/generate" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: "$API_KEY" \
+  -H "x-api-key: $API_KEY" \
   -d '{
         "model_name": "ibm-granite/granite-3.3-8b-instruct"
         "prompt":"Hello, tell me a little about the Federal University of Campina Grande (UFCG)",
-        "hf_token": "$HUGGINGFACE_TOKEN"
+        "hf_token": "'"$HUGGINGFACE_TOKEN"'",
         "max_tokens":50
       }'
 ```
@@ -247,12 +248,12 @@ To check the status and unload the model, we don't need to send anything in the 
 ```bash
 curl -X POST "http://<power9_ip_server>:8000/status" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: "$API_KEY" \
+  -H "x-api-key: $API_KEY"
 ```
 ```bash
 curl -X POST "http://<power9_ip_server>:8000/unload_model" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: "$API_KEY" \
+  -H "x-api-key: $API_KEY" 
 ```
 
 With this final tutorial, we conclude the step-by-step guide to building and running an inference API for language models. We hope this material has been helpful in clarifying the end-to-end process. The IBM UFCG LLM team is available for questions or suggestions about future improvements.
