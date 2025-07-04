@@ -202,20 +202,21 @@ curl -X POST "http://<ip_servidor_power9>:8000/generate_apikey" \
 ```
 
 - É importante que o HuggingFace Token esteja definido como variável de ambiente no local em que esteja executando a inferência.
+- O usuário no campo de `username` deve estar entre aspas (" ")
 - Após executar a requisição acima, a API key retornada deverá ser salva como variável de ambiente para facilitar as próximas execuções. Para salvar você deve copiar a API key retornada e executar o comando:
 
 ```
-export API_KEY_P9=<apik_key_retornada>
+export API_KEY_P9=<api_key_retornada>
 ```
 
 #### Carregar Modelo
 ```bash
 curl -X POST "http://<ip_servidor_power9>:8000/load_model" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: "$API_KEY" \
+  -H "x-api-key: $API_KEY" \
   -d '{
         "model_name":"ibm-granite/granite-3.3-8b-instruct",
-        "hf_token":"$HUGGINGFACE_TOKEN"
+        "hf_token":"'"$HUGGINGFACE_TOKEN"'"
       }'
 ```
 
@@ -223,11 +224,11 @@ curl -X POST "http://<ip_servidor_power9>:8000/load_model" \
 ```bash
 curl -X POST "http://<ip_servidor_power9>:8000/generate" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: "$API_KEY" \
+  -H "x-api-key: $API_KEY" \
   -d '{
         "model_name": "ibm-granite/granite-3.3-8b-instruct"
         "prompt":"Olá, me fale um pouco sobre a Universidade Federal de Campina Grande (UFCG)",
-        "hf_token": "$HUGGINGFACE_TOKEN"
+        "hf_token": "'"$HUGGINGFACE_TOKEN"'",
         "max_tokens":50
       }'
 ```
@@ -236,14 +237,14 @@ curl -X POST "http://<ip_servidor_power9>:8000/generate" \
 Para consultar o status e descarregar o modelo não precisamos passar conteúdo pelo payload, apenas o header com a API key:
 
 ```bash
-curl -X POST "http://10.20.20.250:8000/status" \
+curl -X GET "http://<ip_servidor_power9>:8000/status" \
   -H "Content-Type: application/json" \
-  -H "x-api-key: "$API_KEY" \
+  -H "x-api-key: $API_KEY" 
 ```
 ```bash
-curl -X POST "http://10.20.20.250:8000/unload_model" \
-  -H "Content-Type: application/json" \
-  -H "x-api-key: "$API_KEY" \
+curl -X POST "http://<ip_servidor_power9>:8000/unload_model" \
+  -H "Content-Type: applicatzion/json" \
+  -H "x-api-key: $API_KEY" 
 ```
 
 Com este último tutorial, concluímos o passo a passo para construir e executar uma API de inferência para modelos de linguagem. Esperamos que o material tenha sido útil para esclarecer o processo de ponta a ponta. O time LLM IBM UFCG está à disposição para dúvidas ou sugestões sobre aprimoramentos futuros.
