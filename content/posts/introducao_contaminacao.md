@@ -14,6 +14,11 @@ Benchmarks são estruturas organizadas e padronizadas que podem ser utilizadas p
 
 Apesar de seu uso recorrente, os resultados obtidos em benchmarks podem variar significativamente em função de diversos fatores. Um deles ocorre quando, de alguma forma, os dados de teste são previamente expostos ao modelo durante seu treinamento. Esse cenário caracteriza o fenômeno conhecido como **contaminação de dados de benchmark**, que pode ocorrer de forma acidental ou deliberada. A presença desse tipo de contaminação tende a comprometer a avaliação, pois o modelo pode memorizar parcial ou integralmente os exemplos avaliados em uma determinada tarefa, distorcendo seu desempenho real.
 
+<div style="text-align: center; display: table;">
+  <img src="/images/contaminacao_explicacao.png" alt="Explicação contaminação" style="max-width: 50%; box-shadow: none;">
+  <p style="margin-top: 0.3em; font-size: 0.8em; font-style: italic; color: #000000eb">Contaminação de dados de benchmark</p>
+</div>
+
 Com o objetivo de introduzir e difundir esse tema, esta postagem apresenta os fundamentos conceituais da contaminação de dados de benchmark, suas causas recorrentes e as metodologias atualmente utilizadas para sua detecção.
 
 ## TL;DR
@@ -67,6 +72,11 @@ Essas diferentes manifestações evidenciam que a contaminação de benchmarks �
 
 ## Metodologias de detecção
 A identificação de contaminação em benchmarks exige metodologias específicas, que variam conforme o nível de acesso ao modelo avaliado. Esse acesso costuma ser classificado em três categorias. Modelos **caixa branca** permitem acesso completo aos pesos e aos dados de treinamento. Modelos **caixa cinza** têm documentação limitada e expõem distribuições de probabilidade ou valores de log‑probabilidade, mas não os dados originais. Já modelos **caixa preta** oferecem apenas as respostas finais, sem qualquer visibilidade sobre arquitetura ou treinamento.
+
+<div style="text-align: center; display: table;">
+  <img src="/images/tipos_de_modelos.png" alt="Tipos de Modelos" caption="" style="max-width: 70%; box-shadow: none;">
+  <p style="margin-top: 0.3em; font-size: 0.8em; font-style: italic; color: #000000eb">Níveis de acesso a modelos</p>
+</div>
 
 Cada configuração impõe limitações próprias e condiciona as técnicas de detecção disponíveis. Metodologias de detecção direta, como busca por duplicação literal ou análise de similaridade semântica, requerem transparência total e, portanto, aplicam‑se principalmente a modelos caixa branca. Metodologias de detecção indireta, focadas em vazamentos comportamentais ou indícios temporais, podem ser empregadas nos três cenários, pois não dependem de acesso aos dados de treinamento. A seguir, apresentam‑se as principais abordagens descritas na literatura, organizadas de acordo com a origem da evidência e o grau de inferência envolvido.
 
