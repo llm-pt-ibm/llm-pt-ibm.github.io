@@ -50,3 +50,6 @@ copyright = "IBM & UFCG - 2025"
   [[module.mounts]]
   source = 'static'
   target = 'assets'
+
+[outputs]
+  home = ["HTML", "RSS", "SITEMAP", "ROBOTS"]
