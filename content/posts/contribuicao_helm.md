@@ -15,4 +15,9 @@ A parceria entre Computação@UFCG e a IBM resultou em 15 contribuições signif
 O projeto é coordenado pelo professor João Brunet e reúne uma equipe multidisciplinar dedicada à avaliação de LLMs. Participam também dois professores do Departamento de Sistemas e Computação da UFCG, um professor do IFPB, três alunos de pós-graduação, três de graduação e um profissional com experiência em desenvolvimento de software. A IBM, parceira no projeto, também destaca profissionais para atuarem diretamente na colaboração. Juntos, o grupo tem contribuído de forma expressiva para o avanço do HELM-Stanford, com foco na inclusão da língua portuguesa e na melhoria contínua do *framework*.
 
 
+<div style="text-align: center;">
+  <img src="/images/carvalheira.jpeg" style="max-width: 100%;">
+  <figcaption>Equipe multidisciplinar do projeto.</figcaption>
+</div>
+
 {{< figure src="/images/ibm.jpeg" alt="Seis pessoas trabalhando em computadores" caption="Equipe multidisciplinar do projeto" >}}
