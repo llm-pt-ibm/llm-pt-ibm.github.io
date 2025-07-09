@@ -20,4 +20,4 @@ O projeto é coordenado pelo professor João Brunet e reúne uma equipe multidis
   <figcaption>Equipe multidisciplinar do projeto.</figcaption>
 </div>
 
-{{< figure src="/images/ibm.jpeg" alt="Seis pessoas trabalhando em computadores" caption="Equipe multidisciplinar do projeto" >}}
+{{< figure src="/images/carvalheira.jpeg" alt="Seis pessoas trabalhando em computadores" caption="Equipe multidisciplinar do projeto" >}}
