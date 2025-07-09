@@ -5,6 +5,10 @@ title = 'LLM IBM UFCG'
 pagination.pagerSize = 10
 copyright = "IBM & UFCG - 2025"
 
+[sitemap]
+  changefreq = 'hourly'
+  priority = 0.8
+
 [params]
   tagline = "Blog com relatórios periódicos das tarefas realizadas."
   disableDarkModeCSS = true
@@ -46,3 +50,6 @@ copyright = "IBM & UFCG - 2025"
   [[module.mounts]]
   source = 'static'
   target = 'assets'
+
+[outputs]
+  home = ["HTML", "RSS", "SITEMAP", "ROBOTS"]
