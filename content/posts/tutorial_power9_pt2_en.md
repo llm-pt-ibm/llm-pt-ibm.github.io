@@ -1,6 +1,6 @@
 ---
 title: "Setting Up the Conda and PyTorch on IBM Power9 Servers"
-date: 2025-06-29 # ano-mês-dia
+date: 2025-06-30 # ano-mês-dia
 authors: ["Caio Silva"] # Pode ser uma lista
 tags: ["LLM", "Power9", "Conda", "PyTorch"]
 summary: "This post is part of a tutorial series aimed at building a Language Model API on Power9 servers. In this step, we'll set up the Conda package manager and the PyTorch library."
