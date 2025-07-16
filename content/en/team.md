@@ -1,6 +1,7 @@
 ---
 title: "Team"
 type: "page"
+translationKey: "team"
 ---
 
 João Arthur: joao.arthur@computacao.ufcg.edu.br  

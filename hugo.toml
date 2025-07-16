@@ -51,7 +51,7 @@ defaultContentLanguageInSubdir = false
     [languages.pt.menu]
       [[languages.pt.menu.main]]
         name = "Equipe"
-        url = "/team/"
+        url = "team/"
         weight = 3
       [[languages.pt.menu.main]]
         name = "Tags"
