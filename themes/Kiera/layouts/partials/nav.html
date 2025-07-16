@@ -1,5 +1,26 @@
 {{ $currentPage := . }}
-<nav>
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        {{ if .Translations}}
+              {{ range .Translations }}
+                <a class="lang-link" href="{{ .RelPermalink }}">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    {{ .Language.LanguageName }}
+                </a>
+              {{ end }}
+            {{ else }}
+              {{ range .Site.Languages }}
+                {{ if ne .Lang $.Site.Language.Lang }}
+                    <a class="lang-link" href="{{ .Lang | relLangURL }}">
+                        <img src="/images/traducao.png" alt="Tradução" >
+                        {{ .Language.LanguageName }}
+                    </a>
+                {{ end }}
+              {{ end }}
+            {{ end }}
+    </div>
+    
     <ul>
         {{ range .Site.Menus.main }}
         <li>

@@ -472,3 +472,29 @@ ul.pagination {
 ul.pagination li {
   padding: 0 1em;
 }
+
+.site-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Ruda", sans-serif;
+}
+
+.lang-switch a {
+  text-decoration: none;
+  margin-right: 20px;
+  font-family: "Ruda", sans-serif;
+}
+
+.lang-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.lang-link img {
+  height: 1em;
+  width: auto;
+  margin-right: 6px;
+  vertical-align: middle;
+}
