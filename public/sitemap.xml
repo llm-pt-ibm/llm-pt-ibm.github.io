@@ -2,33 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:39823/posts/</loc>
+    <loc>http://localhost:42951/posts/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:39823/en/posts/"
+                href="http://localhost:42951/en/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:39823/posts/"
+                href="http://localhost:42951/posts/"
                 />
   </url><url>
-    <loc>http://localhost:39823/team/</loc>
+    <loc>http://localhost:42951/team/</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:39823/en/team/"
+                href="http://localhost:42951/en/team/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:39823/team/"
+                href="http://localhost:42951/team/"
                 />
   </url>
 </urlset>
