@@ -52,27 +52,30 @@ A seguir, apresentamos os resultados obtidos, acompanhados de gráficos desenvol
 
 - **ENEM Challenge**:
 
-<div style="text-align: center;">
+<!--<div style="text-align: center;">
   <img src="/images/experimentos_benchmarks_pt_br_image001.png" style="max-width: 90%;">
-</div>
+</div> -->
+{{< figure src="/images/experimentos_benchmarks_pt_br_image001.png" alt="Gráfico dos resultados no ENEM Challenge" caption="Gráfico dos resultados no ENEM Challenge" >}}
 
 Os resultados indicam que os modelos apresentaram desempenhos semelhantes, com uma leve vantagem para o Llama. Os modelos alcançaram uma média de acerto de 62,53%, esse percentual sugere que, embora os modelos demonstrem algum nível de compreensão das questões, ainda não possuem aptidão suficiente para responder de forma satisfatória às provas do ENEM, ou seja, para selecionar a alternativa correta. Há, portanto, um espaço para melhorias, especialmente no que diz respeito à capacidade de raciocínio e interpretação em língua portuguesa.
 
 - **TweetSent-Br**:
 
-<div style="text-align: center;">
+<!--<div style="text-align: center;">
   <img src="/images/experimentos_benchmarks_pt_br_image002.png" style="max-width: 90%;">
-</div>
+</div> -->
 
+{{< figure src="/images/experimentos_benchmarks_pt_br_image002.png" alt="Gráfico dos resultados no TweetSent-Br" caption="Gráfico dos resultados no TweetSent-Br" >}}
 
 Nesse *benchmark*, assim como observado no ENEM Challenge, os resultados também foram semelhantes entre os modelos. Isso reforça a percepção de que ainda existem lacunas no desempenho dos modelos em tarefas relacionadas  à classificação de sentimentos em português. Classificar uma mensagem como positiva, negativa ou neutra ainda representa um desafio para esses modelos, especialmente diante das nuances e ambiguidades da linguagem.
 
 - **IMDB**:
 
-<div style="text-align: center;">
+<!--<div style="text-align: center;">
   <img src="/images/experimentos_benchmarks_pt_br_image003.png" style="max-width: 90%;">
-</div>
+</div>-->
 
+{{< figure src="/images/experimentos_benchmarks_pt_br_image003.png" alt="Gráfico dos resultados no IMDB" caption="Gráfico dos resultados no IMDB" >}}
 
 No IMDB os resultados foram bastante positivos, os modelos apresentaram taxas de acerto superiores a 90%, demonstrando boa performance na tarefa de classificação de sentimentos. O destaque foi o modelo Granite com 8B de parâmetros, que teve uma leve superioridade em relação aos demais. Esses resultados indicam que os modelos conseguem categorizar com facilidade as críticas de filmes em português, mostrando maior domínio nesse tipo de tarefa.
 
