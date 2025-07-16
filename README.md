@@ -102,5 +102,16 @@ No Hugo, a maneira mais simples de incluir imagens nas suas publicações é arm
 Para adicionar uma imagem no seu post, basta utilizar a seguinte sintaxe em Markdown, substituindo ``minha-imagem.jpg`` pelo nome do arquivo que você colocou na pasta ``/static``:
 
 ```markdown
-![Texto Alternativo](/minha-imagem.jpg)
+{{< figure src="/images/minha-imagem.png" alt="Descrição alternativa" caption="Legenda da Imagem" >}}
 ```
+
+### Adicionando links nas publicações
+Para adicionar um link externo e seguir a padronização do blog com a cor do link, basta seguir esse formato: 
+
+```markdown
+[<span class="link-personalizado">Texto para o link</span>](https://exemplo.com.br)
+```
+A class "link-personalizado" no arquivo ``styles-light.css`` irá personalizar o link com a cor padrão. 
+
+Para adicionar um link que remete a alguma outra postagem do blog, basta seguir esse formato:
+[<span class="link-personalizado">Texto para o link</span>]({{< relref "nome_de_outro_post.md" >}})

@@ -296,11 +296,11 @@ a {
 }
 
 .link-personalizado {
-  color: red;
+  color: #2563eb;
 }
 
 .link-personalizado:hover {
-  color: #2563eb;
+  color: blue;
 }
 
 .link-personalizado:visited {
