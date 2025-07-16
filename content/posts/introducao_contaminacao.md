@@ -30,7 +30,7 @@ Com o objetivo de introduzir e difundir esse tema, esta postagem apresenta os fu
 - Em idiomas com baixa representatividade nos dados de treinamento, como o português brasileiro, o risco de contaminação pode ser ampliado.
 
 ## Impactos da contaminação
-A contaminação de benchmarks provoca distorções que afetam tanto o rigor científico das avaliações quanto a confiabilidade de aplicações baseadas em LLMs. Os principais impactos identificados na literatura incluem:
+A contaminação de benchmarks provoca distorções que afetam tanto o rigor científico das avaliações quanto a confiabilidade de aplicações baseadas em LLMs. Os principais impactos descritos abaixo, também são discutidos em estudos como Xu et al. (2024a), Balloccu et al. (2024) e Sainz et al. (2023).
 
 <div style="text-align: center; display: table; width: 100%;">
   <img src="/images/icones_riscos_contaminacao.png" alt="Riscos da contaminação" style="max-width: 40%; box-shadow: none;">
@@ -52,20 +52,20 @@ A contaminação de benchmarks provoca distorções que afetam tanto o rigor cie
 ## Causas da contaminação de dados de benchmark
 A contaminação de dados de benchmarks em LLMs pode ocorrer de forma **acidental** ou **intencional**, com diferentes origens e consequências, dependendo principalmente da forma como os dados de treinamento são coletados, utilizados e reaproveitados nos ciclos de desenvolvimento dos modelos.
 
-A contaminação **acidental** é a mais comum e ocorre, na maioria dos casos, devido ao uso de **dados extraídos automaticamente da internet para pré-treinamento em larga escala**. Esses corpora, por sua diversidade e volume, frequentemente incluem conteúdos associados a benchmarks, como exemplos idênticos, trechos brutos ou textos semanticamente relacionados. Isso se deve ao fato de benchmarks e dados de treinamento frequentemente compartilharem fontes públicas comuns, como Wikipedia, repositórios educacionais, artigos técnicos e redes sociais.
+A contaminação **acidental** é a mais comum e ocorre, na maioria dos casos, devido ao uso de **dados extraídos automaticamente da internet para pré-treinamento em larga escala** (Xu et al., 2024a; Ravaut et al., 2024). Esses corpora, por sua diversidade e volume, frequentemente incluem conteúdos associados a benchmarks, como exemplos idênticos, trechos brutos ou textos semanticamente relacionados. Isso se deve ao fato de benchmarks e dados de treinamento frequentemente compartilharem fontes públicas comuns, como Wikipedia, repositórios educacionais, artigos técnicos e redes sociais.
 
 <div style="text-align: center; display: table;">
   <img src="/images/contaminacao_nao_intencional.png" alt="Contaminação não intencional" caption="" style="max-width: 80%; box-shadow: none;">
   <p style="margin-top: 0.3em; font-size: 0.8em; font-style: italic; color: #000000eb">Fluxo de contaminação não intencional</p>
 </div>
 
-Embora mecanismos de filtragem possam ser implementados para evitar a inclusão de benchmarks conhecidos, essa estratégia apresenta limitações. É difícil garantir a exclusão de todos os benchmarks existentes, especialmente os lançados recentemente ou ainda não amplamente documentados. Além disso, a identificação de sobreposição semântica é complexa, o que torna a detecção de vazamentos indiretos ainda mais desafiadora.
+Embora mecanismos de filtragem possam ser implementados para evitar a inclusão de benchmarks conhecidos, essa estratégia apresenta limitações (Ravaut et al., 2024). É difícil garantir a exclusão de todos os benchmarks existentes, especialmente os lançados recentemente ou ainda não amplamente documentados. Além disso, a identificação de sobreposição semântica é complexa, o que torna a detecção de vazamentos indiretos ainda mais desafiadora.
 
-Outro vetor de contaminação acidental está relacionado à **reutilização de interações com usuários** para re-treinamento ou ajuste fino de modelos implantados em produção. Sistemas comerciais podem reaproveitar entradas fornecidas por usuários durante testes, avaliações públicas ou uso real. Quando essas interações reproduzem exemplos derivados de benchmarks, há risco de contaminação retroativa, mesmo que não intencional, nos ciclos seguintes de treinamento.
+Outro vetor de contaminação acidental está relacionado à **reutilização de interações com usuários** para re-treinamento ou ajuste fino de modelos implantados em produção (Balloccu et al., 2024). Sistemas comerciais podem reaproveitar entradas fornecidas por usuários durante testes, avaliações públicas ou uso real. Quando essas interações reproduzem exemplos derivados de benchmarks, há risco de contaminação retroativa, mesmo que não intencional, nos ciclos seguintes de treinamento.
 
 Além disso, a contaminação pode se propagar por meio da **geração de conteúdo por LLMs**. Modelos contaminados podem gerar textos que replicam padrões ou trechos presentes em benchmarks, mesmo que de forma parafraseada ou reestruturada. Esses textos, quando reutilizados em novos benchmarks ou conjuntos de treinamento, perpetuam e amplificam a contaminação original. Apesar de, nesses casos, os desenvolvedores poderem estar cientes da contaminação prévia, a natureza recursiva do processo faz com que a propagação ocorra de forma indireta e, muitas vezes, incontrolável. Por esse motivo, esse tipo de exposição também pode ser considerado um caso de contaminação acidental.
 
-Por outro lado, a **contaminação intencional** ocorre quando dados de benchmark são deliberadamente incluídos no treinamento, com o objetivo de melhorar o desempenho do modelo em tarefas específicas. Essa prática pode ocorrer, por exemplo, ao incorporar conjuntos como MATH ou GSM8K com o propósito de otimizar a performance em raciocínio matemático. Embora esse uso possa ser justificável como dado supervisionado, sua posterior reutilização como benchmark invalida a avaliação.
+Por outro lado, a **contaminação intencional** ocorre quando dados de benchmark são deliberadamente incluídos no treinamento, com o objetivo de melhorar o desempenho do modelo em tarefas específicas (Xu et al., 2024a; Deng et al., 2024a). Essa prática pode ocorrer, por exemplo, ao incorporar conjuntos como MATH ou GSM8K com o propósito de otimizar a performance em raciocínio matemático (Xu et al., 2024b). Embora esse uso possa ser justificável como dado supervisionado, sua posterior reutilização como benchmark invalida a avaliação.
 
 <div style="text-align: center; display: table;">
   <img src="/images/contaminacao_intencional.png" alt="Contaminação intencional" caption="" style="max-width: 80%; box-shadow: none;">
