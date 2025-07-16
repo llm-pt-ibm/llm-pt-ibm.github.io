@@ -26,10 +26,10 @@ Esta etapa do tutorial mostra como configurar o Sistema Operacional, instalar os
 
 ## Configurando Sistema Operacional
 Vamos começar com a instalação do **Red Hat Enterprise Linux 8.10 (Ootpa)**. Em sistemas Power, a arquitetura usada é a ```ppc64le``` (PowerPC 64 bits little-endian), por isso é essencial que a imagem .iso seja compatível com essa arquitetura. Caso contrário, o petitboot da Power9 não reconhecerá a mídia e a instalação não poderá continuar.
-1. Você pode baixar a imagem correta pelo [link](https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software) indicado. 
-2. Neste tutorial, usaremos a opção **Boot ISO** e seguiremos as instruções da [documentação oficial da Red Hat](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer) para criar uma mídia USB inicializável.
+1. Você pode baixar a imagem correta pelo [<span class="link-personalizado">link</span>](https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software) indicado. 
+2. Neste tutorial, usaremos a opção **Boot ISO** e seguiremos as instruções da [<span class="link-personalizado">documentação oficial da Red Hat</span>](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer) para criar uma mídia USB inicializável.
 3. Após inserir a mídia de instalação no servidor Power 9 e reiniciar a máquina, o sistema deve iniciar automaticamente no petitboot. 
-4. A partir desta etapa, basta seguir o [guia de instalação](https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf) oficial para concluir a configuração do sistema. 
+4. A partir desta etapa, basta seguir o [<span class="link-personalizado">guia de instalação</span>](https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf) oficial para concluir a configuração do sistema. 
 
 
 ## Configurando Driver NVIDIA e CUDA
@@ -224,4 +224,4 @@ echo 'export CUDNN_LIBRARY=/usr/lib64' >> ~/.bashrc
 
 Após isso, o processo de instalação do CUDNN está finalizado. 
 
-Esta é a primeira parte do nosso tutorial. Uma vez que todas as etapas mostradas neste post foram finalizadas, o servidor está pronto para ter o gerenciador de pacotes ```conda``` e a biblioteca ```pytorch``` instaladas, você pode acessar a segunda parte deste tutorial neste [link]({{< relref "tutorial_power9_pt2_en.md" >}}).
+Esta é a primeira parte do nosso tutorial. Uma vez que todas as etapas mostradas neste post foram finalizadas, o servidor está pronto para ter o gerenciador de pacotes ```conda``` e a biblioteca ```pytorch``` instaladas, você pode acessar a segunda parte deste tutorial neste [<span class="link-personalizado">link</span>]({{< relref "tutorial_power9_pt2_en.md" >}}).

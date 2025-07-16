@@ -9,7 +9,7 @@ draft: false # Mude para true se quiser que o post fique como rascunho
 ---
 
 ## Contexto
-Este é o terceiro post de uma série de tutoriais cujo objetivo é mostrar passo a passo como construir uma API de Modelos de Linguagem em um servidor Power9, desde a configuração do sistema operacional até a execução remota de inferências. Já configuramos o sistema operacional, os drivers NVIDIA, CUDA e cuDNN no [primeiro post]({{< relref "tutorial_power9_pt1_en.md" >}}), e no [segundo post]({{< relref "tutorial_power9_pt2_en.md" >}}) instalamos Conda e PyTorch. Nesta etapa, vamos construir a API usando FastAPI e a biblioteca Transformers, baixando modelos do Hugging Face e executando o servidor web com uvicorn.
+Este é o terceiro post de uma série de tutoriais cujo objetivo é mostrar passo a passo como construir uma API de Modelos de Linguagem em um servidor Power9, desde a configuração do sistema operacional até a execução remota de inferências. Já configuramos o sistema operacional, os drivers NVIDIA, CUDA e cuDNN no [<span class="link-personalizado">primeiro post</span>]({{< relref "tutorial_power9_pt1_en.md" >}}), e no [<span class="link-personalizado">segundo post</span>]({{< relref "tutorial_power9_pt2_en.md" >}}) instalamos Conda e PyTorch. Nesta etapa, vamos construir a API usando FastAPI e a biblioteca Transformers, baixando modelos do Hugging Face e executando o servidor web com uvicorn.
 
 A API implementada terá as funcionalidades de gerar API Key, carregar modelos, realizar inferências, obter status e desccaregar modelos. 
 
@@ -334,4 +334,4 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 - `--reload` flag para ser utilizada em desenvolvimento. Recarrega a aplicação sempre que uma mudança é realizada.
 
-Seguindo estas implementações, você terá uma API capaz de realizar inferências com Modelos de Linguagem baixados do Hugging Face. No [próximo tutorial]({{< relref "tutorial_power9_pt4_en.md" >}}) será demonstrado como enviar requisições para a API via curl e python.  
+Seguindo estas implementações, você terá uma API capaz de realizar inferências com Modelos de Linguagem baixados do Hugging Face. No [<span class="link-personalizado">próximo tutorial</span>]({{< relref "tutorial_power9_pt4_en.md" >}}) será demonstrado como enviar requisições para a API via curl e python.  

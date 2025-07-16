@@ -9,7 +9,7 @@ draft: false # Mude para true se quiser que o post fique como rascunho
 ---
 
 ## Contexto
-Este é o quarto e último post de uma série de tutoriais cujo objetivo é mostrar passo a passo como construir uma API de Modelos de Linguagem em um servidor Power9, desde a configuração do sistema operacional até a execução remota de inferências. Já configuramos o sistema operacional, os drivers NVIDIA, CUDA e cuDNN no [primeiro post]({{< relref "tutorial_power9_pt1_en.md" >}}), no [segundo post]({{< relref "tutorial_power9_pt2_en.md" >}}) instalamos Conda e PyTorch e no [terceiro post]({{< relref "tutorial_power9_pt3_en.md" >}}) construímos a API. Nesta etapa, vamos apresentar a API construída e mostrar como realizar requisições.
+Este é o quarto e último post de uma série de tutoriais cujo objetivo é mostrar passo a passo como construir uma API de Modelos de Linguagem em um servidor Power9, desde a configuração do sistema operacional até a execução remota de inferências. Já configuramos o sistema operacional, os drivers NVIDIA, CUDA e cuDNN no [<span class="link-personalizado">primeiro post</span>]({{< relref "tutorial_power9_pt1_en.md" >}}), no [<span class="link-personalizado">segundo post</span>]({{< relref "tutorial_power9_pt2_en.md" >}}) instalamos Conda e PyTorch e no [<span class="link-personalizado">terceiro post</span>]({{< relref "tutorial_power9_pt3_en.md" >}}) construímos a API. Nesta etapa, vamos apresentar a API construída e mostrar como realizar requisições.
 
 ## TL;DR
 - Este post apresenta a API de inferência de LLMs construída e como utilizar.

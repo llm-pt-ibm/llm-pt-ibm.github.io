@@ -217,7 +217,7 @@
     
 
     <h2 id="contexto">Contexto</h2>
-<p>Este é o terceiro post de uma série de tutoriais cujo objetivo é mostrar passo a passo como construir uma API de Modelos de Linguagem em um servidor Power9, desde a configuração do sistema operacional até a execução remota de inferências. Já configuramos o sistema operacional, os drivers NVIDIA, CUDA e cuDNN no <a href="/posts/tutorial_power9_pt1_en/">primeiro post</a>, e no <a href="/posts/tutorial_power9_pt2_en/">segundo post</a> instalamos Conda e PyTorch. Nesta etapa, vamos construir a API usando FastAPI e a biblioteca Transformers, baixando modelos do Hugging Face e executando o servidor web com uvicorn.</p>
+<p>Este é o terceiro post de uma série de tutoriais cujo objetivo é mostrar passo a passo como construir uma API de Modelos de Linguagem em um servidor Power9, desde a configuração do sistema operacional até a execução remota de inferências. Já configuramos o sistema operacional, os drivers NVIDIA, CUDA e cuDNN no <a href="/posts/tutorial_power9_pt1_en/"><span class="link-personalizado">primeiro post</span></a>, e no <a href="/posts/tutorial_power9_pt2_en/"><span class="link-personalizado">segundo post</span></a> instalamos Conda e PyTorch. Nesta etapa, vamos construir a API usando FastAPI e a biblioteca Transformers, baixando modelos do Hugging Face e executando o servidor web com uvicorn.</p>
 <p>A API implementada terá as funcionalidades de gerar API Key, carregar modelos, realizar inferências, obter status e desccaregar modelos.</p>
 <p><strong>FastAPI</strong>: Framework web moderno para construção de APIs com Python 3.8+, baseado em tipagem estática e assíncrona. Foi projetado para ser rápido, fácil de usar e robusto, tornando o desenvolvimento de APIs mais eficiente.</p>
 <p><strong>Transformers</strong>: Biblioteca de código aberto desenvolvida pela Hugging Face. Fornece acesso prático e eficiente a uma ampla coleção de modelos pré-treinados de última geração para Processamento de Linguagem Natural (PLN), visão computacional e áudio.</p>
@@ -505,7 +505,7 @@ pip install fastapi uvicorn transformers
 <p><code>--reload</code> flag para ser utilizada em desenvolvimento. Recarrega a aplicação sempre que uma mudança é realizada.</p>
 </li>
 </ul>
-<p>Seguindo estas implementações, você terá uma API capaz de realizar inferências com Modelos de Linguagem baixados do Hugging Face. No <a href="/posts/tutorial_power9_pt4_en/">próximo tutorial</a> será demonstrado como enviar requisições para a API via curl e python.</p>
+<p>Seguindo estas implementações, você terá uma API capaz de realizar inferências com Modelos de Linguagem baixados do Hugging Face. No <a href="/posts/tutorial_power9_pt4_en/"><span class="link-personalizado">próximo tutorial</span></a> será demonstrado como enviar requisições para a API via curl e python.</p>
 
 
 </article>

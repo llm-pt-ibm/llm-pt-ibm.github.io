@@ -9,7 +9,7 @@ draft: false # Mude para true se quiser que o post fique como rascunho
 ---
 
 ## Contexto
-Este é o segundo post de uma série de tutoriais que vamos mostrar o passo-a-passo de como construir uma API de Modelos de Linguagem em um servidor Power9, desde da configuração do Sistema Operacional, até a API executando inferências de forma remota. O [primeiro post]({{< relref "tutorial_power9_pt1_en.md" >}}) mostra como instalar o S.O e configurar drivers NVIDIA, CUDA e CUDNN. Nesta etapa do tutorial vamos mostrar a configuração do gerenciador de pacotes Conda e da biblioteca PyTorch
+Este é o segundo post de uma série de tutoriais que vamos mostrar o passo-a-passo de como construir uma API de Modelos de Linguagem em um servidor Power9, desde da configuração do Sistema Operacional, até a API executando inferências de forma remota. O [<span class="link-personalizado">primeiro post</span>]({{< relref "tutorial_power9_pt1_en.md" >}}) mostra como instalar o S.O e configurar drivers NVIDIA, CUDA e CUDNN. Nesta etapa do tutorial vamos mostrar a configuração do gerenciador de pacotes Conda e da biblioteca PyTorch
 
 
 **Conda**: Conda é um sistema de gerenciamento de pacotes e ambientes de código aberto e multiplataforma. Ele funciona como uma "caixa de ferramentas" para cientistas de dados e desenvolvedores, ajudando a organizar seus projetos.
@@ -156,4 +156,4 @@ Extensões C carregadas: True
 
 É importante lembrar que as saídas podem ser diferentes em relação ao número e modelo das GPUs e a soma de tensores (devido a aleatoriedade). É importante que as saídas booleanas do código que executamos tenham resultados igual a ```True```.
 
-Com isso, a biblioteca PyTorch está instalada e configurada para ser utilizada. No próximo tutorial vamos realizar a primeira inferência de um Modelo de Linguagem no servidor Power9.
+Com isso, a biblioteca PyTorch está instalada e configurada para ser utilizada. No [<span class="link-personalizado">próximo tutorial</span>]({{< relref "tutorial_power9_pt3_en.md" >}}) vamos realizar a primeira inferência de um Modelo de Linguagem no servidor Power9.
