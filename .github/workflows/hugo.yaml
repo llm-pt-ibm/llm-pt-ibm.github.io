@@ -79,8 +79,8 @@ jobs:
       - name: Check size of public directory
         run: |
           du -sh ./public
-          if [ $(du -s ./public | awk '{print $1}') -gt 10000 ]; then
-            echo "Error: The public directory size exceeds 10GB!"
+          if [ $(du -s ./public | awk '{print $1}') -gt 512000 ]; then
+            echo "Error: The public directory size exceeds 500M!"
             exit 1
           fi
 
