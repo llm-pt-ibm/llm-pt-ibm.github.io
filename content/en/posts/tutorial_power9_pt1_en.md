@@ -30,10 +30,10 @@ This step of the tutorial shows how to set up the operating system and install N
 ## Setting up the Operating System
 Let's start with the installation of **Red Hat Enterprise Linux 8.10 (Ootpa)**. On Power systems, the architecture used is `ppc64le` (PowerPC 64-bit little-endian), so it's essential to ensure the .iso image is compatible with this architecture. Otherwise, the Power9's petitboot won't recognize the media and installation won't proceed.
 
-1. You can download the correct image from the [link](https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software) provided.
-2. In this tutorial, we'll use the **Boot ISO** option and follow the [official Red Hat documentation](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer) to create a bootable USB medium.
+1. You can download the correct image from the [<span class="link-personalizado">link</span>](https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software) provided.
+2. In this tutorial, we'll use the **Boot ISO** option and follow the [<span class="link-personalizado">official Red Hat documentation</span>](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer) to create a bootable USB medium.
 3. After inserting the installation media into the Power9 server and rebooting, the system should automatically start petitboot.
-4. From there, just follow the [official installation guide](https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf) to complete the OS setup.
+4. From there, just follow the [<span class="link-personalizado">official installation guide</span>](https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf) to complete the OS setup.
 
 
 
@@ -218,4 +218,4 @@ echo 'export CUDNN_LIBRARY=/usr/lib64' >> ~/.bashrc
 ```
 After that, the CUDNN installation process is complete.
 
-This is the first part of our tutorial. Once you've finished all the steps in this post, the server will be ready to install the `conda` package manager and the `pytorch` library. You can access the second part of this tutorial at this [link]({{< relref "tutorial_power9_pt2_en.md" >}}).
+This is the first part of our tutorial. Once you've finished all the steps in this post, the server will be ready to install the `conda` package manager and the `pytorch` library. You can access the second part of this tutorial at this [<span class="link-personalizado">link</span>]({{< relref "tutorial_power9_pt2_en.md" >}}).

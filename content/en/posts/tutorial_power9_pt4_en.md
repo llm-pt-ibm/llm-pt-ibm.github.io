@@ -9,7 +9,7 @@ draft: false # Mude para true se quiser que o post fique como rascunho
 ---
 
 ## Background
-This is the fourth and final post in a tutorial series that aims to show step by step how to build a LLM API on a Power9 server, from operating system setup to remote inference execution. We already configured the operating system, NVIDIA drivers, CUDA, and cuDNN in the [first post]({{< relref "tutorial_power9_pt1_en.md" >}}), installed Conda and PyTorch in the [second post]({{< relref "tutorial_power9_pt2_en.md" >}}), and built the API in the [third post]({{< relref "tutorial_power9_pt3_en.md" >}}). In this stage, we will present the built API and show how to make requests.
+This is the fourth and final post in a tutorial series that aims to show step by step how to build a LLM API on a Power9 server, from operating system setup to remote inference execution. We already configured the operating system, NVIDIA drivers, CUDA, and cuDNN in the [<span class="link-personalizado">first post</span>]({{< relref "tutorial_power9_pt1_en.md" >}}), installed Conda and PyTorch in the [<span class="link-personalizado">second post</span>]({{< relref "tutorial_power9_pt2_en.md" >}}), and built the API in the [<span class="link-personalizado">third post</span>]({{< relref "tutorial_power9_pt3_en.md" >}}). In this stage, we will present the built API and show how to make requests.
 
 
 ## TL;DR

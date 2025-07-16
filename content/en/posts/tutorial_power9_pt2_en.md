@@ -9,7 +9,7 @@ draft: false # Mude para true se quiser que o post fique como rascunho
 ---
 
 ## Background
-This is the second post in a tutorial series on how to build a Language Model API on an IBM Power9 server, covering everything from setting up the operating system to having the API running remote inference. The [first post]({{< relref "tutorial_power9_pt1_en.md" >}}) covers installing the OS and configuring NVIDIA drivers, CUDA, and CUDNN. In this step, we'll show how to set up the Conda package manager and the PyTorch library.
+This is the second post in a tutorial series on how to build a Language Model API on an IBM Power9 server, covering everything from setting up the operating system to having the API running remote inference. The [<span class="link-personalizado">first post</span>]({{< relref "tutorial_power9_pt1_en.md" >}}) covers installing the OS and configuring NVIDIA drivers, CUDA, and CUDNN. In this step, we'll show how to set up the Conda package manager and the PyTorch library.
 
 **Conda**: Conda is an open-source, cross-platform package and environment management system. It's like a "toolbox" for data scientists and developers to organize their projects.
 
@@ -155,5 +155,5 @@ C extensions loaded: True
 
 Keep in mind that the output may vary depending on the number and model of GPUs, as well as the tensor sums (due to randomness). What matters is that the boolean outputs in the script return ```True```.
 
-With this, PyTorch is installed and ready to use. In the next tutorial, we’ll run the first Language Model inference on the Power9 server.
+With this, PyTorch is installed and ready to use. [<span class="link-personalizado">In the next tutorial</span>]({{< relref "tutorial_power9_pt3_en.md" >}}), we’ll run the first Language Model inference on the Power9 server.
 

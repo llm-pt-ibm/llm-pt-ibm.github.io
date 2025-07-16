@@ -9,7 +9,7 @@ draft: false # Mude para true se quiser que o post fique como rascunho
 ---
 
 ## Background
-This is the third post in a tutorial series designed to show step by step how to build a LLM API on a Power9 server, from operating system setup to remote inference execution. We already configured the operating system, NVIDIA drivers, CUDA, and cuDNN in the [first post]({{< relref "tutorial_power9_pt1_en.md" >}}), and installed Conda and PyTorch in the [second post]({{< relref "tutorial_power9_pt2_en.md" >}}). In this stage, we will build the API using FastAPI and the Transformers library, downloading models from Hugging Face and running the web server with uvicorn.
+This is the third post in a tutorial series designed to show step by step how to build a LLM API on a Power9 server, from operating system setup to remote inference execution. We already configured the operating system, NVIDIA drivers, CUDA, and cuDNN in the [<span class="link-personalizado">first post</span>]({{< relref "tutorial_power9_pt1_en.md" >}}), and installed Conda and PyTorch in the [<span class="link-personalizado">second post</span>]({{< relref "tutorial_power9_pt2_en.md" >}}). In this stage, we will build the API using FastAPI and the Transformers library, downloading models from Hugging Face and running the web server with uvicorn.
 
 The implemented API will support generating API keys, loading models, performing inferences, checking status, and unloading models.
 
@@ -338,4 +338,4 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 - `--reload` is a flag for development use. It automatically reloads the server whenever changes are made.
 
 
-BBy following this guide, you'll have a working API capable of running LLM inference using models downloaded from Hugging Face. In the [next tutorial]({{< relref "tutorial_power9_pt4_en.md" >}}), we will show how to send requests to the API using curl and Python.
+BBy following this guide, you'll have a working API capable of running LLM inference using models downloaded from Hugging Face. In the [<span class="link-personalizado">next tutorial</span>]({{< relref "tutorial_power9_pt4_en.md" >}}), we will show how to send requests to the API using curl and Python.
