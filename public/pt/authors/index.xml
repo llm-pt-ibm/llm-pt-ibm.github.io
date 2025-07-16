@@ -1,0 +1,15 @@
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+ <channel>
+   <title>Authors on LLM IBM UFCG</title>
+   <link>https://llm-pt-ibm.github.io/pt/authors/</link>
+   <description>Recent content in Authors on LLM IBM UFCG</description>
+   <generator>Hugo -- gohugo.io</generator>
+   <language>pt</language>
+   <copyright>IBM &amp; UFCG - 2025</copyright>
+   
+       <atom:link href="https://llm-pt-ibm.github.io/pt/authors/index.xml" rel="self" type="application/rss+xml" />
+   
+   
+ </channel>
+</rss>

@@ -1,52 +1,54 @@
-<!doctype html>
+<html lang="pt">
 
-<html lang="pt-br">
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=41701&amp;path=livereload" data-no-instant defer></script><!doctype html>
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-  <title>LLMs Inference API on IBM Power9 Server - LLM IBM UFCG</title>
+<html lang="pt">
+
+<head>
+  <title>API de inferência de Modelos de Linguagem no servidor Power9 IBM - LLM IBM UFCG</title>
   <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
-<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/tutorial_power9_pt4_en/">
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:41701/posts/tutorial_power9_pt4_en/">
   <meta property="og:site_name" content="LLM IBM UFCG">
-  <meta property="og:title" content="LLMs Inference API on IBM Power9 Server">
-  <meta property="og:description" content="This post is part of a tutorial series whose ultimate goal is to build a LLM API on Power9 servers. In this stage, we will present the API and show how to make requests.">
-  <meta property="og:locale" content="pt_br">
+  <meta property="og:title" content="API de inferência de Modelos de Linguagem no servidor Power9 IBM">
+  <meta property="og:description" content="Este post faz parte de uma série de tutoriais cujo objetivo final é construir uma API de Modelos de Linguagem em um servidor Power9. Nesta etapa, vamos apresentar a API e mostrar como realizar requisições.">
+  <meta property="og:locale" content="pt">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-07-02T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-07-02T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-07-03T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-03T00:00:00+00:00">
     <meta property="article:tag" content="LLM">
     <meta property="article:tag" content="Power9">
     <meta property="article:tag" content="API">
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="LLMs Inference API on IBM Power9 Server">
-  <meta name="twitter:description" content="This post is part of a tutorial series whose ultimate goal is to build a LLM API on Power9 servers. In this stage, we will present the API and show how to make requests.">
+  <meta name="twitter:title" content="API de inferência de Modelos de Linguagem no servidor Power9 IBM">
+  <meta name="twitter:description" content="Este post faz parte de uma série de tutoriais cujo objetivo final é construir uma API de Modelos de Linguagem em um servidor Power9. Nesta etapa, vamos apresentar a API e mostrar como realizar requisições.">
 
 <meta name="generator" content="Hugo 0.147.9">
     
-    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://localhost:41701/favicon.ico" type="image/x-icon">
   
   
-    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="http://localhost:41701/favicon-16x16.png" sizes="16x16" type="image/png">
   
   
-    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="http://localhost:41701/favicon-32x32.png" sizes="32x32" type="image/png">
   
   
-    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="http://localhost:41701/apple-touch-icon.png">
   
 
   <link rel="stylesheet" href="/css/normalize.min.css" />
-  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="http://localhost:41701/fontawesome/css/all.min.css" />
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
   
   
   <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
-  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <link rel='stylesheet' href='http://localhost:41701/css/custom.css'><link rel='stylesheet' href='http://localhost:41701/css/font.css'>
   <style>
     .site-header {
       display: flex;
@@ -105,7 +107,7 @@
       <div class="site-header">
         <div class="title-tagline-wrapper">
           <h1>
-            <a href="http://localhost:1313/">LLM IBM UFCG</a>
+            <a href="http://localhost:41701/">LLM IBM UFCG</a>
           </h1>
           
           <p class="tagline"><em>Blog com relatórios periódicos das tarefas realizadas.</em></p>
@@ -114,7 +116,7 @@
         <div class="logo-wrapper">
           
 <div class="site_logo featured_image">
-    <a href="http://localhost:1313/">
+    <a href="http://localhost:41701/">
         <img class="" 
              src="/site_logo.png">
     </a>
@@ -125,6 +127,9 @@
       </div>
 
       <ul id="social-media">
+            <li><a href="/en/posts/tutorial_power9_pt4_en/">English Version</a></li>
+          
+        
       </ul>
     </header>
 
@@ -160,14 +165,14 @@
 
 <article>
 
-    <h1>LLMs Inference API on IBM Power9 Server</h1>
+    <h1>API de inferência de Modelos de Linguagem no servidor Power9 IBM</h1>
 
     
       <aside>
     <ul>
         
         <li>
-            <time class="post-date" datetime="2025-07-02T00:00:00Z">Jul 2, 2025</time>
+            <time class="post-date" datetime="2025-07-03T00:00:00Z">Jul 3, 2025</time>
         </li>
         
         
@@ -207,61 +212,61 @@
 
     
 
-    <h2 id="context">Context</h2>
-<p>This is the fourth and final post in a tutorial series that aims to show step by step how to build a LLM API on a Power9 server, from operating system setup to remote inference execution. We already configured the operating system, NVIDIA drivers, CUDA, and cuDNN in the <a href="/posts/tutorial_power9_pt1_en/">first post</a>, installed Conda and PyTorch in the <a href="/posts/tutorial_power9_pt2_en/">second post</a>, and built the API in the <a href="/posts/tutorial_power9_pt3_en/">third post</a>. In this stage, we will present the built API and show how to make requests.</p>
-<h2 id="tldr">TLDR</h2>
+    <h2 id="contexto">Contexto</h2>
+<p>Este é o quarto e último post de uma série de tutoriais cujo objetivo é mostrar passo a passo como construir uma API de Modelos de Linguagem em um servidor Power9, desde a configuração do sistema operacional até a execução remota de inferências. Já configuramos o sistema operacional, os drivers NVIDIA, CUDA e cuDNN no <a href="/posts/tutorial_power9_pt1_en/"><span class="link-personalizado">primeiro post</span></a>, no <a href="/posts/tutorial_power9_pt2_en/"><span class="link-personalizado">segundo post</span></a> instalamos Conda e PyTorch e no <a href="/posts/tutorial_power9_pt3_en/"><span class="link-personalizado">terceiro post</span></a> construímos a API. Nesta etapa, vamos apresentar a API construída e mostrar como realizar requisições.</p>
+<h2 id="tldr">TL;DR</h2>
 <ul>
-<li>This post introduces the built LLM inference API and how to use it.</li>
-<li>We will show how to make requests using Python and curl.</li>
+<li>Este post apresenta a API de inferência de LLMs construída e como utilizar.</li>
+<li>Vamos mostrar como realizar requisições via python e curl.</li>
 </ul>
-<h2 id="introducing-the-api">Introducing the API</h2>
-<p>Built with FastAPI, it includes loading specific models, keeping them in GPU memory for successive calls, and generating text from prompts sent via HTTP requests. It was implemented with FastAPI and includes API Key access control, memory management (loading and unloading models), support for multiple GPUs with automatic sharding, and endpoints for status queries. The goal is to provide a robust, production-ready service optimized for intensive use, ensuring fast inferences and easy integration with external applications.</p>
-<h4 id="architecture-overview">Architecture Overview</h4>
-<p>The API exposes LLMs via FastAPI with REST endpoints. The ModelManager handles loading, unloading, and model inference, keeping models in GPU memory for fast calls. Authentication is enforced via API Key. The architecture supports multiple GPUs with automatic sharding to optimize memory usage and performance. Models are sourced from Hugging Face and use the Transformers library to perform inferences.</p>
-<figure><img src="/images/arquitetura_api_llm_01_en.png"
+<h2 id="apresentando-a-api">Apresentando a API</h2>
+<p>Esta API foi desenvolvida para expor modelos de linguagem de grande porte para inferência remota. Permite ao usuário carregar modelos específicos, mantê-los na memória da GPU para chamadas sucessivas e gerar texto a partir de prompts enviados via requisição HTTP. Foi implementada em FastAPI e inclui controle de acesso via API Key, gerenciamento de memória (carregar e descarregar modelos), suporte a múltiplas GPUs com sharding automático e endpoints para consulta de status. O objetivo é oferecer um serviço robusto, otimizado para uso intensivo, garantindo rapidez nas inferências e facilidade de integração com aplicações externas.</p>
+<h4 id="visão-geral-da-arquitetura">Visão Geral da Arquitetura</h4>
+<p>A API expõe modelos de linguagem via FastAPI com endpoints REST. O ModelManager gerencia o carregamento, descarregamento e a inferência dos modelos, mantendo-os em GPU para chamadas rápidas. A autenticação é feita por API Key. A arquitetura suporta múltiplas GPUs com sharding automático para otimizar o uso de memória e desempenho. Os modelos são importados do HuggingFace e utiliza a biblioteca Transformers para execução de inferências.</p>
+<figure><img src="/images/arquitetura_api_llm_01.png"
     alt="Descrição alternativa"><figcaption>
-      <p>Architecture Diagram</p>
+      <p>Diagrama da arquitetura</p>
     </figcaption>
 </figure>
 
-<h4 id="main-features">Main Features</h4>
+<h4 id="principais-funcionalidades">Principais Funcionalidades</h4>
 <ul>
 <li>
-<p><strong>Load Models</strong></p>
+<p><strong>Carregar Modelos</strong></p>
 <ul>
 <li><code>/load_model</code></li>
-<li>Loads a model from the Hugging Face Hub</li>
-<li>Performs sharding across GPUs</li>
-<li>Supports Hugging Face Token</li>
+<li>Carrega modelo do HuggingFace Hub</li>
+<li>Faz sharding para as GPUs</li>
+<li>Suporte ao HuggingFace Token</li>
 </ul>
 </li>
 <li>
-<p><strong>Generate Text</strong></p>
+<p><strong>Gerar Texto</strong></p>
 <ul>
 <li><code>/generate</code></li>
-<li>Accepts prompt, max_tokens, model name, temperature, and top_p</li>
-<li>Uses an already loaded model or loads a new one</li>
-<li>Returns result in JSON</li>
+<li>Recebe prompt, max_tokens, nome do modelo, temperatura e top_p</li>
+<li>Usa modelo já carregado ou carrega um novo</li>
+<li>Retorna resultado em JSON</li>
 </ul>
 </li>
 <li>
-<p><strong>Management</strong></p>
+<p><strong>Gerenciamento</strong></p>
 <ul>
-<li><code>/status</code>: Checks the loaded model and device (CPU/GPU)</li>
-<li><code>/unload_model</code>: Frees GPU and memory</li>
-<li><code>/generate_apikey</code>: Creates API keys from LDAP user</li>
+<li><code>/status</code>: Verifica modelo carregado em device (CPU/GPU)</li>
+<li><code>/unload_model</code>: libera GPU e memória</li>
+<li><code>/generate_apikey</code>: cria chaves a partir de usuário LDAP</li>
 </ul>
 </li>
 </ul>
-<h4 id="usage-flow">Usage Flow</h4>
-<figure><img src="/images/arquitetura_api_llm_02_en.png"
+<h4 id="fluxo-de-uso">Fluxo de Uso</h4>
+<figure><img src="/images/arquitetura_api_llm_02.png"
     alt="Descrição alternativa"><figcaption>
-      <p>Usage flow diagram</p>
+      <p>Diagrama do fluxo de uso</p>
     </figcaption>
 </figure>
 
-<h4 id="inputs-and-endpoints">Inputs and Endpoints</h4>
-<p>The table below describes the API endpoints, required inputs, and responses.</p>
+<h4 id="entradas-e-endpoints">Entradas e Endpoints</h4>
+<p>Na tabela abaixo estão descritos o endpoints da API, entradas necessárias e retornos.</p>
 <style>
 table {
   border-collapse: collapse;
@@ -290,14 +295,14 @@ caption {
 }
 </style>
 <table>
- <caption>Inputs and endpoints table
+ <caption>Tabela de endpoints e entradas
   <thead>
     <tr>
       <th>Endpoints</th>
-      <th>Method</th>
+      <th>Método</th>
       <th>Api Key</th>
-      <th>Input (Body/Query)</th>
-      <th>Response</th>
+      <th>Entrada (Body/Query)</th>
+      <th>Retorno</th>
     </tr>
   </thead>
   <tbody>
@@ -315,7 +320,7 @@ caption {
       <td class="center">{model_name <br> 
                             hf_token(opcional) <br>
                             device(opcional)}</td>
-      <td class="center">None, just loads the model</td>
+      <td class="center">Nenhum, apenas carrega o modelo</td>
     </tr>
     <tr>
       <td><code>/generate</code></td>
@@ -328,43 +333,44 @@ caption {
                             temperature(opcional) <br>
                             top_p(opcional)
 }</td>
-      <td class="center">Text generated by the model</td>
+      <td class="center">Texto gerado pelo modelo</td>
     </tr>
     <tr>
       <td><code>/status</code></td>
       <td class="center">GET</td>
       <td class="center">✅</td>
-      <td class="center">None</td>
-      <td class="center">Model status and the device it is loaded on</td>
+      <td class="center">Nenhuma</td>
+      <td class="center">Status do modelo e dispositivo que ele está carregado</td>
     </tr>
     <tr>
       <td><code>/unload_model</code></td>
       <td class="center">POST</td>
       <td class="center">✅</td>
-      <td class="center">None</td>
-      <td class="center">None, just unloads the model</td>
+      <td class="center">Nenhuma</td>
+      <td class="center">Nenhum, apenas descarrega o modelo
+</td>
     </tr>
   </tbody>
 </table>
-<h2 id="how-to-use-the-api-with-python">How to Use the API with Python</h2>
-<h4 id="generate-api-key">Generate API Key</h4>
+<h2 id="como-usar-a-api-com-python">Como usar a API com Python</h2>
+<h4 id="gerar-api-key">Gerar API Key</h4>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#f92672">import</span> requests
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#f92672">import</span> json
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#f92672">import</span> os
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://&lt;power9_ip_server&gt;:8000/&#34;</span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>username <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>ldap_user<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://&lt;ip_servidor_power9&gt;:8000/&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>username <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>usuario_ldap<span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>hf_token <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;HUGGINGFACE_TOKEN&#34;</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">/generate_apikey&#34;</span>, json<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;username&#34;</span>: username})<span style="color:#f92672">.</span>content<span style="color:#f92672">.</span>decode()
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>api_key <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(response)<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;api_key&#34;</span>)
 </span></span></code></pre></div><ul>
-<li>It is important that the Hugging Face Token is set as an environment variable in the location where the inference will run.</li>
-<li><code>api_key</code> will be the return value of the called function.</li>
+<li>É importante que o HuggingFace Token esteja definido como variável de ambiente no local em que esteja executando a inferência.</li>
+<li><code>api_key</code> será o retorno da função chamada.</li>
 </ul>
-<h4 id="load-model">Load Model</h4>
-<p>First, we need to create a header containing the API Key returned from the code above and the payload with <code>model_name</code> and the Hugging Face token <code>hf_token</code>. After that, we can send the request with these two pieces of information.</p>
+<h4 id="carregar-modelo">Carregar Modelo</h4>
+<p>Primeiramente precisamos criar um header que irá conter a API Key retornada com o código acima e o payload que irá conter o <code>model_name</code> o token do huggingface <code>hf_token</code>. Após isso, podemos enviar a requisições com essas duas informações.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#e6db74">&#34;x-api-key&#34;</span>: api_key}
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>
@@ -372,57 +378,57 @@ caption {
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>           <span style="color:#e6db74">&#34;hf_token&#34;</span>: hf_token}
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">/load_model&#34;</span>, headers<span style="color:#f92672">=</span>headers, json<span style="color:#f92672">=</span>payload)
-</span></span></code></pre></div><h4 id="generate-text">Generate Text</h4>
-<p>Now we need to create a new payload with the necessary information to generate text with an LLM, which includes: <code>prompt</code>, <code>model_name</code>, and <code>hf_token</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>payload <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;prompt&#34;</span>: <span style="color:#e6db74">&#34;Hello, tell me a little about the Federal University of Campina Grande (UFCG)&#34;</span>,
+</span></span></code></pre></div><h4 id="gerar-texto">Gerar Texto</h4>
+<p>Agora precisamos criar um novo payload com as informações necessárias para gerar um texto com uma llm, são elas: <code>prompt</code>, <code>model_name</code> e <code>hf_token</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>payload <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;prompt&#34;</span>: <span style="color:#e6db74">&#34;Olá, me fale um pouco sobre a Universidade Federal de Campina Grande (UFCG)&#34;</span>,
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>           <span style="color:#e6db74">&#34;model_name&#34;</span>: <span style="color:#e6db74">&#34;ibm-granite/granite-3.3-8b-instruct&#34;</span>,
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>           <span style="color:#e6db74">&#34;hf_token&#34;</span>: hf_token}
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">/generate&#34;</span>, headers<span style="color:#f92672">=</span>headers, json<span style="color:#f92672">=</span>payload)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span>resp <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(resp<span style="color:#f92672">.</span>content<span style="color:#f92672">.</span>decode())
-</span></span></code></pre></div><h4 id="check-status-and-unload-the-model">Check status and unload the model</h4>
-<p>To check the status and unload the model, we don&rsquo;t need to send anything in the payload—just the header with the API key:</p>
+</span></span></code></pre></div><h4 id="consultar-status-e-descarregar-o-modelo">Consultar status e descarregar o modelo</h4>
+<p>Para consultar o status e descarregar o modelo não precisamos passar conteúdo pelo payload, apenas o header com a API key:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">/status&#34;</span>, headers<span style="color:#f92672">=</span>headers)<span style="color:#f92672">.</span>content
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">/unload_model&#34;</span>, headers<span style="color:#f92672">=</span>headers)
-</span></span></code></pre></div><h2 id="how-to-use-the-api-with-curl-in-cli">How to use the API with curl in CLI</h2>
-<h4 id="generate-api-key-1">Generate API Key</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://&lt;power9_ip_server&gt;:8000/generate_apikey&#34;</span> <span style="color:#ae81ff">\
+</span></span></code></pre></div><h2 id="como-usar-a-api-com-curl-em-cli">Como usar a API com curl em CLI</h2>
+<h4 id="gerar-api-key-1">Gerar API Key</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://&lt;ip_servidor_power9&gt;:8000/generate_apikey&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{&#34;username&#34;: &lt;ldap_user&gt;}&#39;</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{&#34;username&#34;: &lt;usuario_ldap&gt;}&#39;</span>
 </span></span></code></pre></div><ul>
-<li>It is important that the Hugging Face Token is set as an environment variable in the location where the inference will run.</li>
-<li>The user in the username field must be enclosed in quotation marks (&quot; &ldquo;)</li>
-<li>After running the request above, the returned API key should be saved as an environment variable to make future executions easier. To save it, copy the returned API key and run the command:</li>
+<li>É importante que o HuggingFace Token esteja definido como variável de ambiente no local em que esteja executando a inferência.</li>
+<li>O usuário no campo de <code>username</code> deve estar entre aspas (&quot; &ldquo;)</li>
+<li>Após executar a requisição acima, a API key retornada deverá ser salva como variável de ambiente para facilitar as próximas execuções. Para salvar você deve copiar a API key retornada e executar o comando:</li>
 </ul>
-<pre tabindex="0"><code>export API_KEY_P9=&lt;returned_api_key&gt;
-</code></pre><h4 id="load-model-1">Load Model</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://&lt;power9_ip_server&gt;:8000/load_model&#34;</span> <span style="color:#ae81ff">\
+<pre tabindex="0"><code>export API_KEY_P9=&lt;api_key_retornada&gt;
+</code></pre><h4 id="carregar-modelo-1">Carregar Modelo</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://&lt;ip_servidor_power9&gt;:8000/load_model&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;x-api-key: </span>$API_KEY<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;model_name&#34;:&#34;ibm-granite/granite-3.3-8b-instruct&#34;,
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;hf_token&#34;:&#34;&#39;</span><span style="color:#e6db74">&#34;</span>$HUGGINGFACE_TOKEN<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }&#39;</span>
-</span></span></code></pre></div><h4 id="generate-text-1">Generate Text</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://&lt;power9_ip_server&gt;:8000/generate&#34;</span> <span style="color:#ae81ff">\
+</span></span></code></pre></div><h4 id="gerar-texto-1">Gerar Texto</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://&lt;ip_servidor_power9&gt;:8000/generate&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;x-api-key: </span>$API_KEY<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -d <span style="color:#e6db74">&#39;{
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;model_name&#34;: &#34;ibm-granite/granite-3.3-8b-instruct&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;prompt&#34;:&#34;Hello, tell me a little about the Federal University of Campina Grande (UFCG)&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;prompt&#34;:&#34;Olá, me fale um pouco sobre a Universidade Federal de Campina Grande (UFCG)&#34;,
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;hf_token&#34;: &#34;&#39;</span><span style="color:#e6db74">&#34;</span>$HUGGINGFACE_TOKEN<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;&#34;,
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &#34;max_tokens&#34;:50
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }&#39;</span>
-</span></span></code></pre></div><h4 id="check-status-and-unload-the-model-1">Check status and unload the model</h4>
-<p>To check the status and unload the model, we don&rsquo;t need to send anything in the payload—just the header with the API key:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X GET <span style="color:#e6db74">&#34;http://&lt;power9_ip_server&gt;:8000/status&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;x-api-key: </span>$API_KEY<span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://&lt;power9_ip_server&gt;:8000/unload_model&#34;</span> <span style="color:#ae81ff">\
+</span></span></code></pre></div><h4 id="consultar-status-e-descarregar-o-modelo-1">Consultar status e descarregar o modelo</h4>
+<p>Para consultar o status e descarregar o modelo não precisamos passar conteúdo pelo payload, apenas o header com a API key:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X GET <span style="color:#e6db74">&#34;http://&lt;ip_servidor_power9&gt;:8000/status&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;x-api-key: </span>$API_KEY<span style="color:#e6db74">&#34;</span> 
-</span></span></code></pre></div><p>We hope this series has helped clarify the full development and deployment process. The IBM UFCG LLM team is available for questions or suggestions about future improvements.</p>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST <span style="color:#e6db74">&#34;http://&lt;ip_servidor_power9&gt;:8000/unload_model&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: applicatzion/json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;x-api-key: </span>$API_KEY<span style="color:#e6db74">&#34;</span> 
+</span></span></code></pre></div><p>Esperamos que estes posts tenham ajudado a esclarecer todo o processo de desenvolvimento e implantação. O time LLM-IBM-UFCG está à disposição para dúvidas ou sugestões sobre aprimoramentos futuros.</p>
 
 
 </article>
@@ -432,12 +438,12 @@ caption {
     <ul>
         <li>
         
-            <a href="http://localhost:1313/posts/tutorial_power9_pt2_en/"><i class="fa fa-chevron-circle-left"></i> Setting Up the Conda and PyTorch on IBM Power9 Servers</a>
+            <a href="http://localhost:41701/posts/tutorial_power9_pt3_en/"><i class="fa fa-chevron-circle-left"></i> Construindo API para inferências de LLMs em um servidor IBM Power9</a>
         
         </li>
         <li>
         
-            <a href="http://localhost:1313/posts/tutorial_power9_pt3_en/">Building an API for LLM inferences on IBM Power9 servers <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="http://localhost:41701/posts/contribuicao_helm/">Computação@UFCG lidera contribuições do Brasil ao framework HELM-Stanford em parceria com a IBM <i class="fa fa-chevron-circle-right"></i> </a>
         
         </li>
     </ul>
@@ -455,7 +461,7 @@ caption {
     <ul>
         <li>
             <h6>IBM &amp; UFCG - 2025 
-                <a href="http://localhost:1313/index.xml"> </a></h6>
+                <a href="http://localhost:41701/index.xml"> </a></h6>
         </li>
         
         

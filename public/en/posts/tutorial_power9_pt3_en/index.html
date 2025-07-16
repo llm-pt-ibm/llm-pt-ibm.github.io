@@ -1,0 +1,546 @@
+<html lang="en">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=41701&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Building an API for LLM inferences on IBM Power9 servers - LLM IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:41701/en/posts/tutorial_power9_pt3_en/">
+  <meta property="og:site_name" content="LLM IBM UFCG">
+  <meta property="og:title" content="Building an API for LLM inferences on IBM Power9 servers">
+  <meta property="og:description" content="This is the third post in a tutorial series that walks through the process of building an LLM API on an IBM Power9 server. In this stage, we will develop the API using FastAPI and the Transformers library.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-07-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-02T00:00:00+00:00">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="Power9">
+    <meta property="article:tag" content="API">
+    <meta property="article:tag" content="FastAPI">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Building an API for LLM inferences on IBM Power9 servers">
+  <meta name="twitter:description" content="This is the third post in a tutorial series that walks through the process of building an LLM API on an IBM Power9 server. In this stage, we will develop the API using FastAPI and the Transformers library.">
+
+<meta name="generator" content="Hugo 0.147.9">
+    
+    <link rel="icon" href="http://localhost:41701/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:41701/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:41701/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:41701/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:41701/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:41701/css/custom.css'><link rel='stylesheet' href='http://localhost:41701/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:41701/">LLM IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Blog with periodic reports of the tasks performed.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:41701/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+            <li><a href="/posts/tutorial_power9_pt3_en/">Versão em Português</a></li>
+          
+        
+      </ul>
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="/en/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/team">
+                <i class="fa-li fa  fa-lg"></i><span>Team</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Building an API for LLM inferences on IBM Power9 servers</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2025-07-02T00:00:00Z">Jul 2, 2025</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Caio Silva</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/en/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/en/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/en/tags/api">#API</a>
+                
+                    , 
+                    <a href="/en/tags/fastapi">#FastAPI</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="background">Background</h2>
+<p>This is the third post in a tutorial series designed to show step by step how to build a LLM API on a Power9 server, from operating system setup to remote inference execution. We already configured the operating system, NVIDIA drivers, CUDA, and cuDNN in the <a href="/en/posts/tutorial_power9_pt1_en/"><span class="link-personalizado">first post</span></a>, and installed Conda and PyTorch in the <a href="/en/posts/tutorial_power9_pt2_en/"><span class="link-personalizado">second post</span></a>. In this stage, we will build the API using FastAPI and the Transformers library, downloading models from Hugging Face and running the web server with uvicorn.</p>
+<p>The implemented API will support generating API keys, loading models, performing inferences, checking status, and unloading models.</p>
+<p><strong>FastAPI</strong>: a modern web framework for building APIs with Python 3.8+, based on static typing and async programming. It is designed to be fast, easy to use, and robust, making API development more efficient.</p>
+<p><strong>Transformers</strong>: an open-source library developed by Hugging Face. It offers easy and efficient access to a wide collection of state-of-the-art pretrained models for Natural Language Processing (NLP), computer vision, and audio.</p>
+<p><strong>Hugging Face</strong>: Hugging Face is a platform focused on artificial intelligence, known for hosting NLP models and other tasks. The Hugging Face Hub is a collaborative repository where developers and researchers can share, version, and download ready-to-use models, making access and integration easier.</p>
+<p><strong>Uvicorn</strong>: ASGI (Asynchronous Server Gateway Interface) web server. Uvicorn is a high-performance server for asynchronous Python applications.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>This post provides a step-by-step guide to implementing an API that performs LLM inferences.</li>
+<li>We will use FastAPI and Transformers to develop this API and Hugging Face to download the models.</li>
+</ul>
+<h2 id="environment-setup">Environment Setup</h2>
+<h4 id="directory-structure">Directory Structure</h4>
+<p>Start by creating the basic project structure:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>model_api/
+</span></span><span style="display:flex;"><span>├── requirements.txt
+</span></span><span style="display:flex;"><span>├── app/
+</span></span><span style="display:flex;"><span>│   ├── __init__.py
+</span></span><span style="display:flex;"><span>│   ├── main.py
+</span></span><span style="display:flex;"><span>│   ├── schemas.py
+</span></span><span style="display:flex;"><span>│   ├── auth.py
+</span></span><span style="display:flex;"><span>│   ├── model_manager.py
+</span></span><span style="display:flex;"><span>│   ├── utils.py
+</span></span><span style="display:flex;"><span>│   └── apikey_store.json
+</span></span><span style="display:flex;"><span>└── README.md (optional)
+</span></span></code></pre></div><h4 id="requirementstxt-file"><code>requirements.txt</code> File</h4>
+<p>We will use FastAPI and Transformers to build the API. Additionally, we will use uvicorn to run the server, pydantic for input data validation, and torch, which we installed in the <a href="/en/posts/tutorial_power9_pt2_en/">previous tutorial</a>.</p>
+<p>First, we&rsquo;ll install the required libraries and then populate the <code>requirements.txt</code> file. Remember to activate your <code>conda</code> environment if you created one, to ensure proper use of <code>pytorch</code>.</p>
+<pre tabindex="0"><code>conda activate llm_api
+pip install fastapi uvicorn transformers
+</code></pre><p>The <code>requirements.txt</code> file will look like this:</p>
+<p><strong>requirements.txt</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>fastapi&gt;=0.104.0
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>uvicorn&gt;=0.24.0
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>torch&gt;=2.0.0
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>transformers&gt;=4.35.0
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>pydantic&gt;=2.0.0
+</span></span></code></pre></div><h4 id="api-key-storage-file">API Key Storage File</h4>
+<p>The <code>apikey_store.json</code> file will store the generated API keys. We will start with it empty, containing only <code>{}</code>.</p>
+<p><strong>apikey_store.json</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>{}
+</span></span></code></pre></div><h2 id="schemas-and-data-validation">Schemas and Data Validation</h2>
+<p>Schemas are essential for validating the API&rsquo;s input and output data. They ensure data is in the correct format and enable automatic documentation generation.</p>
+<p>We will create the <code>app/schemas.py</code> file containing all the data models. We will define four models: <code>GenerateRequest</code>, <code>LoadModelRequest</code>, <code>ApiKeyResponse</code>, and <code>LDAPUserRequest</code>.</p>
+<p><strong>schemas.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#f92672">from</span> pydantic <span style="color:#f92672">import</span> BaseModel, Field
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Optional
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GenerateRequest</span>(BaseModel):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>    model_name: str <span style="color:#f92672">=</span> Field(<span style="color:#f92672">...</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The name of the model to use for generation.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    prompt: str <span style="color:#f92672">=</span> Field(<span style="color:#f92672">...</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The input text to generate a response for.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    max_tokens: Optional[int] <span style="color:#f92672">=</span> Field(<span style="color:#ae81ff">300</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The maximum length of the generated response.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    temperature: Optional[float] <span style="color:#f92672">=</span> Field(<span style="color:#ae81ff">1.0</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The sampling temperature for generation.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    top_p: Optional[float] <span style="color:#f92672">=</span> Field(<span style="color:#ae81ff">1.0</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The cumulative probability for nucleus sampling.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    hf_token: Optional[str] <span style="color:#f92672">=</span> Field(<span style="color:#66d9ef">None</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The Hugging Face tokenizer to use, if applicable.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoadModelRequest</span>(BaseModel):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    model_name: str <span style="color:#f92672">=</span> Field(<span style="color:#f92672">...</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The name of the model to load.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    device: Optional[str] <span style="color:#f92672">=</span> Field(<span style="color:#e6db74">&#34;cuda&#34;</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The device to load the model on (e.g., &#39;cpu&#39;, &#39;cuda&#39;).&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    hf_token: Optional[str] <span style="color:#f92672">=</span> Field(<span style="color:#66d9ef">None</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The Hugging Face tokenizer to use, if applicable.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ApiKeyResponse</span>(BaseModel):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>    api_key: str <span style="color:#f92672">=</span> Field(<span style="color:#f92672">...</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The API key for accessing the model API.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LDAPUserRequest</span>(BaseModel):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>    username: str <span style="color:#f92672">=</span> Field(<span style="color:#f92672">...</span>, description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The username for LDAP authentication.&#34;</span>)
+</span></span></code></pre></div><ul>
+<li>All classes inherit from <code>pydantic</code>&rsquo;s <code>BaseModel</code>, gaining validation, serialization, and automatic documentation features.</li>
+<li>The <code>Field(...)</code> declaration defines a required field with no default value.</li>
+<li>The <code>Field(value)</code> declaration defines a required field with <code>value</code> as its default.</li>
+<li>The <code>Optional[type]</code> annotation indicates the field is optional but must be of type <code>type</code> if provided.</li>
+</ul>
+<p>With the schemas defined, let&rsquo;s create the file responsible for API Key authentication.</p>
+<h2 id="authentication-and-api-keys">Authentication and API Keys</h2>
+<p>The authentication system protects your API by ensuring that only authorized users can access the endpoints. We will implement a mechanism based on API Keys.</p>
+<p>Let&rsquo;s create the <code>app/auth.py</code> file with all the authentication functionalities.</p>
+<p><strong>auth.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#f92672">import</span> secrets 
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#f92672">from</span> fastapi <span style="color:#f92672">import</span> HTTPException, Request
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>APIKEY_STORE_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;app/apikey_store.json&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_apikeys</span>():
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>        <span style="color:#66d9ef">with</span> open(APIKEY_STORE_FILE, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>            <span style="color:#66d9ef">return</span> json<span style="color:#f92672">.</span>load(f)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">FileNotFoundError</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>        <span style="color:#66d9ef">raise</span> HTTPException(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>            status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">404</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>            detail<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;API keys file not found: </span><span style="color:#e6db74">{</span>APIKEY_STORE_FILE<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">save_apikeys</span>(keys: dict):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>    <span style="color:#66d9ef">with</span> open(APIKEY_STORE_FILE, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>        json<span style="color:#f92672">.</span>dump(keys, f, indent<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_apikey</span>(user:str) <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>    key <span style="color:#f92672">=</span> secrets<span style="color:#f92672">.</span>token_hex(<span style="color:#ae81ff">32</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>    keys <span style="color:#f92672">=</span> load_apikeys()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>    keys[user] <span style="color:#f92672">=</span> key
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>    save_apikeys(keys)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>    <span style="color:#66d9ef">return</span> key
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">verify_apikey</span>(request: Request) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>    apikey <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;x-API-Key&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> apikey:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>        <span style="color:#66d9ef">raise</span> HTTPException(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>            status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">401</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>            detail<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;API key not provided.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>        keys <span style="color:#f92672">=</span> load_apikeys()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span>        <span style="color:#66d9ef">if</span> apikey <span style="color:#f92672">in</span> keys<span style="color:#f92672">.</span>values():
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span>    <span style="color:#66d9ef">except</span> json<span style="color:#f92672">.</span>JSONDecodeError:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span>        <span style="color:#66d9ef">raise</span> HTTPException(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span>        status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">403</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span>        detail<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Invalid API Key&#34;</span>)
+</span></span></code></pre></div><ul>
+<li>The <code>load_apikeys</code> function loads the information stored in the <code>app/apikey_store.json</code> file.</li>
+<li><code>save_apikeys</code> is responsible for saving the content in JSON format.</li>
+<li>The <code>generate_apikey</code> function creates a key for a user and adds it to the dictionary using the provided username as the key.</li>
+<li><code>verify_apikey</code> will be called whenever a request arrives, to perform validation.</li>
+</ul>
+<h2 id="model-and-gpu-manager">Model and GPU Manager</h2>
+<p>The <code>app/model_manager.py</code> is the core of the API, responsible for loading, managing, and running llm. It optimizes GPU/CPU usage and ensures efficient text generation.</p>
+<p><strong>model_manager.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#f92672">import</span> torch 
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#f92672">from</span> transformers <span style="color:#f92672">import</span> AutoTokenizer, AutoModelForCausalLM
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#f92672">from</span> fastapi <span style="color:#f92672">import</span> HTTPException
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#f92672">import</span> gc
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#f92672">from</span> .utils <span style="color:#f92672">import</span> is_model_on_gpu
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>DEVICE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;cuda&#34;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;cpu&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ModelManager</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">__init__</span>(self):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>        self<span style="color:#f92672">.</span>model <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>        self<span style="color:#f92672">.</span>tokenizer <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        self<span style="color:#f92672">.</span>model_name <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_model</span>(self, model_name: str, hf_token:str <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, device: str <span style="color:#f92672">=</span> DEVICE):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>model_name <span style="color:#f92672">!=</span> <span style="color:#66d9ef">None</span> <span style="color:#f92672">and</span> self<span style="color:#f92672">.</span>model_name <span style="color:#f92672">!=</span> model_name:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>            print(<span style="color:#e6db74">&#34;Removing previously loaded model...&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>        self<span style="color:#f92672">.</span>unload_model()        
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Loading model </span><span style="color:#e6db74">{</span>model_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> on device </span><span style="color:#e6db74">{</span>device<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>       
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>model_name <span style="color:#f92672">!=</span> model_name:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>            <span style="color:#66d9ef">try</span>:            
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>                <span style="color:#66d9ef">if</span> hf_token:           
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>                    self<span style="color:#f92672">.</span>tokenizer <span style="color:#f92672">=</span> AutoTokenizer<span style="color:#f92672">.</span>from_pretrained(model_name, token<span style="color:#f92672">=</span>hf_token)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>                    self<span style="color:#f92672">.</span>model <span style="color:#f92672">=</span> AutoModelForCausalLM<span style="color:#f92672">.</span>from_pretrained(model_name, device_map<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;balanced&#34;</span>, token<span style="color:#f92672">=</span>hf_token)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>                    self<span style="color:#f92672">.</span>tokenizer <span style="color:#f92672">=</span> AutoTokenizer<span style="color:#f92672">.</span>from_pretrained(model_name)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>                    self<span style="color:#f92672">.</span>model <span style="color:#f92672">=</span> AutoModelForCausalLM<span style="color:#f92672">.</span>from_pretrained(model_name, device_map<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;balanced&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>                self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>eval()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>                self<span style="color:#f92672">.</span>model_name <span style="color:#f92672">=</span> model_name
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>                print(is_model_on_gpu(self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>hf_device_map, self<span style="color:#f92672">.</span>model_name))
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>                
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>            <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span>                <span style="color:#66d9ef">raise</span> HTTPException(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, detail<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Erro ao carregar modelo: </span><span style="color:#e6db74">{</span>str(e)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;The model </span><span style="color:#e6db74">{</span>model_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> is already loaded.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate</span>(self, model_name:str, hf_token: str, prompt:str, max_tokens:int <span style="color:#f92672">=</span> <span style="color:#ae81ff">300</span>, temperature:float <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>, top_p:float <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>) <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span>        
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>model_name <span style="color:#f92672">!=</span> model_name:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span>            self<span style="color:#f92672">.</span>load_model(model_name, hf_token, device<span style="color:#f92672">=</span>DEVICE)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>model <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span> <span style="color:#f92672">or</span> self<span style="color:#f92672">.</span>tokenizer <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span><span>            <span style="color:#66d9ef">raise</span> HTTPException(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">400</span>, detail<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;No model loaded.&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span><span>            inputs <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>tokenizer(prompt, return_tensors<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pt&#34;</span>)<span style="color:#f92672">.</span>to(self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>device)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span><span>            <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad(): 
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span><span>                outputs <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>generate(<span style="color:#f92672">**</span>inputs, max_new_tokens<span style="color:#f92672">=</span>max_tokens,temperature<span style="color:#f92672">=</span>temperature, top_p<span style="color:#f92672">=</span>top_p, eos_token_id<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>tokenizer<span style="color:#f92672">.</span>eos_token_id)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span><span>            <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>tokenizer<span style="color:#f92672">.</span>decode(outputs[<span style="color:#ae81ff">0</span>], skip_special_tokens<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span><span>            <span style="color:#66d9ef">raise</span> HTTPException(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, detail<span style="color:#f92672">=</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error generating text:</span><span style="color:#e6db74">{</span>str(e)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_status</span>(self) <span style="color:#f92672">-&gt;</span> str:        
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>model <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span><span>            self<span style="color:#f92672">.</span>unload_model()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;No model loaded.&#34;</span>       
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span><span>        <span style="color:#66d9ef">return</span> is_model_on_gpu(self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>hf_device_map, self<span style="color:#f92672">.</span>model_name)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unload_model</span>(self):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span><span>        self<span style="color:#f92672">.</span>model <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span><span>        self<span style="color:#f92672">.</span>tokenizer <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span><span>        old_model <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>model_name <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>model_name <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span><span>        self<span style="color:#f92672">.</span>model_name <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span><span>        gc<span style="color:#f92672">.</span>collect()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span><span>        torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>empty_cache()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69</span><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Model </span><span style="color:#e6db74">{</span>old_model<span style="color:#e6db74">}</span><span style="color:#e6db74"> successfully unloaded.&#34;</span> <span style="color:#66d9ef">if</span> old_model <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;No model loaded to unload.&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71</span><span>manager <span style="color:#f92672">=</span> ModelManager()
+</span></span></code></pre></div><ul>
+<li>The <code>load_model</code> function loads a new model into memory, removing any previously loaded model.</li>
+<li><code>generate</code> is the main function of the API, responsible for performing model inference. It allows adjusting the parameters: temperature, top_p, and max_tokens.</li>
+<li><code>get_status</code> reports whether there is a loaded model and whether it is on the GPU or CPU.</li>
+<li>The <code>unload_model</code> function removes the model from memory, clears the CUDA cache, and invokes Python’s garbage collector to avoid leftovers that could interfere with future loads.</li>
+</ul>
+<h2 id="fastapi-api-endpoints">FastAPI API Endpoints</h2>
+<p>The <code>app/main.py</code> file is where all the components come together. In it, we define all the endpoints and the API’s routing logic.</p>
+<p><strong>main.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#f92672">from</span> fastapi <span style="color:#f92672">import</span> FastAPI, Request, HTTPException, Depends
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#f92672">from</span> fastapi.responses <span style="color:#f92672">import</span> JSONResponse
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#f92672">from</span> app <span style="color:#f92672">import</span> schemas, model_manager, auth
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>app <span style="color:#f92672">=</span> FastAPI()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">require_api_key</span>(request: Request) <span style="color:#f92672">-&gt;</span> schemas<span style="color:#f92672">.</span>LDAPUserRequest:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    user <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> auth<span style="color:#f92672">.</span>verify_apikey(request)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> user:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        <span style="color:#66d9ef">raise</span> HTTPException(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">401</span>, detail<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Invalid API Key&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#66d9ef">return</span> user
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span><span style="color:#a6e22e">@app.post</span>(<span style="color:#e6db74">&#34;/generate_apikey&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_apikey</span>(payload: schemas<span style="color:#f92672">.</span>LDAPUserRequest) <span style="color:#f92672">-&gt;</span> JSONResponse:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    key <span style="color:#f92672">=</span> auth<span style="color:#f92672">.</span>generate_apikey(payload<span style="color:#f92672">.</span>username)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    <span style="color:#66d9ef">return</span> JSONResponse(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>, content<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;api_key&#34;</span>: key})
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span><span style="color:#a6e22e">@app.post</span>(<span style="color:#e6db74">&#34;/load_model&#34;</span>, dependencies<span style="color:#f92672">=</span>[Depends(require_api_key)])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_model</span>(payload: schemas<span style="color:#f92672">.</span>LoadModelRequest) <span style="color:#f92672">-&gt;</span> JSONResponse:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>        model_manager<span style="color:#f92672">.</span>manager<span style="color:#f92672">.</span>load_model(payload<span style="color:#f92672">.</span>model_name, payload<span style="color:#f92672">.</span>hf_token, payload<span style="color:#f92672">.</span>device)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>        <span style="color:#66d9ef">return</span> JSONResponse(content<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Model </span><span style="color:#e6db74">{</span>payload<span style="color:#f92672">.</span>model_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> loaded successfully.&#34;</span>})
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>        <span style="color:#66d9ef">raise</span> HTTPException(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, content<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;error&#34;</span>: str(e)})
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span><span style="color:#a6e22e">@app.post</span>(<span style="color:#e6db74">&#34;/generate&#34;</span>, dependencies<span style="color:#f92672">=</span>[Depends(require_api_key)])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate</span>(payload: schemas<span style="color:#f92672">.</span>GenerateRequest)<span style="color:#f92672">-&gt;</span> JSONResponse:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>        result <span style="color:#f92672">=</span> model_manager<span style="color:#f92672">.</span>manager<span style="color:#f92672">.</span>generate(payload<span style="color:#f92672">.</span>model_name, payload<span style="color:#f92672">.</span>hf_token,payload<span style="color:#f92672">.</span>prompt, payload<span style="color:#f92672">.</span>max_tokens, payload<span style="color:#f92672">.</span>temperature, payload<span style="color:#f92672">.</span>top_p)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>        <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;result&#34;</span>: result}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>        <span style="color:#66d9ef">return</span> JSONResponse(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, content<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;error&#34;</span>: str(e)})
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span><span style="color:#a6e22e">@app.get</span>(<span style="color:#e6db74">&#34;/status&#34;</span>, dependencies<span style="color:#f92672">=</span>[Depends(require_api_key)])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">status</span>()<span style="color:#f92672">-&gt;</span> JSONResponse:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span>    str_status <span style="color:#f92672">=</span> model_manager<span style="color:#f92672">.</span>manager<span style="color:#f92672">.</span>get_status()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span>    <span style="color:#66d9ef">return</span> JSONResponse(content<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;status&#34;</span>: str_status})
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span><span style="color:#a6e22e">@app.post</span>(<span style="color:#e6db74">&#34;/unload_model&#34;</span>, dependencies<span style="color:#f92672">=</span>[Depends(require_api_key)])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unload_model</span>() <span style="color:#f92672">-&gt;</span> JSONResponse:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span>        str_unload <span style="color:#f92672">=</span> model_manager<span style="color:#f92672">.</span>manager<span style="color:#f92672">.</span>unload_model()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span>        <span style="color:#66d9ef">return</span> JSONResponse(content<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;message&#34;</span>:str_unload})
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span><span>        <span style="color:#66d9ef">raise</span> HTTPException(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">500</span>, content<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;error&#34;</span>: str(e)})
+</span></span></code></pre></div><ul>
+<li>The <code>require_api_key</code> function checks the API Key on each request and returns the authenticated user or raises a 401 error.</li>
+<li><code>generate_apikey</code> creates and returns a new API key for the specified user.</li>
+<li><code>load_model</code> loads the specified model. If needed, it also accepts a Hugging Face token.</li>
+<li>The <code>generate</code> function makes the model perform inference using the given prompt and parameters.</li>
+<li>Calling the <code>status</code> endpoint returns the current status of the model manager.</li>
+<li><code>unload_model</code> unloads the currently loaded model and returns a success message if completed properly.</li>
+</ul>
+<h2 id="utilspy-file"><code>utils.py</code> File</h2>
+<p>The <code>app/utils.py</code> file contains the function that checks whether the loaded model is fully or partially on the GPU, or if it was loaded on the CPU.</p>
+<p><strong>utils.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_model_on_gpu</span>(hf_device_map: dict, model_name: str) <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">in</span> hf_device_map<span style="color:#f92672">.</span>keys() <span style="color:#f92672">and</span> hf_device_map[<span style="color:#e6db74">&#39;&#39;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;cpu&#39;</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Model </span><span style="color:#e6db74">{</span>model_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> fully loaded on CPU.&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>    <span style="color:#66d9ef">elif</span> <span style="color:#e6db74">&#39;cpu&#39;</span> <span style="color:#f92672">in</span> hf_device_map<span style="color:#f92672">.</span>values():
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Some layers of the model </span><span style="color:#e6db74">{</span>model_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> are loaded on the CPU.&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Model </span><span style="color:#e6db74">{</span>model_name<span style="color:#e6db74">}</span><span style="color:#e6db74"> fully loaded on GPU.&#34;</span>
+</span></span></code></pre></div><h2 id="running-the-api">Running the API</h2>
+<p>To run the API with <code>uvicorn</code>, simply execute a command specifying the host and port for the service to start.</p>
+<pre tabindex="0"><code>uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+</code></pre><ul>
+<li>
+<p><code>app:main</code> refers to the <code>app/main.py</code> file, which connects all components and handles user requests.</p>
+</li>
+<li>
+<p><code>--host 0.0.0.0</code> sets the IP address on which the Uvicorn server will listen. The value <code>0.0.0.0</code> allows the server to be accessible from any network interface on the Power9 machine.</p>
+</li>
+<li>
+<p><code>--port 8000</code> specifies the port on which the server will listen for requests.</p>
+</li>
+<li>
+<p><code>--reload</code> is a flag for development use. It automatically reloads the server whenever changes are made.</p>
+</li>
+</ul>
+<p>BBy following this guide, you&rsquo;ll have a working API capable of running LLM inference using models downloaded from Hugging Face. In the <a href="/en/posts/tutorial_power9_pt4_en/"><span class="link-personalizado">next tutorial</span></a>, we will show how to send requests to the API using curl and Python.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:41701/en/posts/tutorial_power9_pt2_en/"><i class="fa fa-chevron-circle-left"></i> Setting Up the Conda and PyTorch on IBM Power9 Servers</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:41701/en/posts/tutorial_power9_pt4_en/">LLMs Inference API on IBM Power9 Server <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:41701/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>

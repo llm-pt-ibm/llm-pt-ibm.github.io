@@ -4,13 +4,14 @@ theme = 'Kiera'
 title = 'LLM IBM UFCG'
 pagination.pagerSize = 10
 copyright = "IBM & UFCG - 2025"
+defaultContentLanguage = "pt"
+defaultContentLanguageInSubdir = false
 
 [sitemap]
   changefreq = 'hourly'
   priority = 0.8
 
 [params]
-  tagline = "Blog com relatórios periódicos das tarefas realizadas."
   disableDarkModeCSS = true
   customCSS = ["css/custom.css", "css/font.css"]
   site_logo = "/site_logo.png"
@@ -19,22 +20,6 @@ copyright = "IBM & UFCG - 2025"
     favicon16x16 = '/favicon-16x16.png'
     favicon32x32 = '/favicon-32x32.png'
     appletouchicon = '/apple-touch-icon.png'
-
-[menu]
-  [[menu.main]]
-    name = "Equipe"
-    url = "/team/"
-    weight = 3
-
-  [[menu.main]]
-    name = "Tags"
-    url = "/tags"
-    weight = 2
-
-  [[menu.main]]
-    name = "Início"
-    url = "/"
-    weight = 1
 
 [taxonomies]
   author = "authors"
@@ -53,3 +38,47 @@ copyright = "IBM & UFCG - 2025"
 
 [outputs]
   home = ["HTML", "RSS", "SITEMAP", "ROBOTS"]
+
+
+[languages]
+  [languages.pt]
+    languageName = "Versão em Português"
+    weight = 1
+    contentDir = "content/pt"
+    [languages.pt.params]
+      tagline = "Blog com relatórios periódicos das tarefas realizadas."
+    
+    [languages.pt.menu]
+      [[languages.pt.menu.main]]
+        name = "Equipe"
+        url = "team/"
+        weight = 3
+      [[languages.pt.menu.main]]
+        name = "Tags"
+        url = "/tags"
+        weight = 2
+      [[languages.pt.menu.main]]
+        name = "Início"
+        url = "/"
+        weight = 1
+
+  [languages.en]
+    languageName = "English Version"
+    weight = 2
+    contentDir = "content/en/"
+    [languages.en.params]
+      tagline = "Blog with periodic reports of the tasks performed."
+
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        name = "Team"
+        url = "/en/team"
+        weight = 3
+      [[languages.en.menu.main]]
+        name = "Tags"
+        url = "/en/tags"
+        weight = 2
+      [[languages.en.menu.main]]
+        name = "Home"
+        url = "/en/"
+        weight = 1

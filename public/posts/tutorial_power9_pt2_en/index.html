@@ -1,21 +1,23 @@
-<!doctype html>
+<html lang="pt">
 
-<html lang="pt-br">
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=41701&amp;path=livereload" data-no-instant defer></script><!doctype html>
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-  <title>Setting Up the Conda and PyTorch on IBM Power9 Servers - LLM IBM UFCG</title>
+<html lang="pt">
+
+<head>
+  <title>Configurando Conda e PyTorch em um servidor IBM Power9 - LLM IBM UFCG</title>
   <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
-<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/tutorial_power9_pt2_en/">
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:41701/posts/tutorial_power9_pt2_en/">
   <meta property="og:site_name" content="LLM IBM UFCG">
-  <meta property="og:title" content="Setting Up the Conda and PyTorch on IBM Power9 Servers">
-  <meta property="og:description" content="This post is part of a tutorial series aimed at building a Language Model API on Power9 servers. In this step, we’ll set up the Conda package manager and the PyTorch library.">
-  <meta property="og:locale" content="pt_br">
+  <meta property="og:title" content="Configurando Conda e PyTorch em um servidor IBM Power9">
+  <meta property="og:description" content="Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o gerenciador de pacotes Conda e a biblioteca PyTorch.">
+  <meta property="og:locale" content="pt">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-06-29T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-06-29T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-06-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-06-30T00:00:00+00:00">
     <meta property="article:tag" content="LLM">
     <meta property="article:tag" content="Power9">
     <meta property="article:tag" content="Conda">
@@ -23,31 +25,31 @@
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Setting Up the Conda and PyTorch on IBM Power9 Servers">
-  <meta name="twitter:description" content="This post is part of a tutorial series aimed at building a Language Model API on Power9 servers. In this step, we’ll set up the Conda package manager and the PyTorch library.">
+  <meta name="twitter:title" content="Configurando Conda e PyTorch em um servidor IBM Power9">
+  <meta name="twitter:description" content="Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o gerenciador de pacotes Conda e a biblioteca PyTorch.">
 
 <meta name="generator" content="Hugo 0.147.9">
     
-    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://localhost:41701/favicon.ico" type="image/x-icon">
   
   
-    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="http://localhost:41701/favicon-16x16.png" sizes="16x16" type="image/png">
   
   
-    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="http://localhost:41701/favicon-32x32.png" sizes="32x32" type="image/png">
   
   
-    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="http://localhost:41701/apple-touch-icon.png">
   
 
   <link rel="stylesheet" href="/css/normalize.min.css" />
-  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="http://localhost:41701/fontawesome/css/all.min.css" />
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
   
   
   <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
-  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <link rel='stylesheet' href='http://localhost:41701/css/custom.css'><link rel='stylesheet' href='http://localhost:41701/css/font.css'>
   <style>
     .site-header {
       display: flex;
@@ -106,7 +108,7 @@
       <div class="site-header">
         <div class="title-tagline-wrapper">
           <h1>
-            <a href="http://localhost:1313/">LLM IBM UFCG</a>
+            <a href="http://localhost:41701/">LLM IBM UFCG</a>
           </h1>
           
           <p class="tagline"><em>Blog com relatórios periódicos das tarefas realizadas.</em></p>
@@ -115,7 +117,7 @@
         <div class="logo-wrapper">
           
 <div class="site_logo featured_image">
-    <a href="http://localhost:1313/">
+    <a href="http://localhost:41701/">
         <img class="" 
              src="/site_logo.png">
     </a>
@@ -126,6 +128,9 @@
       </div>
 
       <ul id="social-media">
+            <li><a href="/en/posts/tutorial_power9_pt2_en/">English Version</a></li>
+          
+        
       </ul>
     </header>
 
@@ -161,14 +166,14 @@
 
 <article>
 
-    <h1>Setting Up the Conda and PyTorch on IBM Power9 Servers</h1>
+    <h1>Configurando Conda e PyTorch em um servidor IBM Power9</h1>
 
     
       <aside>
     <ul>
         
         <li>
-            <time class="post-date" datetime="2025-06-29T00:00:00Z">Jun 29, 2025</time>
+            <time class="post-date" datetime="2025-06-30T00:00:00Z">Jun 30, 2025</time>
         </li>
         
         
@@ -211,62 +216,62 @@
 
     
 
-    <h2 id="context">Context</h2>
-<p>This is the second post in a tutorial series on how to build a Language Model API on an IBM Power9 server, covering everything from setting up the operating system to having the API running remote inference. The <a href="/posts/tutorial_power9_pt1_en/">first post</a> covers installing the OS and configuring NVIDIA drivers, CUDA, and CUDNN. In this step, we&rsquo;ll show how to set up the Conda package manager and the PyTorch library.</p>
-<p><strong>Conda</strong>: Conda is an open-source, cross-platform package and environment management system. It&rsquo;s like a &ldquo;toolbox&rdquo; for data scientists and developers to organize their projects.</p>
-<p><strong>PyTorch</strong>: PyTorch is an open-source machine learning library developed primarily by Facebook AI Research (FAIR). It&rsquo;s especially popular for building deep learning applications, a subfield of machine learning inspired by how the human brain works.</p>
-<h2 id="tldr">TLDR</h2>
+    <h2 id="contexto">Contexto</h2>
+<p>Este é o segundo post de uma série de tutoriais que vamos mostrar o passo-a-passo de como construir uma API de Modelos de Linguagem em um servidor Power9, desde da configuração do Sistema Operacional, até a API executando inferências de forma remota. O <a href="/posts/tutorial_power9_pt1_en/"><span class="link-personalizado">primeiro post</span></a> mostra como instalar o S.O e configurar drivers NVIDIA, CUDA e CUDNN. Nesta etapa do tutorial vamos mostrar a configuração do gerenciador de pacotes Conda e da biblioteca PyTorch</p>
+<p><strong>Conda</strong>: Conda é um sistema de gerenciamento de pacotes e ambientes de código aberto e multiplataforma. Ele funciona como uma &ldquo;caixa de ferramentas&rdquo; para cientistas de dados e desenvolvedores, ajudando a organizar seus projetos.</p>
+<p><strong>PyTorch</strong>: PyTorch é uma biblioteca de código aberto para aprendizado de máquina, desenvolvida principalmente pelo Facebook AI Research (FAIR). Ela é especialmente popular para o desenvolvimento de aplicações de deep learning (aprendizado profundo), um subcampo do aprendizado de máquina que se inspira no funcionamento do cérebro humano.</p>
+<h2 id="tldr">TL;DR</h2>
 <ul>
-<li>This post provides a step-by-step guide to installing Conda and PyTorch.</li>
-<li>The main challenge is finding compatible versions for the Power9 machine architecture.</li>
+<li>Este post apresenta o passo-a-passo para a instalação do Conda e PyTorch.</li>
+<li>O desafio maior é encontrar versões compatíveis com a arquitetura das máquinas Power.</li>
 </ul>
-<h2 id="setting-up-the-conda">Setting up the Conda</h2>
-<p>We&rsquo;ll start with installing <strong>Conda</strong>. On Power systems, the architecture used is <code>ppc64le</code> (PowerPC 64-bit little-endian), so it&rsquo;s essential to download the version for this architecture. We&rsquo;ll use <strong>miniconda</strong>, a lighter option that&rsquo;s better suited for custom setups like the Power9 server.</p>
+<h2 id="configurando-conda">Configurando Conda</h2>
+<p>Vamos começar com a instalação do <strong>Conda</strong>. Em sistemas Power, a arquitetura usada é a <code>ppc64le</code> (PowerPC 64 bits little-endian), por isso é essencial que a versão baixada seja para esta arquitetura. Para isso, vamos utilizar o <strong>miniconda</strong>, uma versão mais leve e direta para setups customizados como o servidor Power9.</p>
 <ol>
-<li>To download and install the latest version of Miniconda:</li>
+<li>Para baixar e instalar a versão mais atualizada do miniconda:</li>
 </ol>
 <pre tabindex="0"><code>sudo wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-ppc64le.sh
 bash ~/Miniconda3-latest-Linux-ppc64le.sh
 </code></pre><ol start="2">
-<li>Check if Conda was activated automatically:</li>
+<li>Verifique se a instalação ativou o conda automático:</li>
 </ol>
 <pre tabindex="0"><code>conda -–version
-</code></pre><p>If it didn&rsquo;t start automatically, you&rsquo;ll need to activate it.</p>
+</code></pre><p>Caso não tenha iniciado automaticamente, o Conda precisa ser ativado.</p>
 <ol start="3">
-<li>To ensure it&rsquo;s automatically activated with each new connection, we will write the command into your <code>.bashrc</code> (or <code>.zshrc</code>) file.</li>
+<li>Para  não precisar ativar sempre que realizar uma nova conexão, vamos escrever o comando no bashrc (ou zshrc):</li>
 </ol>
 <pre tabindex="0"><code>echo &#39;source ~/miniconda3/etc/profile.d/conda.sh&#39; &gt;&gt; ~/.bashrc
 source ~/.bashrc
-</code></pre><p>Check again with the command:</p>
-<pre tabindex="0"><code>conda -–version
-</code></pre><p>Expected output looks like: <code>conda 23.10.0</code></p>
-<h2 id="installing-and-configuring-the-pytorch-library">Installing and configuring the PyTorch library</h2>
-<p>There are no official builds or Conda/PyPi wheels with full support for the <strong>ppc64le</strong> architecture. To install PyTorch, you’ll need to build it manually.</p>
-<h4 id="optional-creating-a-conda-virtual-environment">(Optional) Creating a Conda virtual environment</h4>
-<p>It’s recommended to create a dedicated virtual environment to install PyTorch in isolation.</p>
+</code></pre><p>Verifique novamente com o comando:</p>
+<pre tabindex="0"><code>conda --version
+</code></pre><p>A saída esperada é algo semelhante a: <code>conda 23.10.0</code></p>
+<h2 id="instalando-e-configurando-a-biblioteca-pytorch">Instalando e configurando a biblioteca PyTorch</h2>
+<p>Não existem builds oficiais ou wheels Conda/PyPi com suporte completo para a arquitetura ppc64le, sendo assim, para instalar o PyTorch precisamos buildar manualmente.</p>
+<h4 id="opcional-criação-de-ambiente-virtual-conda">(Opcional) Criação de ambiente virtual Conda</h4>
+<p>Para iniciarmos a instalação é aconselhável criar um ambiente virtual para instalar o pytorch apenas nele.</p>
 <ol>
-<li>To create and activate the virtual environment, run:</li>
+<li>Para criar e ativar o ambiente virtual executamos os comandos:</li>
 </ol>
 <pre tabindex="0"><code>conda create -y -n api_llm python=3.10
 conda activate api_llm
-</code></pre><h4 id="installing-prerequisites">Installing prerequisites</h4>
-<p>We need to install some packages required to properly build PyTorch.</p>
+</code></pre><h4 id="instalando-pré-requisitos">Instalando pré-requisitos</h4>
+<p>Precisamos instalar alguns pacotes necessários para realizar o build do PyTorch da forma correta.</p>
 <ol>
-<li>First, install the packages using the following commands:</li>
+<li>Inicialmente, vamos instalar os pacotes com os seguintes comandos:</li>
 </ol>
 <pre tabindex="0"><code>conda install -y -c conda-forge openblas libblas cmake ninja python3-devel gcc-c++ rust cargo
-</code></pre><p>CMake (the build system used by PyTorch) dropped support for scripts declaring compatibility with older versions (&lt;3.5). To address this, we need to install a version of cmake &lt;3.5 using pip.</p>
+</code></pre><p>O CMake (sistema de build utilizado pelo PyTorch) removeu o suporte a scripts que declaram compatibilidade com versões antigas (&lt;3.5). Para resolver isso, precisamos instalar via pip uma versão do cmake &lt;3.5.</p>
 <ol start="2">
-<li>Run the command:</li>
+<li>Executamos o comando:</li>
 </ol>
 <pre tabindex="0"><code>pip install cmake==3.27.7
-</code></pre><p>To make sure the correct version was installed, run the command:</p>
-<pre tabindex="0"><code>cmake --version 
-</code></pre><p>Expected output: <code>cmake version 3.27.7</code></p>
-<h4 id="building-pytorch">Building PyTorch</h4>
-<p>Now let&rsquo;s start the <strong>PyTorch</strong> build process.</p>
+</code></pre><p>Para garantir que a versão correta foi instalada, executamos o comando:</p>
+<pre tabindex="0"><code>cmake --version
+</code></pre><p>A saída esperada é: <code>cmake version 3.27.7</code></p>
+<h4 id="build-do-pytorch">Build do Pytorch</h4>
+<p>Agora vamos iniciar o processo de build do <strong>PyTorch</strong>.</p>
 <ol>
-<li>The first step is to clone the repository and set it up to install version 2.6.0:</li>
+<li>O primeiro passo é clonar o repositório e configurar para instalar a versão 2.6.0:</li>
 </ol>
 <pre tabindex="0"><code>git clone --recursive https://github.com/pytorch/pytorch
 cd pytorch
@@ -274,56 +279,56 @@ git checkout v2.6.0
 git submodule sync 
 git submodule update --init --recursive 
 </code></pre><ol start="2">
-<li>To install the required packages via pip, run the following command:</li>
+<li>Para instalar os pacotes necessários via pip executamos o seguinte comando:</li>
 </ol>
 <pre tabindex="0"><code>pip install -r requirements.txt
 </code></pre><ol start="3">
-<li>And finally, to build PyTorch, run Python’s setup.py:</li>
+<li>E, finalmente, para realizar o build do PyTorch, executamos o setup.py do python:</li>
 </ol>
 <pre tabindex="0"><code>sudo USE_CUDA=1 USE_DISTRIBUTED=1 USE_NCCL=1 USE_GLOO=1 USE_CUDNN=1 python setup.py install
-</code></pre><p>The build process usually takes a while, around 15 minutes.</p>
+</code></pre><p>O processo de build geralmente demora um tempo considerável, cerca de 15 minutos.</p>
 <ol start="4">
-<li>To check if everything worked correctly, create a file named <code>test_torch.py</code></li>
+<li>Para testar se tudo ocorreu certo, vamos criar um arquivo chamado <code>test_torch.py</code></li>
 </ol>
 <pre tabindex="0"><code>nano test_torch.py
-</code></pre><p>This file should contain the following lines:</p>
+</code></pre><p>Esse arquivo deve conter as seguintes linhas:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#f92672">import</span> torch
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>print(torch<span style="color:#f92672">.</span>__version__)
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>print(<span style="color:#e6db74">&#34;CUDA available:&#34;</span>, torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available())
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>print(<span style="color:#e6db74">&#34;Number of GPUs:&#34;</span>, torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>device_count())
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>print(<span style="color:#e6db74">&#34;GPU name:&#34;</span>, torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>get_device_name(<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>print(<span style="color:#e6db74">&#34;CUDA disponível:&#34;</span>, torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available())
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>print(<span style="color:#e6db74">&#34;Número de GPUs:&#34;</span>, torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>device_count())
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>print(<span style="color:#e6db74">&#34;Nome da GPU:&#34;</span>, torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>get_device_name(<span style="color:#ae81ff">0</span>))
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>rand(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>cuda()
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>rand(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)<span style="color:#f92672">.</span>cuda()
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>print(<span style="color:#e6db74">&#34;Sum on GPU:&#34;</span>, (x <span style="color:#f92672">+</span> y))
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>print(<span style="color:#e6db74">&#34;cuDNN available:&#34;</span>, torch<span style="color:#f92672">.</span>backends<span style="color:#f92672">.</span>cudnn<span style="color:#f92672">.</span>is_available())
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>print(<span style="color:#e6db74">&#34;C extensions loaded:&#34;</span>, torch<span style="color:#f92672">.</span>_C<span style="color:#f92672">.</span>_cuda_getDeviceCount() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
-</span></span></code></pre></div><p>When you run this file, you’ll check:</p>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>print(<span style="color:#e6db74">&#34;Soma na GPU:&#34;</span>, (x <span style="color:#f92672">+</span> y))
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>print(<span style="color:#e6db74">&#34;cuDNN disponível:&#34;</span>, torch<span style="color:#f92672">.</span>backends<span style="color:#f92672">.</span>cudnn<span style="color:#f92672">.</span>is_available())
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>print(<span style="color:#e6db74">&#34;Extensões C carregadas:&#34;</span>, torch<span style="color:#f92672">.</span>_C<span style="color:#f92672">.</span>_cuda_getDeviceCount() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><p>Ao executar esse arquivo, saberemos:</p>
 <ul>
-<li>Installed PyTorch version</li>
-<li>CUDA availability</li>
-<li>Number of available GPUs</li>
-<li>GPU name on the Power9 server</li>
-<li>Whether GPU usage is working correctly</li>
-<li>CUDNN availability</li>
-<li>Whether the .so files were compiled correctly</li>
+<li>Versão instalada do pytorch</li>
+<li>Disponibilidade do CUDA</li>
+<li>Quantidade de GPUs disponíveis</li>
+<li>Nome da GPU no servidor Power9</li>
+<li>Se a utilização da GPU está acontecendo de forma correta</li>
+<li>Disponibilidade do CUDNN</li>
+<li>Se os arquivos .so foram compilados corretamentes</li>
 </ul>
-<p>This script simply verifies some CUDA and PyTorch informations and performs a basic addition operation using GPU tensors.</p>
+<p>Esse arquivo apenas checa algumas informações do CUDA e PyTorch e executa uma operação de soma utilizando tensores em GPU.</p>
 <ol start="5">
-<li>Run the file with the command:</li>
+<li>Vamos executar o arquivo com o comando:</li>
 </ol>
 <pre tabindex="0"><code>python test_gpu.py
-</code></pre><p>Expected output should look something like:</p>
+</code></pre><p>A saída deve ser algo semelhante a:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>2.6.0a0+git1eba9b3
-</span></span><span style="display:flex;"><span>CUDA available: True
-</span></span><span style="display:flex;"><span>Number of GPUs: <span style="color:#ae81ff">4</span>
-</span></span><span style="display:flex;"><span>GPU name: Tesla V100-SXM2-16GB
-</span></span><span style="display:flex;"><span>Sum on GPU: tensor<span style="color:#f92672">([[</span>1.9163, 1.2208, 0.5998<span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>CUDA disponível: True
+</span></span><span style="display:flex;"><span>Número de GPUs: <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>Nome da GPU: Tesla V100-SXM2-16GB
+</span></span><span style="display:flex;"><span>Soma na GPU: tensor<span style="color:#f92672">([[</span>1.9163, 1.2208, 0.5998<span style="color:#f92672">]</span>,
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span>1.7962, 0.6040, 1.3943<span style="color:#f92672">]</span>,
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">[</span>0.9536, 0.8010, 0.0668<span style="color:#f92672">]]</span>, device<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;cuda:0&#39;</span><span style="color:#f92672">)</span>
-</span></span><span style="display:flex;"><span>cuDNN available: True
-</span></span><span style="display:flex;"><span>C extensions loaded: True
-</span></span></code></pre></div><p>Keep in mind that the output may vary depending on the number and model of GPUs, as well as the tensor sums (due to randomness). What matters is that the boolean outputs in the script return <code>True</code>.</p>
-<p>With this, PyTorch is installed and ready to use. In the next tutorial, we’ll run the first Language Model inference on the Power9 server.</p>
+</span></span><span style="display:flex;"><span>cuDNN disponível: True
+</span></span><span style="display:flex;"><span>Extensões C carregadas: True
+</span></span></code></pre></div><p>É importante lembrar que as saídas podem ser diferentes em relação ao número e modelo das GPUs e a soma de tensores (devido a aleatoriedade). É importante que as saídas booleanas do código que executamos tenham resultados igual a <code>True</code>.</p>
+<p>Com isso, a biblioteca PyTorch está instalada e configurada para ser utilizada. No <a href="/posts/tutorial_power9_pt3_en/"><span class="link-personalizado">próximo tutorial</span></a> vamos realizar a primeira inferência de um Modelo de Linguagem no servidor Power9.</p>
 
 
 </article>
@@ -333,12 +338,12 @@ git submodule update --init --recursive
     <ul>
         <li>
         
-            <a href="http://localhost:1313/posts/tutorial_power9_pt1_en/"><i class="fa fa-chevron-circle-left"></i> Setting Up the OS, NVIDIA Drivers, CUDA, and cuDNN on IBM Power 9 Servers</a>
+            <a href="http://localhost:41701/posts/tutorial_power9_pt1_en/"><i class="fa fa-chevron-circle-left"></i> Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9</a>
         
         </li>
         <li>
         
-            <a href="http://localhost:1313/posts/tutorial_power9_pt4_en/">LLMs Inference API on IBM Power9 Server <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="http://localhost:41701/posts/tutorial_power9_pt3_en/">Construindo API para inferências de LLMs em um servidor IBM Power9 <i class="fa fa-chevron-circle-right"></i> </a>
         
         </li>
     </ul>
@@ -356,7 +361,7 @@ git submodule update --init --recursive
     <ul>
         <li>
             <h6>IBM &amp; UFCG - 2025 
-                <a href="http://localhost:1313/index.xml"> </a></h6>
+                <a href="http://localhost:41701/index.xml"> </a></h6>
         </li>
         
         

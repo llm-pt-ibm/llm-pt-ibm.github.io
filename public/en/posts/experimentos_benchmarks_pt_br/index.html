@@ -1,0 +1,326 @@
+<html lang="en">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=41701&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Evaluating Small-Scale LLMs (up to 8B) on PT-BR Benchmarks - LLM IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:41701/en/posts/experimentos_benchmarks_pt_br/">
+  <meta property="og:site_name" content="LLM IBM UFCG">
+  <meta property="og:title" content="Evaluating Small-Scale LLMs (up to 8B) on PT-BR Benchmarks">
+  <meta property="og:description" content="In this post, we present the results of evaluating small-scale LLMs on sentiment analysis and MQA tasks in Brazilian Portuguese, using the HELM framework.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-06-02T00:00:00+00:00">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="HELM">
+    <meta property="article:tag" content="PT-BR">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Evaluating Small-Scale LLMs (up to 8B) on PT-BR Benchmarks">
+  <meta name="twitter:description" content="In this post, we present the results of evaluating small-scale LLMs on sentiment analysis and MQA tasks in Brazilian Portuguese, using the HELM framework.">
+
+<meta name="generator" content="Hugo 0.147.9">
+    
+    <link rel="icon" href="http://localhost:41701/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:41701/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:41701/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:41701/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:41701/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:41701/css/custom.css'><link rel='stylesheet' href='http://localhost:41701/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:41701/">LLM IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Blog with periodic reports of the tasks performed.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:41701/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+            <li><a href="/posts/experimentos_benchmarks_pt_br/">Versão em Português</a></li>
+          
+        
+      </ul>
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="/en/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/team">
+                <i class="fa-li fa  fa-lg"></i><span>Team</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Evaluating Small-Scale LLMs (up to 8B) on PT-BR Benchmarks</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2025-06-02T00:00:00Z">Jun 2, 2025</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Lucas Pereira</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/en/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/en/tags/helm">#HELM</a>
+                
+                    , 
+                    <a href="/en/tags/pt-br">#PT-BR</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="background">Background</h2>
+<p>This is the first of two posts in this series, aimed at providing a summary of the investigation we conducted using the <a href="https://github.com/stanford-crfm/helm" rel="external"><span class="link-personalizado">HELM</span></a> (<em>Holistic Evaluation of Language Models</em>) evaluation framework to assess the <a href="https://huggingface.co/ibm-granite" rel="external"><span class="link-personalizado">Granite</span></a> family of models, the <a href="https://huggingface.co/meta-llama/Llama-3.1-8B" rel="external"><span class="link-personalizado">Llama-3.1-8B</span></a> model, and the <a href="https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B" rel="external"><span class="link-personalizado">DeepSeek-R1-Distill-Llama-3.1-8B</span></a> model. The evaluations cover both Portuguese-language benchmarks and code generation tasks. In this first part, the focus is on evaluating model performance in Brazilian Portuguese (PT-BR) for <strong>sentiment analysis</strong> and <strong>MQA</strong> (<em>Multiple-Choice Question Answering</em>) tasks. The second part, to be published soon, will present the evaluation results for code generation tasks.</p>
+<p>The use of English-language datasets for evaluating language models is common practice. However, to evaluate this models across different languages and cultural contexts, it is important to test them on benchmarks in other languages. In the case of PT-BR, which typically represents a smaller share of the data used to train multilingual models, understanding model behavior is an important step in evaluating their suitability for tasks and contexts specific to this language. In this sense, this post aims to contribute to that understanding by highlighting both the advances and the remaining challenges in these LLMs’ performance on tasks in the PT-BR context.</p>
+<h2 id="tldr">TL;DR</h2>
+<div style="text-align: justify;">
+<ul>
+<li>We evaluated the models: Granite, Llama-3.1-8B, and DeepSeek-R1-Distill-Llama-3.1-8B on the ENEM Challenge, TweetSent-Br, and IMDB benchmarks.</li>
+<li>Our method involved experimentation supported by the HELM framework, which we describe in detail in this document.</li>
+<li>The results show that the models accurately classify sentiments in movie reviews in PT-BR.</li>
+</ul>
+</div>
+<h2 id="method">Method</h2>
+<h3 id="execution-environment-and-tool-used">Execution Environment and Tool Used</h3>
+<p>We used HELM as the evaluation tool. HELM is an LLM evaluation framework developed by researchers at Stanford University. It includes a variety of benchmarks, such as sentiment analysis, code generation, and multiple-choice question answering. Using these benchmarks, we evaluated and compared the performance of the Granite (8B), Llama-3.1-8B, and DeepSeek-R1-Distill-Llama-3.1-8B models.</p>
+<p>For running the experiments, we used Google Colab as the environment, which provides access to an A100 GPU. In this setup, we were able to clone the HELM repository and run models with 8 billion parameters. All configuration and testing were carried out on this platform, ensuring convenience and access to the necessary computational resources.</p>
+<p>In a future post, we will go into more detail about LLM evaluation strategies and tools, with a deeper focus on HELM’s capabilities and operation.</p>
+<h3 id="benchmarks-and-models">Benchmarks and Models</h3>
+<p>To run tests in Brazilian Portuguese scenarios, it was necessary to extend HELM by adding new benchmarks, since the tool did not previously support this language. This effort represented a direct contribution to HELM, adding three benchmarks:</p>
+<ul>
+<li>
+<p><a href="https://huggingface.co/datasets/eduagarcia/enem_challenge" rel="external"><span class="link-personalizado"><strong>ENEM Challenge</strong></span></a>: built from questions from the Exame Nacional do Ensino Médio (ENEM), designed to evaluate LLMs ability to handle MQA tasks across various knowledge areas, including Humanities, Natural Sciences, Languages, and Mathematics.</p>
+</li>
+<li>
+<p><a href="https://huggingface.co/datasets/eduagarcia/tweetsentbr_fewshot" rel="external"><span class="link-personalizado"><strong>TweetSent-Br</strong></span></a>: composed of tweets, specifically for sentiment analysis tasks. The dataset is organized into three main classes: positive (tweets expressing a positive reaction about the main topic), negative (tweets expressing a negative reaction), and neutral (tweets that don’t fit the other categories).</p>
+</li>
+<li>
+<p><a href="https://huggingface.co/datasets/maritaca-ai/imdb_pt" rel="external"><span class="link-personalizado"><strong>IMDB</strong></span></a>: made up of movie reviews written in Brazilian Portuguese. This benchmark also focuses on sentiment classification tasks, but uses longer-form review texts, in contrast to TweetSent-Br’s shorter posts.</p>
+</li>
+</ul>
+<p>About the models, selection was guided by compatibility with the available execution environment and by citation relevance and performance. This included the Granite family of models developed by IBM; the Llama models from Meta; and the DeepSeek-R1-Distill-Llama-8B, a compact, optimized version derived from Llama 3.1. This choice enabled a fair and practical comparison among the models.</p>
+<h2 id="results">Results</h2>
+<p>Below, we present the results obtained, along with charts developed by the team to make it easier to visualize and understand the models’ performance on the evaluated tasks.</p>
+<ul>
+<li><strong>ENEM Challenge</strong>:</li>
+</ul>
+<!--<div style="text-align: center;">
+  <img src="/images/experimentos_benchmarks_pt_br_image001.png" style="max-width: 90%;">
+</div> -->
+<figure><img src="/images/experimentos_benchmarks_pt_br_image001.png"
+    alt="Chart of results on the ENEM Challenge"><figcaption>
+      <p>Chart of results on the ENEM Challenge</p>
+    </figcaption>
+</figure>
+
+<p>The results indicate that the models showed similar performance, with a slight advantage for Llama. The models achieved an average accuracy of 62.53%, suggesting that while they demonstrate some level of understanding of the questions, they still lack sufficient ability to answer ENEM exam questions satisfactorily. Improvement is still needed, particularly in reasoning and interpretation in Portuguese.</p>
+<ul>
+<li><strong>TweetSent-Br</strong>:</li>
+</ul>
+<!--<div style="text-align: center;">
+  <img src="/images/experimentos_benchmarks_pt_br_image002.png" style="max-width: 90%;">
+</div> -->
+<figure><img src="/images/experimentos_benchmarks_pt_br_image002.png"
+    alt="Chart of results on the TweetSent-Br"><figcaption>
+      <p>Chart of results on the TweetSent-Br</p>
+    </figcaption>
+</figure>
+
+<p>In this benchmark, as observed with the ENEM Challenge, the results were also similar across models. This reinforces the view that there are still gaps in model performance on sentiment classification tasks in Portuguese. Classifying a message as positive, negative, or neutral remains a challenge for these models, especially given the nuances and ambiguities of the language.</p>
+<ul>
+<li><strong>IMDB</strong>:</li>
+</ul>
+<!--<div style="text-align: center;">
+  <img src="/images/experimentos_benchmarks_pt_br_image003.png" style="max-width: 90%;">
+</div>-->
+<figure><img src="/images/experimentos_benchmarks_pt_br_image003.png"
+    alt="Chart of results on the IMDB"><figcaption>
+      <p>Chart of results on the IMDB</p>
+    </figcaption>
+</figure>
+
+<p>In the IMDB benchmark, the results were quite positive. The models achieved accuracy rates above 90%, demonstrating strong performance in sentiment classification. The highlight was the Granite model with 8B parameters, which showed a slight advantage over the others. These results indicate that the models can easily categorize movie reviews in Portuguese, showing greater proficiency in this type of task.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This study provided a clearer view of the performance of language models in PT-BR through evaluation on three different benchmarks. The results show that the models analyzed have reasonable performance when selecting an answer in ENEM knowledge areas, while also indicating that there is still room for improvement. On the other hand, in the IMDB sentiment analysis task, these smaller-scale models demonstrated good classification ability.</p>
+<p>The team plans, in future studies, to conduct experiments with larger-scale models to enable broader comparisons of performance and efficiency. This will allow for a more detailed analysis of the errors made by each model, contributing to a deeper understanding of their strengths and limitations.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:41701/en/posts/power10/"><i class="fa fa-chevron-circle-left"></i> Performing CPU Inference on Power10</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:41701/en/posts/tutorial_power9_pt1_en/">Setting Up the OS, NVIDIA Drivers, CUDA, and cuDNN on IBM Power 9 Servers <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:41701/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>

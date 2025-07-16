@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://localhost:41701/en/posts/</loc>
+    <lastmod>2025-07-09T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt"
+                href="http://localhost:41701/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:41701/en/posts/"
+                />
+  </url><url>
+    <loc>http://localhost:41701/en/team/</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt"
+                href="http://localhost:41701/team/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:41701/en/team/"
+                />
+  </url>
+</urlset>

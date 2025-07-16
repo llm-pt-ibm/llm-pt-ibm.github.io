@@ -63,7 +63,9 @@ Se o Docker não estiver instalado, siga as instruções da [documentação ofic
 ## Adicionando uma publicação ao blog
 
 1. Crie uma nova _branch_ no repositório.
-2. Adicione o conteúdo que deseja publicar em um arquivo no formato Markdown (`.md`) dentro do diretório `/content/posts/`.
+2. Adicione o conteúdo em português que deseja publicar em um arquivo no formato Markdown (`.md`) dentro do diretório `/content/pt/posts/`.
+3. Adicione o conteúdo em inglês que deseja publicar em um arquivo no formato Markdown (`.md`) dentro do diretório `/content/en/posts/`.
+   1. É importante que tenha seu conteúdo seja feito nas duas versões e o arquivo (`.md`) tenham o mesmo nome.
 3. Execute o blog localmente para garantir que as alterações foram aplicadas corretamente.
 4. Crie um _pull request_ para mesclar a sua _branch_ com a branch principal do repositório.
 5. Aguarde o _pull request_ ser revisado e aceito. Após a aprovação, as alterações serão publicadas no blog.
@@ -75,6 +77,7 @@ title: "Título da publicação"
 date: 2025-03-12 # ano-mês-dia
 authors: ["Nome do Autor", "Outro Autor"] # Pode ser uma lista
 tags: ["LLM", "benchmark", "pesquisa"]
+translationKey: "nome-do-post"
 summary: "Breve resumo do post, que aparecerá como descrição no blog."
 draft: false # Mude para true se quiser que o post fique como rascunho
 ---
@@ -102,5 +105,16 @@ No Hugo, a maneira mais simples de incluir imagens nas suas publicações é arm
 Para adicionar uma imagem no seu post, basta utilizar a seguinte sintaxe em Markdown, substituindo ``minha-imagem.jpg`` pelo nome do arquivo que você colocou na pasta ``/static``:
 
 ```markdown
-![Texto Alternativo](/minha-imagem.jpg)
+{{< figure src="/images/minha-imagem.png" alt="Descrição alternativa" caption="Legenda da Imagem" >}}
 ```
+
+### Adicionando links nas publicações
+Para adicionar um link externo e seguir a padronização do blog com a cor do link, basta seguir esse formato: 
+
+```markdown
+[<span class="link-personalizado">Texto para o link</span>](https://exemplo.com.br)
+```
+A class "link-personalizado" no arquivo ``styles-light.css`` irá personalizar o link com a cor padrão. 
+
+Para adicionar um link que remete a alguma outra postagem do blog, basta seguir esse formato:
+[<span class="link-personalizado">Texto para o link</span>]({{< relref "nome_de_outro_post.md" >}})
