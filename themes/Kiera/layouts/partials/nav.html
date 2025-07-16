@@ -14,7 +14,7 @@
                 {{ if ne .Lang $.Site.Language.Lang }}
                     <a class="lang-link" href="{{ .Lang | relLangURL }}">
                         <img src="/images/traducao.png" alt="Tradução" >
-                        {{ .Language.LanguageName }}
+                        {{ .LanguageName }}
                     </a>
                 {{ end }}
               {{ end }}

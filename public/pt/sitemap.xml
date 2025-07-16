@@ -2,482 +2,482 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:42951/authors/</loc>
+    <loc>http://localhost:38805/authors/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/authors/"
+                href="http://localhost:38805/en/authors/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/authors/"
+                href="http://localhost:38805/authors/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/contribuicao_helm/</loc>
+    <loc>http://localhost:38805/posts/contribuicao_helm/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/contribuicao_helm/"
+                href="http://localhost:38805/en/posts/contribuicao_helm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/contribuicao_helm/"
+                href="http://localhost:38805/posts/contribuicao_helm/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/helm/</loc>
+    <loc>http://localhost:38805/tags/helm/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/helm/"
+                href="http://localhost:38805/en/tags/helm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/helm/"
+                href="http://localhost:38805/tags/helm/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/ibm/</loc>
+    <loc>http://localhost:38805/tags/ibm/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/ibm/"
+                href="http://localhost:38805/en/tags/ibm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/ibm/"
+                href="http://localhost:38805/tags/ibm/"
                 />
   </url><url>
-    <loc>http://localhost:42951/authors/jo%C3%A3o-brunet/</loc>
+    <loc>http://localhost:38805/authors/jo%C3%A3o-brunet/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/authors/jo%C3%A3o-brunet/"
+                href="http://localhost:38805/en/authors/jo%C3%A3o-brunet/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/authors/jo%C3%A3o-brunet/"
+                href="http://localhost:38805/authors/jo%C3%A3o-brunet/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/llm/</loc>
+    <loc>http://localhost:38805/tags/llm/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/llm/"
+                href="http://localhost:38805/en/tags/llm/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/llm/"
+                href="http://localhost:38805/tags/llm/"
                 />
   </url><url>
-    <loc>http://localhost:42951/</loc>
+    <loc>http://localhost:38805/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/"
+                href="http://localhost:38805/en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/"
+                href="http://localhost:38805/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/</loc>
+    <loc>http://localhost:38805/posts/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/"
+                href="http://localhost:38805/en/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/"
+                href="http://localhost:38805/posts/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/</loc>
+    <loc>http://localhost:38805/tags/</loc>
     <lastmod>2025-07-09T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/"
+                href="http://localhost:38805/en/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/"
+                href="http://localhost:38805/tags/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/api/</loc>
+    <loc>http://localhost:38805/tags/api/</loc>
     <lastmod>2025-07-03T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/api/"
+                href="http://localhost:38805/en/tags/api/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/api/"
+                href="http://localhost:38805/tags/api/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/tutorial_power9_pt4_en/</loc>
+    <loc>http://localhost:38805/posts/tutorial_power9_pt4_en/</loc>
     <lastmod>2025-07-03T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/tutorial_power9_pt4_en/"
+                href="http://localhost:38805/en/posts/tutorial_power9_pt4_en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/tutorial_power9_pt4_en/"
+                href="http://localhost:38805/posts/tutorial_power9_pt4_en/"
                 />
   </url><url>
-    <loc>http://localhost:42951/authors/caio-silva/</loc>
+    <loc>http://localhost:38805/authors/caio-silva/</loc>
     <lastmod>2025-07-03T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/authors/caio-silva/"
+                href="http://localhost:38805/en/authors/caio-silva/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/authors/caio-silva/"
+                href="http://localhost:38805/authors/caio-silva/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/power9/</loc>
+    <loc>http://localhost:38805/tags/power9/</loc>
     <lastmod>2025-07-03T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/power9/"
+                href="http://localhost:38805/en/tags/power9/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/power9/"
+                href="http://localhost:38805/tags/power9/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/tutorial_power9_pt3_en/</loc>
+    <loc>http://localhost:38805/posts/tutorial_power9_pt3_en/</loc>
     <lastmod>2025-07-02T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/tutorial_power9_pt3_en/"
+                href="http://localhost:38805/en/posts/tutorial_power9_pt3_en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/tutorial_power9_pt3_en/"
+                href="http://localhost:38805/posts/tutorial_power9_pt3_en/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/fastapi/</loc>
+    <loc>http://localhost:38805/tags/fastapi/</loc>
     <lastmod>2025-07-02T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/fastapi/"
+                href="http://localhost:38805/en/tags/fastapi/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/fastapi/"
+                href="http://localhost:38805/tags/fastapi/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/conda/</loc>
+    <loc>http://localhost:38805/tags/conda/</loc>
     <lastmod>2025-06-30T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/conda/"
+                href="http://localhost:38805/en/tags/conda/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/conda/"
+                href="http://localhost:38805/tags/conda/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/tutorial_power9_pt2_en/</loc>
+    <loc>http://localhost:38805/posts/tutorial_power9_pt2_en/</loc>
     <lastmod>2025-06-30T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/tutorial_power9_pt2_en/"
+                href="http://localhost:38805/en/posts/tutorial_power9_pt2_en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/tutorial_power9_pt2_en/"
+                href="http://localhost:38805/posts/tutorial_power9_pt2_en/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/pytorch/</loc>
+    <loc>http://localhost:38805/tags/pytorch/</loc>
     <lastmod>2025-06-30T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/pytorch/"
+                href="http://localhost:38805/en/tags/pytorch/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/pytorch/"
+                href="http://localhost:38805/tags/pytorch/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/tutorial_power9_pt1_en/</loc>
+    <loc>http://localhost:38805/posts/tutorial_power9_pt1_en/</loc>
     <lastmod>2025-06-29T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/tutorial_power9_pt1_en/"
+                href="http://localhost:38805/en/posts/tutorial_power9_pt1_en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/tutorial_power9_pt1_en/"
+                href="http://localhost:38805/posts/tutorial_power9_pt1_en/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/cuda/</loc>
+    <loc>http://localhost:38805/tags/cuda/</loc>
     <lastmod>2025-06-29T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/cuda/"
+                href="http://localhost:38805/en/tags/cuda/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/cuda/"
+                href="http://localhost:38805/tags/cuda/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/drivers/</loc>
+    <loc>http://localhost:38805/tags/drivers/</loc>
     <lastmod>2025-06-29T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/drivers/"
+                href="http://localhost:38805/en/tags/drivers/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/drivers/"
+                href="http://localhost:38805/tags/drivers/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/nvidia/</loc>
+    <loc>http://localhost:38805/tags/nvidia/</loc>
     <lastmod>2025-06-29T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/nvidia/"
+                href="http://localhost:38805/en/tags/nvidia/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/nvidia/"
+                href="http://localhost:38805/tags/nvidia/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/experimentos_benchmarks_pt_br/</loc>
+    <loc>http://localhost:38805/posts/experimentos_benchmarks_pt_br/</loc>
     <lastmod>2025-06-02T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/experimentos_benchmarks_pt_br/"
+                href="http://localhost:38805/en/posts/experimentos_benchmarks_pt_br/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/experimentos_benchmarks_pt_br/"
+                href="http://localhost:38805/posts/experimentos_benchmarks_pt_br/"
                 />
   </url><url>
-    <loc>http://localhost:42951/authors/lucas-pereira/</loc>
+    <loc>http://localhost:38805/authors/lucas-pereira/</loc>
     <lastmod>2025-06-02T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/authors/lucas-pereira/"
+                href="http://localhost:38805/en/authors/lucas-pereira/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/authors/lucas-pereira/"
+                href="http://localhost:38805/authors/lucas-pereira/"
                 />
   </url><url>
-    <loc>http://localhost:42951/authors/andr%C3%A9-alves/</loc>
+    <loc>http://localhost:38805/authors/andr%C3%A9-alves/</loc>
     <lastmod>2025-04-06T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/authors/andr%C3%A9-alves/"
+                href="http://localhost:38805/en/authors/andr%C3%A9-alves/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/authors/andr%C3%A9-alves/"
+                href="http://localhost:38805/authors/andr%C3%A9-alves/"
                 />
   </url><url>
-    <loc>http://localhost:42951/tags/power10/</loc>
+    <loc>http://localhost:38805/tags/power10/</loc>
     <lastmod>2025-04-06T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/tags/power10/"
+                href="http://localhost:38805/en/tags/power10/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/tags/power10/"
+                href="http://localhost:38805/tags/power10/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/power10/</loc>
+    <loc>http://localhost:38805/posts/power10/</loc>
     <lastmod>2025-04-06T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/power10/"
+                href="http://localhost:38805/en/posts/power10/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/power10/"
+                href="http://localhost:38805/posts/power10/"
                 />
   </url><url>
-    <loc>http://localhost:42951/authors/ronaldd-matias/</loc>
+    <loc>http://localhost:38805/authors/ronaldd-matias/</loc>
     <lastmod>2025-04-06T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/authors/ronaldd-matias/"
+                href="http://localhost:38805/en/authors/ronaldd-matias/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/authors/ronaldd-matias/"
+                href="http://localhost:38805/authors/ronaldd-matias/"
                 />
   </url><url>
-    <loc>http://localhost:42951/posts/introducao/</loc>
+    <loc>http://localhost:38805/posts/introducao/</loc>
     <lastmod>2025-03-12T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/posts/introducao/"
+                href="http://localhost:38805/en/posts/introducao/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/posts/introducao/"
+                href="http://localhost:38805/posts/introducao/"
                 />
   </url><url>
-    <loc>http://localhost:42951/authors/jos%C3%A9-gama/</loc>
+    <loc>http://localhost:38805/authors/jos%C3%A9-gama/</loc>
     <lastmod>2025-03-12T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/authors/jos%C3%A9-gama/"
+                href="http://localhost:38805/en/authors/jos%C3%A9-gama/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/authors/jos%C3%A9-gama/"
+                href="http://localhost:38805/authors/jos%C3%A9-gama/"
                 />
   </url><url>
-    <loc>http://localhost:42951/categories/</loc>
+    <loc>http://localhost:38805/categories/</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/categories/"
+                href="http://localhost:38805/en/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/categories/"
+                href="http://localhost:38805/categories/"
                 />
   </url><url>
-    <loc>http://localhost:42951/team/</loc>
+    <loc>http://localhost:38805/team/</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:42951/en/team/"
+                href="http://localhost:38805/en/team/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt"
-                href="http://localhost:42951/team/"
+                href="http://localhost:38805/team/"
                 />
   </url>
 </urlset>
