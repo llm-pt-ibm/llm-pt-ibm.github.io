@@ -295,6 +295,18 @@ a {
   /*text-decoration: none;*/
 }
 
+.link-personalizado {
+  color: red;
+}
+
+.link-personalizado:hover {
+  color: #2563eb;
+}
+
+.link-personalizado:visited {
+  color: #551A8B;
+}
+
 .image, figure img, img {
   width: 100%;
   box-shadow: 0 3px 3px #bbbbbb;

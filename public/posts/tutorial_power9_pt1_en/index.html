@@ -1,17 +1,19 @@
-<!doctype html>
+<html lang="pt">
 
-<html lang="pt-br">
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-  <title>Setting Up the OS, NVIDIA Drivers, CUDA, and cuDNN on IBM Power 9 Servers - LLM IBM UFCG</title>
+<html lang="pt">
+
+<head>
+  <title>Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9 - LLM IBM UFCG</title>
   <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
 <meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/tutorial_power9_pt1_en/">
   <meta property="og:site_name" content="LLM IBM UFCG">
-  <meta property="og:title" content="Setting Up the OS, NVIDIA Drivers, CUDA, and cuDNN on IBM Power 9 Servers">
-  <meta property="og:description" content="This post is part of a tutorial series aimed at building a Large Language Model API on Power9 servers. In this step, we’ll set up the operating system and install NVIDIA drivers, CUDA, and cuDNN.">
-  <meta property="og:locale" content="pt_br">
+  <meta property="og:title" content="Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9">
+  <meta property="og:description" content="Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o sistema operacional, instalar drivers NVIDIA, CUDA e CUDNN.">
+  <meta property="og:locale" content="pt">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2025-06-29T00:00:00+00:00">
@@ -24,8 +26,8 @@
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Setting Up the OS, NVIDIA Drivers, CUDA, and cuDNN on IBM Power 9 Servers">
-  <meta name="twitter:description" content="This post is part of a tutorial series aimed at building a Large Language Model API on Power9 servers. In this step, we’ll set up the operating system and install NVIDIA drivers, CUDA, and cuDNN.">
+  <meta name="twitter:title" content="Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9">
+  <meta name="twitter:description" content="Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o sistema operacional, instalar drivers NVIDIA, CUDA e CUDNN.">
 
 <meta name="generator" content="Hugo 0.147.9">
     
@@ -127,6 +129,9 @@
       </div>
 
       <ul id="social-media">
+            <li><a href="/en/posts/tutorial_power9_pt1_en/">English Version</a></li>
+          
+        
       </ul>
     </header>
 
@@ -162,7 +167,7 @@
 
 <article>
 
-    <h1>Setting Up the OS, NVIDIA Drivers, CUDA, and cuDNN on IBM Power 9 Servers</h1>
+    <h1>Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9</h1>
 
     
       <aside>
@@ -215,72 +220,72 @@
 
     
 
-    <h2 id="background">Background</h2>
-<p>This is the first post in a tutorial series on how to build a Language Model API on an IBM Power9 server, covering everything from setting up the operating system to having the API running remote inference.
-This step of the tutorial shows how to set up the operating system and install NVIDIA drivers, CUDA, and cuDNN on machines with IBM Power9 AC922 processors. The focus is on ensuring everything works correctly on <code>ppc64le</code> architectures, which are common in high-performance environments.</p>
-<p><strong>IBM Power9</strong>: The IBM Power9 AC922 is a high-performance machine used for demanding tasks such as artificial intelligence and scientific computing. It uses Power9 processors and works well with NVIDIA GPUs, offering high-speed communication between the CPU and GPU.</p>
-<p><strong>NVIDIA Drivers</strong>: Software that allows the operating system to communicate correctly with NVIDIA GPUs. These drivers are essential to enable GPU acceleration.</p>
-<p><strong>CUDA</strong>: NVIDIA&rsquo;s platform for accelerating parallel computing on GPUs. It lets you run complex algorithms efficiently, such as Large Language Model inference.</p>
-<p><strong>cuDNN</strong>: A GPU-optimized library of primitives for deep neural networks (DNNs) developed by NVIDIA. It offers high-performance implementations of key DNN operations like convolutions, pooling, and normalization, significantly speeding up training and inference on GPUs.</p>
-<h2 id="tldr">TLDR</h2>
+    <h2 id="contexto">Contexto</h2>
+<p>Este é o primeiro post de uma série de tutoriais sobre como construir uma API de Modelos de Linguagem em um servidor Power9, desde da configuração do Sistema Operacional, até a API executando inferências de forma remota.
+Esta etapa do tutorial mostra como configurar o Sistema Operacional, instalar os drivers da NVIDIA, CUDA e CUDNN em máquinas com processador IBM Power9 AC922. O foco é garantir que tudo funcione corretamente em arquiteturas <code>ppc64le</code>, comuns em ambientes de alto desempenho.</p>
+<p><strong>IBM Power9</strong>: A IBM Power9 AC922 é uma máquina de alto desempenho usada em tarefas pesadas como inteligência artificial e processamento científico. Ela usa processadores Power9 e trabalha bem com GPUs NVIDIA, oferecendo alta velocidade de comunicação entre CPU e GPU.</p>
+<p><strong>NVIDIA Drivers</strong>: Programas que permitem que o sistema operacional se comunique corretamente com as placas de vídeo da marca. São essenciais para ativar o uso de GPUs.</p>
+<p><strong>CUDA</strong>: Plataforma NVIDIA que permite usar GPUs para acelerar cálculos paralelos. Com essa plataforma é possível rodar algoritmos complexos de forma rápida, como a execução de Grandes Modelos de Linguagem, por exemplo.</p>
+<p><strong>CUDNN</strong>: Uma biblioteca de primitivas otimizadas para redes neurais profundas (DNNs), desenvolvida pela NVIDIA. Ele oferece implementações de alto desempenho para operações essenciais em DNNs, como convoluções, pooling e normalização, acelerando significativamente o treinamento e a inferência em GPUs.</p>
+<h2 id="tldr">TL;DR</h2>
 <ul>
-<li>This post provides a step-by-step guide on setting up Power9 servers, including the OS and NVIDIA configurations.</li>
-<li>The main challenge is finding compatible versions for the Power9 machine architecture.</li>
+<li>Este post apresenta o passo-a-passo de configurar um servidor Power9 incluindo setup do SO e configurações NVIDIA.</li>
+<li>O desafio maior é encontrar versões compatíveis com a arquitetura das máquinas Power.</li>
 </ul>
-<h2 id="setting-up-the-operating-system">Setting up the Operating System</h2>
-<p>Let&rsquo;s start with the installation of <strong>Red Hat Enterprise Linux 8.10 (Ootpa)</strong>. On Power systems, the architecture used is <code>ppc64le</code> (PowerPC 64-bit little-endian), so it&rsquo;s essential to ensure the .iso image is compatible with this architecture. Otherwise, the Power9&rsquo;s petitboot won&rsquo;t recognize the media and installation won&rsquo;t proceed.</p>
+<h2 id="configurando-sistema-operacional">Configurando Sistema Operacional</h2>
+<p>Vamos começar com a instalação do <strong>Red Hat Enterprise Linux 8.10 (Ootpa)</strong>. Em sistemas Power, a arquitetura usada é a <code>ppc64le</code> (PowerPC 64 bits little-endian), por isso é essencial que a imagem .iso seja compatível com essa arquitetura. Caso contrário, o petitboot da Power9 não reconhecerá a mídia e a instalação não poderá continuar.</p>
 <ol>
-<li>You can download the correct image from the <a href="https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software" rel="external">link</a> provided.</li>
-<li>In this tutorial, we&rsquo;ll use the <strong>Boot ISO</strong> option and follow the <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer" rel="external">official Red Hat documentation</a> to create a bootable USB medium.</li>
-<li>After inserting the installation media into the Power9 server and rebooting, the system should automatically start petitboot.</li>
-<li>From there, just follow the <a href="https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf" rel="external">official installation guide</a> to complete the OS setup.</li>
+<li>Você pode baixar a imagem correta pelo <a href="https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software" rel="external">link</a> indicado.</li>
+<li>Neste tutorial, usaremos a opção <strong>Boot ISO</strong> e seguiremos as instruções da <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer" rel="external">documentação oficial da Red Hat</a> para criar uma mídia USB inicializável.</li>
+<li>Após inserir a mídia de instalação no servidor Power 9 e reiniciar a máquina, o sistema deve iniciar automaticamente no petitboot.</li>
+<li>A partir desta etapa, basta seguir o <a href="https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf" rel="external">guia de instalação</a> oficial para concluir a configuração do sistema.</li>
 </ol>
-<h2 id="setting-up-nvidia-driver-and-cuda">Setting up NVIDIA Driver and CUDA</h2>
-<h4 id="checking-gpus-and-operating-system">Checking GPUs and Operating System</h4>
-<p>To enable the operating system to communicate properly with the server&rsquo;s GPUs, we need to install and configure the NVIDIA driver.</p>
+<h2 id="configurando-driver-nvidia-e-cuda">Configurando Driver NVIDIA e CUDA</h2>
+<h4 id="checagem-de-gpus-e-sistema-operacional">Checagem de GPUs e Sistema Operacional</h4>
+<p>Para o sistema operacional realizar comunicação correta com as GPUs do servidor, precisamos instalar e configurar o driver da NVIDIA.</p>
 <ol>
-<li>First, let&rsquo;s check for the presence of the GPU(s):</li>
+<li>Inicialmente, vamos checar a presença da(s) GPU(s):</li>
 </ol>
 <pre tabindex="0"><code>lspci | grep -i nvidia
-</code></pre><p>The expected output is something like:</p>
+</code></pre><p>A saída esperada é algo como:</p>
 <p><code>0004:04:00.0 3D controller: NVIDIA Corporation GV100GL [Tesla V100 SXM2 16GB] (rev a1)</code></p>
 <ol start="2">
-<li>Next, let&rsquo;s check the system architecture and operating system name:</li>
+<li>Após isso, vamos verificar arquitetura e nome do sistema operacional:</li>
 </ol>
 <pre tabindex="0"><code>uname -m &amp;&amp; cat /etc/redhat-release
-</code></pre><p>The expected output is:</p>
+</code></pre><p>A saída esperada é:</p>
 <p><code>ppc64le Red Hat Enterprise Linux release 8.10 (Ootpa)</code></p>
-<h4 id="avoiding-conflicts">Avoiding conflicts</h4>
-<p>To avoid potential conflicts, it&rsquo;s recommended to disable the <code>nouveau</code> driver and <code>SELinux</code>.</p>
-<p>The <code>nouveau</code> driver is an open-source driver for NVIDIA GPUs that replaces the proprietary driver when users want to use only free software without needing high performance.</p>
-<p><code>SELinux=enable</code> restricts certain processes from making changes to the system, which can conflict with the installations we&rsquo;ll do in this tutorial.</p>
+<h4 id="evitando-interferências">Evitando interferências</h4>
+<p>Para evitar algumas interferências, é recomendável desativar o driver <code>nouveau</code> e <code>SELinux</code>.</p>
+<p>O <code>noveau</code> é um driver de código aberto para GPUs NVIDIA que subsitui o driver proprietário quando o usuário quer apenas usar o software livre, sem necessidade de de alto desempenho.</p>
+<p>O <code>SELinux=enable</code> restringe alguns processos de aplicarem mudanças no sistema, podendo conflitar com as instalações que vamos fazer neste tutorial.</p>
 <ol>
-<li>Disable the <code>nouveau</code> driver:</li>
+<li>Desative o driver <code>nouveau</code>:</li>
 </ol>
 <pre tabindex="0"><code>echo -e &#34;blacklist nouveau\noptions nouveau modeset=0&#34; | sudo tee /etc/modprobe.d/disable-nouveau.conf
 </code></pre><ol start="2">
-<li>To disable <code>SELinux</code>, let&rsquo;s first check its status by running:</li>
+<li>Para desativar o <code>SELinux</code>, primeiro vamos checar o status executando:</li>
 </ol>
 <pre tabindex="0"><code>sestatus
-</code></pre><p>If it&rsquo;s active, you&rsquo;ll need to set the <code>SELINUX=disabled</code> parameter in the <code>/etc/selinux/config</code> file to proceed. Remember that saving changes requires sudo permissions.</p>
+</code></pre><p>Caso esteja ativo, será preciso setar o parâmetro <code>SELINUX=disabled</code> no arquivo <code>/etc/selinux/config</code> para prosseguir. É importante lembrar que a edição só será salva com permissão sudo.</p>
 <ol start="3">
-<li>After that, update the <code>initramfs</code> and reboot the machine with the following commands:</li>
+<li>Após isso, vamos atualizar o <code>initrafms</code> e reiniciar a máquina com os seguintes comandos:</li>
 </ol>
 <pre tabindex="0"><code>sudo dracut --force
 sudo reboot
 </code></pre><ol start="4">
-<li>To verify everything worked so far, let&rsquo;s check if <code>nouveau</code> is disabled:</li>
+<li>Para checar se tudo deu certo até agora, vamos checar se o <code>nouveau</code> foi desabilitado:</li>
 </ol>
 <pre tabindex="0"><code>lsmod | grep nouveau
-</code></pre><p>If it&rsquo;s been successfully disabled, there will be no output.</p>
+</code></pre><p>Caso tenha sido desabilitado, não terá saída.</p>
 <ol start="5">
-<li>To verify the <code>SELinux</code>:</li>
+<li>Para checar o SELinux:</li>
 </ol>
 <pre tabindex="0"><code>sestatus
-</code></pre><p>If it&rsquo;s disabled, the output will be:  <code>SELinux status: disabled</code></p>
-<h4 id="installing-prerequisites">Installing Prerequisites</h4>
+</code></pre><p>Caso tenha sido desabilitado, a saída será:  <code>SELinux status: disabled</code></p>
+<h4 id="instalando-pré-requisitos">Instalando pré-requisitos</h4>
 <ol>
-<li>Let&rsquo;s install some prerequisites before starting the actual installation:</li>
+<li>Vamos instalar alguns pré-requisitos antes de iniciar a instalação de fato:</li>
 </ol>
 <pre tabindex="0"><code>sudo dnf install pciutils environment-modules
 sudo dnf install kernel-devel-$(uname -r) kernel-headers
@@ -288,22 +293,22 @@ sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noa
 sudo dnf clean all 
 sudo dnf install dkms
 </code></pre><ol start="2">
-<li>We also need to enable some repositories:</li>
+<li>Também precisamos habilitar alguns repositórios:</li>
 </ol>
 <pre tabindex="0"><code>sudo subscription-manager repos --enable=rhel-8-for-ppc64le-appstream-rpms
 sudo subscription-manager repos --enable=rhel-8-for-ppc64le-baseos-rpms
 sudo subscription-manager repos --enable=codeready-builder-for-rhel-8-ppc64le-rpms
-</code></pre><h4 id="downloading-and-installing-cuda-package-repositories">Downloading and Installing CUDA Package Repositories</h4>
+</code></pre><h4 id="baixando-e-instalando-repositórios-dos-pacotes-cuda">Baixando e instalando repositórios dos pacotes CUDA</h4>
 <ol>
-<li>Let&rsquo;s download <strong>CUDA version 12.2</strong> and <strong>NVIDIA Driver 535.54.03-1</strong> with the following command:</li>
+<li>Vamos baixar a versão <strong>12.2 do CUDA</strong> e o <strong>Driver NVIDIA 535.54.03-1</strong> com o comando seguinte:</li>
 </ol>
 <pre tabindex="0"><code>wget https://developer.download.nvidia.com/compute/cuda/12.2.0/local_installers/cuda-repo-rhel8-12-2-local-12.2.0_535.54.03-1.ppc64le.rpm
 </code></pre><ol start="2">
-<li>To install the downloaded package:</li>
+<li>Para instalar o pacote baixado:</li>
 </ol>
 <pre tabindex="0"><code>sudo rpm -i cuda-repo-rhel8-12-2-local-12.2.0_535.54.03-1.ppc64le.rpm
 </code></pre><ol start="3">
-<li>To install the NVIDIA driver and CUDA, run the following commands:</li>
+<li>Para instalar o driver NVIDIA e o CUDA, os seguintes comandos serão executados:</li>
 </ol>
 <pre tabindex="0"><code>sudo dnf install nvidia-driver-cuda 
 sudo dnf clean all 
@@ -311,66 +316,66 @@ sudo dnf module reset nvidia-driver
 sudo dnf module enable nvidia-driver:latest-dkms
 sudo dnf -y module install nvidia-driver:latest-dkms
 sudo dnf -y install cuda      
-</code></pre><p>With these commands, the driver and CUDA installation is complete.</p>
-<h4 id="post-installation-steps">Post-Installation Steps</h4>
+</code></pre><p>Com esses comandos a instalação do driver e do CUDA estão finalizadas.</p>
+<h4 id="processos-pós-instalação">Processos pós-instalação</h4>
 <ol>
-<li>Let&rsquo;s set the <code>PATH</code> and <code>LD_LIBRARY_PATH</code> environment variables. To do this, edit the <code>.bashrc</code> file and add these two lines:</li>
+<li>Vamos declarar as variáveis de ambiente <code>PATH</code> e <code>LD_LIBRARY_PATH</code>. Para isso, deve-se editar o arquivo <code>.bashrc</code> e adicionar essas duas linhas:</li>
 </ol>
 <pre tabindex="0"><code>export PATH=/usr/local/cuda/bin:$PATH 
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
-</code></pre><p>To update the environment variables, run the following command:</p>
+</code></pre><p>Para atualizar as variáveis de ambiente, vamos executar o comando:</p>
 <pre tabindex="0"><code>source ~/.bashrc
-</code></pre><p>We need to make two manual changes because they aren&rsquo;t handled automatically by the CUDA package installation. If these aren&rsquo;t done, the CUDA driver installation will not work properly.</p>
+</code></pre><p>Precisamos realizar duas mudanças de forma manual, pois não são tratadas de forma automática pela instalação dos pacotes CUDA. Caso não sejam realizadas, a instalação do driver CUDA ficará inoperante.</p>
 <ol start="2">
-<li>The first change is to configure the NVIDIA persistence daemon. First, check its status, and if it&rsquo;s not active, enable it:</li>
+<li>A primeira mudança será configurar o <code>deamon</code> de persistência da NVIDIA. Primeiro vamos verificar o status e caso não esteja ativo, vamos ativar:</li>
 </ol>
 <pre tabindex="0"><code>systemctl status nvidia-persistenced
 systemctl enable nvidia-persistenced
-</code></pre><p>Some Linux distributions have a udev rule that brings hot-plugged memory online as soon as it&rsquo;s detected, preventing NVIDIA software from correctly configuring GPU memory on Power9.</p>
+</code></pre><p>Algumas distros Linux possuem uma regra do udev que coloca a memória hot-plug em estado online assim que é detectada fisicamente, impedindo que o software da NVIDIA configure a memória da GPU com os parâmetros corretos no Power9.</p>
 <ol start="3">
-<li>To disable this rule, run the following commands:</li>
+<li>Para desativar esta regra, vamos executar os comandos:</li>
 </ol>
 <pre tabindex="0"><code>sudo cp /lib/udev/rules.d/40-redhat.rules /etc/udev/rules.d/
 sudo sed -i &#39;s/SUBSYSTEM!=&#34;memory&#34;,.*GOTO=&#34;memory_hotplug_end&#34;/SUBSYSTEM==&#34;*&#34;, GOTO=&#34;memory_hotplug_end&#34;/&#39; /etc/udev/rules.d/40-redhat.rules
-</code></pre><h4 id="installation-check">Installation Check</h4>
-<p>After completing all these steps, let&rsquo;s reboot the machine and verify the installations:</p>
+</code></pre><h4 id="checagem-de-instalação">Checagem de instalação</h4>
+<p>Após realizar todos esses procedimentos, vamos reiniciar a máquina e checar as instalações:</p>
 <ol>
-<li>Reboot the machine:</li>
+<li>Reiniciando a máquina:</li>
 </ol>
 <pre tabindex="0"><code>sudo reboot
 </code></pre><ol start="2">
-<li>Check the NVIDIA driver:</li>
+<li>Checagem de driver NVIDIA:</li>
 </ol>
 <pre tabindex="0"><code>nvidia-smi
-</code></pre><p>The output of the command above should display CUDA compiler information: version and install date. It should also list available devices (GPUs) with details like name, memory, temperature, and other information.</p>
-<p>To perform the final check, let&rsquo;s download the <code>cuda-samples</code> repository and run the device test.</p>
+</code></pre><p>A saída do comando acima deve mostrar informações do compilador CUDA: versão e data de instalação. Além de mostrar os dispositivos (GPUs) disponíveis com nome, memória, temperatura entre outras informações.</p>
+<p>Para realizar a última checagem, vamos baixar o repositório <code>cuda-samples</code> e executar o teste de dispositivos.</p>
 <ol start="3">
-<li>Download the repository and access the <code>cuda-samples</code> version matching the installed CUDA:</li>
+<li>Baixando o repositório e acessando a versão do <code>cuda-samples</code> referente ao CUDA instalado:</li>
 </ol>
 <pre tabindex="0"><code>git clone https://github.com/NVIDIA/cuda-samples.git 
 cd cuda-samples/Samples/1_Utilities/deviceQuery
 git checkout v12.2 
 </code></pre><ol start="4">
-<li>To build and run the tests:</li>
+<li>Para buildar e executar os testes:</li>
 </ol>
 <pre tabindex="0"><code>make
 ./deviceQuery
-</code></pre><p>After running this test, you should see <code>Result = PASS</code> in the last line. This confirms that the Power9 is set up with the NVIDIA driver and CUDA working correctly.</p>
-<h2 id="setting-up-the-cudnn">Setting up the CUDNN</h2>
+</code></pre><p>Após executar este teste, espera-se que na última linha contenha: <code>Result = PASS</code>. Com isso, a Power9 está configurada, com driver NVIDIA e CUDA funcionando corretamente.</p>
+<h2 id="configurando-cudnn">Configurando CUDNN</h2>
 <ol>
-<li>First, we need to download and install the <code>.rpm</code> package specific to <code>ppc64le</code>.</li>
+<li>Inicialmente, precisamos baixar e instalar o <code>.rpm</code> específico para <code>ppc64le</code>.</li>
 </ol>
 <pre tabindex="0"><code>wget https://developer.download.nvidia.com/compute/cudnn/9.0.0/local_installers/cudnn-local-repo-rhel8-9.0.0-1.0-1.ppc64le.rpm
 sudo rpm -i cudnn-local-repo-rhel8-9.0.0-1.0-1.ppc64le.rpm
 sudo dnf clean all
 sudo dnf -y install cudnn
 </code></pre><ol start="2">
-<li>After installing, set the <code>CUDNN_LIBRARY</code> and <code>CUDNN_INCLUDE_DIR</code> environment variables directly by adding these lines to your <code>.bashrc</code>:</li>
+<li>Após a instalação, precisamos configurar as variáveis de ambiente <code>CUDNN_LIBRARY</code> e <code>CUDNN_INCLUDE_DIR</code>: (De uma forma mais direta do que fizemos anteriormente)</li>
 </ol>
 <pre tabindex="0"><code>echo &#39;export CUDNN_LIBRARY=/usr/lib64&#39; &gt;&gt; ~/.bashrc    
 echo &#39;export CUDNN_LIBRARY=/usr/lib64&#39; &gt;&gt; ~/.bashrc 
-</code></pre><p>After that, the CUDNN installation process is complete.</p>
-<p>This is the first part of our tutorial. Once you&rsquo;ve finished all the steps in this post, the server will be ready to install the <code>conda</code> package manager and the <code>pytorch</code> library. You can access the second part of this tutorial at this <a href="/posts/tutorial_power9_pt2_en/">link</a>.</p>
+</code></pre><p>Após isso, o processo de instalação do CUDNN está finalizado.</p>
+<p>Esta é a primeira parte do nosso tutorial. Uma vez que todas as etapas mostradas neste post foram finalizadas, o servidor está pronto para ter o gerenciador de pacotes <code>conda</code> e a biblioteca <code>pytorch</code> instaladas, você pode acessar a segunda parte deste tutorial neste <a href="/posts/tutorial_power9_pt2_en/">link</a>.</p>
 
 
 </article>
@@ -385,7 +390,7 @@ echo &#39;export CUDNN_LIBRARY=/usr/lib64&#39; &gt;&gt; ~/.bashrc
         </li>
         <li>
         
-            <a href="http://localhost:1313/posts/tutorial_power9_pt2_en/">Setting Up the Conda and PyTorch on IBM Power9 Servers <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="http://localhost:1313/posts/tutorial_power9_pt2_en/">Configurando Conda e PyTorch em um servidor IBM Power9 <i class="fa fa-chevron-circle-right"></i> </a>
         
         </li>
     </ul>

@@ -1,0 +1,415 @@
+<html lang="pt">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=39531&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="pt">
+
+<head>
+  <title>Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9 - LLM IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:39531/posts/tutorial_power9_pt1/">
+  <meta property="og:site_name" content="LLM IBM UFCG">
+  <meta property="og:title" content="Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9">
+  <meta property="og:description" content="Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o sistema operacional, instalar drivers NVIDIA, CUDA e CUDNN.">
+  <meta property="og:locale" content="pt">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-29T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-06-29T00:00:00+00:00">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="Power9">
+    <meta property="article:tag" content="Drivers">
+    <meta property="article:tag" content="CUDA">
+    <meta property="article:tag" content="NVIDIA">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9">
+  <meta name="twitter:description" content="Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o sistema operacional, instalar drivers NVIDIA, CUDA e CUDNN.">
+
+<meta name="generator" content="Hugo 0.147.9">
+    
+    <link rel="icon" href="http://localhost:39531/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:39531/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:39531/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:39531/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:39531/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:39531/css/custom.css'><link rel='stylesheet' href='http://localhost:39531/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:39531/">LLM IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Blog com relatórios periódicos das tarefas realizadas.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:39531/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+            <li><a href="/en">English Version</a></li>
+          
+      </ul>
+    </header>
+
+    
+<nav>
+    <ul>
+        
+        <li>
+            <a class="" href="/">
+                <i class="fa-li fa  fa-lg"></i><span>Início</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/team/">
+                <i class="fa-li fa  fa-lg"></i><span>Equipe</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2025-06-29T00:00:00Z">Jun 29, 2025</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Caio Silva</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/tags/drivers">#Drivers</a>
+                
+                    , 
+                    <a href="/tags/cuda">#CUDA</a>
+                
+                    , 
+                    <a href="/tags/nvidia">#NVIDIA</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="contexto">Contexto</h2>
+<p>Este é o primeiro post de uma série de tutoriais sobre como construir uma API de Modelos de Linguagem em um servidor Power9, desde da configuração do Sistema Operacional, até a API executando inferências de forma remota.
+Esta etapa do tutorial mostra como configurar o Sistema Operacional, instalar os drivers da NVIDIA, CUDA e CUDNN em máquinas com processador IBM Power9 AC922. O foco é garantir que tudo funcione corretamente em arquiteturas <code>ppc64le</code>, comuns em ambientes de alto desempenho.</p>
+<p><strong>IBM Power9</strong>: A IBM Power9 AC922 é uma máquina de alto desempenho usada em tarefas pesadas como inteligência artificial e processamento científico. Ela usa processadores Power9 e trabalha bem com GPUs NVIDIA, oferecendo alta velocidade de comunicação entre CPU e GPU.</p>
+<p><strong>NVIDIA Drivers</strong>: Programas que permitem que o sistema operacional se comunique corretamente com as placas de vídeo da marca. São essenciais para ativar o uso de GPUs.</p>
+<p><strong>CUDA</strong>: Plataforma NVIDIA que permite usar GPUs para acelerar cálculos paralelos. Com essa plataforma é possível rodar algoritmos complexos de forma rápida, como a execução de Grandes Modelos de Linguagem, por exemplo.</p>
+<p><strong>CUDNN</strong>: Uma biblioteca de primitivas otimizadas para redes neurais profundas (DNNs), desenvolvida pela NVIDIA. Ele oferece implementações de alto desempenho para operações essenciais em DNNs, como convoluções, pooling e normalização, acelerando significativamente o treinamento e a inferência em GPUs.</p>
+<h2 id="tldr">TLDR</h2>
+<ul>
+<li>Este post apresenta o passo-a-passo de configurar um servidor Power9 incluindo setup do SO e configurações NVIDIA.</li>
+<li>O desafio maior é encontrar versões compatíveis com a arquitetura das máquinas Power.</li>
+</ul>
+<h2 id="configurando-sistema-operacional">Configurando Sistema Operacional</h2>
+<p>Vamos começar com a instalação do <strong>Red Hat Enterprise Linux 8.10 (Ootpa)</strong>. Em sistemas Power, a arquitetura usada é a <code>ppc64le</code> (PowerPC 64 bits little-endian), por isso é essencial que a imagem .iso seja compatível com essa arquitetura. Caso contrário, o petitboot da Power9 não reconhecerá a mídia e a instalação não poderá continuar.</p>
+<ol>
+<li>Você pode baixar a imagem correta pelo <a href="https://access.redhat.com/downloads/content/279/ver=/rhel---8/8.10/ppc64le/product-software" rel="external">link</a> indicado.</li>
+<li>Neste tutorial, usaremos a opção <strong>Boot ISO</strong> e seguiremos as instruções da <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/interactively_installing_rhel_from_installation_media/assembly_creating-a-bootable-installation-medium_rhel-installer" rel="external">documentação oficial da Red Hat</a> para criar uma mídia USB inicializável.</li>
+<li>Após inserir a mídia de instalação no servidor Power 9 e reiniciar a máquina, o sistema deve iniciar automaticamente no petitboot.</li>
+<li>A partir desta etapa, basta seguir o <a href="https://www.ibm.com/docs/en/linuxonibm/liabw/rhelqs_guide_Power_p9_usb.pdf" rel="external">guia de instalação</a> oficial para concluir a configuração do sistema.</li>
+</ol>
+<h2 id="configurando-driver-nvidia-e-cuda">Configurando Driver NVIDIA e CUDA</h2>
+<h4 id="checagem-de-gpus-e-sistema-operacional">Checagem de GPUs e Sistema Operacional</h4>
+<p>Para o sistema operacional realizar comunicação correta com as GPUs do servidor, precisamos instalar e configurar o driver da NVIDIA.</p>
+<ol>
+<li>Inicialmente, vamos checar a presença da(s) GPU(s):</li>
+</ol>
+<pre tabindex="0"><code>lspci | grep -i nvidia
+</code></pre><p>A saída esperada é algo como:</p>
+<p><code>0004:04:00.0 3D controller: NVIDIA Corporation GV100GL [Tesla V100 SXM2 16GB] (rev a1)</code></p>
+<ol start="2">
+<li>Após isso, vamos verificar arquitetura e nome do sistema operacional:</li>
+</ol>
+<pre tabindex="0"><code>uname -m &amp;&amp; cat /etc/redhat-release
+</code></pre><p>A saída esperada é:</p>
+<p><code>ppc64le Red Hat Enterprise Linux release 8.10 (Ootpa)</code></p>
+<h4 id="evitando-interferências">Evitando interferências</h4>
+<p>Para evitar algumas interferências, é recomendável desativar o driver <code>nouveau</code> e <code>SELinux</code>.</p>
+<p>O <code>noveau</code> é um driver de código aberto para GPUs NVIDIA que subsitui o driver proprietário quando o usuário quer apenas usar o software livre, sem necessidade de de alto desempenho.</p>
+<p>O <code>SELinux=enable</code> restringe alguns processos de aplicarem mudanças no sistema, podendo conflitar com as instalações que vamos fazer neste tutorial.</p>
+<ol>
+<li>Desative o driver <code>nouveau</code>:</li>
+</ol>
+<pre tabindex="0"><code>echo -e &#34;blacklist nouveau\noptions nouveau modeset=0&#34; | sudo tee /etc/modprobe.d/disable-nouveau.conf
+</code></pre><ol start="2">
+<li>Para desativar o <code>SELinux</code>, primeiro vamos checar o status executando:</li>
+</ol>
+<pre tabindex="0"><code>sestatus
+</code></pre><p>Caso esteja ativo, será preciso setar o parâmetro <code>SELINUX=disabled</code> no arquivo <code>/etc/selinux/config</code> para prosseguir. É importante lembrar que a edição só será salva com permissão sudo.</p>
+<ol start="3">
+<li>Após isso, vamos atualizar o <code>initrafms</code> e reiniciar a máquina com os seguintes comandos:</li>
+</ol>
+<pre tabindex="0"><code>sudo dracut --force
+sudo reboot
+</code></pre><ol start="4">
+<li>Para checar se tudo deu certo até agora, vamos checar se o <code>nouveau</code> foi desabilitado:</li>
+</ol>
+<pre tabindex="0"><code>lsmod | grep nouveau
+</code></pre><p>Caso tenha sido desabilitado, não terá saída.</p>
+<ol start="5">
+<li>Para checar o SELinux:</li>
+</ol>
+<pre tabindex="0"><code>sestatus
+</code></pre><p>Caso tenha sido desabilitado, a saída será:  <code>SELinux status: disabled</code></p>
+<h4 id="instalando-pré-requisitos">Instalando pré-requisitos</h4>
+<ol>
+<li>Vamos instalar alguns pré-requisitos antes de iniciar a instalação de fato:</li>
+</ol>
+<pre tabindex="0"><code>sudo dnf install pciutils environment-modules
+sudo dnf install kernel-devel-$(uname -r) kernel-headers
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo dnf clean all 
+sudo dnf install dkms
+</code></pre><ol start="2">
+<li>Também precisamos habilitar alguns repositórios:</li>
+</ol>
+<pre tabindex="0"><code>sudo subscription-manager repos --enable=rhel-8-for-ppc64le-appstream-rpms
+sudo subscription-manager repos --enable=rhel-8-for-ppc64le-baseos-rpms
+sudo subscription-manager repos --enable=codeready-builder-for-rhel-8-ppc64le-rpms
+</code></pre><h4 id="baixando-e-instalando-repositórios-dos-pacotes-cuda">Baixando e instalando repositórios dos pacotes CUDA</h4>
+<ol>
+<li>Vamos baixar a versão <strong>12.2 do CUDA</strong> e o <strong>Driver NVIDIA 535.54.03-1</strong> com o comando seguinte:</li>
+</ol>
+<pre tabindex="0"><code>wget https://developer.download.nvidia.com/compute/cuda/12.2.0/local_installers/cuda-repo-rhel8-12-2-local-12.2.0_535.54.03-1.ppc64le.rpm
+</code></pre><ol start="2">
+<li>Para instalar o pacote baixado:</li>
+</ol>
+<pre tabindex="0"><code>sudo rpm -i cuda-repo-rhel8-12-2-local-12.2.0_535.54.03-1.ppc64le.rpm
+</code></pre><ol start="3">
+<li>Para instalar o driver NVIDIA e o CUDA, os seguintes comandos serão executados:</li>
+</ol>
+<pre tabindex="0"><code>sudo dnf install nvidia-driver-cuda 
+sudo dnf clean all 
+sudo dnf module reset nvidia-driver 
+sudo dnf module enable nvidia-driver:latest-dkms
+sudo dnf -y module install nvidia-driver:latest-dkms
+sudo dnf -y install cuda      
+</code></pre><p>Com esses comandos a instalação do driver e do CUDA estão finalizadas.</p>
+<h4 id="processos-pós-instalação">Processos pós-instalação</h4>
+<ol>
+<li>Vamos declarar as variáveis de ambiente <code>PATH</code> e <code>LD_LIBRARY_PATH</code>. Para isso, deve-se editar o arquivo <code>.bashrc</code> e adicionar essas duas linhas:</li>
+</ol>
+<pre tabindex="0"><code>export PATH=/usr/local/cuda/bin:$PATH 
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+</code></pre><p>Para atualizar as variáveis de ambiente, vamos executar o comando:</p>
+<pre tabindex="0"><code>source ~/.basrhc
+</code></pre><p>Precisamos realizar duas mudanças de forma manual, pois não são tratadas de forma automática pela instalação dos pacotes CUDA. Caso não sejam realizadas, a instalação do driver CUDA ficará inoperante.</p>
+<ol start="2">
+<li>A primeira mudança será configurar o <code>deamon</code> de persistência da NVIDIA. Primeiro vamos verificar o status e caso não esteja ativo, vamos ativar:</li>
+</ol>
+<pre tabindex="0"><code>systemctl status nvidia-persistenced
+systemctl enable nvidia-persistenced
+</code></pre><p>Algumas distros Linux possuem uma regra do udev que coloca a memória hot-plug em estado online assim que é detectada fisicamente, impedindo que o software da NVIDIA configure a memória da GPU com os parâmetros corretos no Power9.</p>
+<ol start="3">
+<li>Para desativar esta regra, vamos executar os comandos:</li>
+</ol>
+<pre tabindex="0"><code>sudo cp /lib/udev/rules.d/40-redhat.rules /etc/udev/rules.d/
+sudo sed -i &#39;s/SUBSYSTEM!=&#34;memory&#34;,.*GOTO=&#34;memory_hotplug_end&#34;/SUBSYSTEM==&#34;*&#34;, GOTO=&#34;memory_hotplug_end&#34;/&#39; /etc/udev/rules.d/40-redhat.rules
+</code></pre><h4 id="checagem-de-instalação">Checagem de instalação</h4>
+<p>Após realizar todos esses procedimentos, vamos reiniciar a máquina e checar as instalações:</p>
+<ol>
+<li>Reiniciando a máquina:</li>
+</ol>
+<pre tabindex="0"><code>sudo reboot
+</code></pre><ol start="2">
+<li>Checagem de driver NVIDIA:</li>
+</ol>
+<pre tabindex="0"><code>nvidia-smi
+</code></pre><p>A saída do comando acima deve mostrar informações do compilador CUDA: versão e data de instalação. Além de mostrar os dispositivos (GPUs) disponíveis com nome, memória, temperatura entre outras informações.</p>
+<p>Para realizar a última checagem, vamos baixar o repositório <code>cuda-samples</code> e executar o teste de dispositivos.</p>
+<ol start="3">
+<li>Baixando o repositório e acessando a versão do <code>cuda-samples</code> referente ao CUDA instalado:</li>
+</ol>
+<pre tabindex="0"><code>git clone https://github.com/NVIDIA/cuda-samples.git 
+cd cuda-samples/Samples/1_Utilities/deviceQuery
+git checkout v12.2 
+</code></pre><ol start="4">
+<li>Para buildar e executar os testes:</li>
+</ol>
+<pre tabindex="0"><code>make
+./deviceQuery
+</code></pre><p>Após executar este teste, espera-se que na última linha contenha: <code>Result = PASS</code>. Com isso, a Power9 está configurada, com driver NVIDIA e CUDA funcionando corretamente.</p>
+<h2 id="configurando-cudnn">Configurando CUDNN</h2>
+<ol>
+<li>Inicialmente, precisamos baixar e instalar o <code>.rpm</code> específico para <code>ppc64le</code>.</li>
+</ol>
+<pre tabindex="0"><code>wget https://developer.download.nvidia.com/compute/cudnn/9.0.0/local_installers/cudnn-local-repo-rhel8-9.0.0-1.0-1.ppc64le.rpm
+sudo rpm -i cudnn-local-repo-rhel8-9.0.0-1.0-1.ppc64le.rpm
+sudo dnf clean all
+sudo dnf -y install cudnn
+</code></pre><ol start="2">
+<li>Após a instalação, precisamos configurar as variáveis de ambiente <code>CUDNN_LIBRARY</code> e <code>CUDNN_INCLUDE_DIR</code>: (De uma forma mais direta do que fizemos anteriormente)</li>
+</ol>
+<pre tabindex="0"><code>echo &#39;export CUDNN_LIBRARY=/usr/lib64&#39; &gt;&gt; ~/.bashrc    
+echo &#39;export CUDNN_LIBRARY=/usr/lib64&#39; &gt;&gt; ~/.bashrc 
+</code></pre><p>Após isso, o processo de instalação do CUDNN está finalizado.</p>
+<p>Esta é a primeira parte do nosso tutorial. Uma vez que todas as etapas mostradas neste post foram finalizadas, o servidor está pronto para ter o gerenciador de pacotes <code>conda</code> e a biblioteca <code>pytorch</code> instaladas, você pode acessar a segunda parte deste tutorial neste <a href="/posts/tutorial_power9_pt2/">link</a>.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:39531/posts/experimentos_benchmarks_pt_br/"><i class="fa fa-chevron-circle-left"></i> Avaliando LLMs de Pequeno Porte (até 8B) em Benchmarks PT-BR</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:39531/posts/tutorial_power9_pt2/">Configurando Conda e PyTorch em um servidor IBM Power9 <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:39531/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>
