@@ -1,10 +1,10 @@
 ---
-title: "Avaliação Multilíngue dos Modelos IBM Granite no HumanEvalX"
+title: "Avaliação de Modelos IBM Granite para Tarefas de Geração de Código no HumanEvalX"
 date: 2025-11-28
 authors: ["Ronaldd Matias"]
 tags: ["LLM", "benchmark", "HumanEvalX", "Granite"]
 translationKey: "avaliacao-granite-humanevalx"
-summary: "Uma análise detalhada do desempenho dos modelos IBM Granite no benchmark HumanEvalX, cobrindo cinco linguagens de programação e revelando padrões importantes para aplicações reais."
+summary: "Avaliamos a família IBM Granite em tarefas de geração de código no benchmark HumanEvalX, abrangendo cinco linguagens de programação e analisando como modelos de diferentes tamanhos se comportam nesses cenários."
 draft: false
 ---
 
