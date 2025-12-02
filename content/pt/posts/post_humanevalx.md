@@ -23,9 +23,9 @@ O objetivo foi responder perguntas centrais da equipe:
 
 A avaliação foi conduzida utilizando o **OpenCompass**, um framework moderno e extensível para benchmarking de LLMs em escala. Ele permitiu executar todos os experimentos de forma padronizada, reprodutível e com protocolos consistentes de inferência.
 
-Como o OpenCompass não possui suporte nativo aos modelos hospedados na **IBM Cloud**, foi necessário desenvolver um client personalizado para integrar o framework à IBM Cloud Inference API. Esse client permitiu que o processo de avaliação executasse requisições de forma transparente, tratasse autenticação, controlasse parâmetros de geração e retornasse as respostas no formato esperado pelo benchmark. Os experimentos também foram executados no **Google Colab**, que serviu como ambiente prático de prototipação e execução dos modelos.
+Como o OpenCompass não possui suporte nativo aos modelos hospedados na **IBM Cloud**, foi necessário desenvolver um *client* personalizado para integrar o framework à IBM Cloud Inference API. Esse *client* permitiu que o processo de avaliação executasse requisições de forma transparente, tratasse autenticação, controlasse parâmetros de geração e retornasse as respostas no formato esperado pelo benchmark. Os experimentos também foram executados no **Google Colab**, que serviu como ambiente prático de prototipação e execução dos modelos.
 
-Utilizamos o benchmark HumanEvalX, uma extensão do HumanEval tradicional, cobrindo cinco linguagens com métricas consistentes de **Pass@1**.
+Utilizamos o benchmark HumanEvalX, uma extensão do HumanEval tradicional, cobrindo cinco linguagens com métricas consistentes de avaliação como, por exemplo ,**Pass@1**.
 
 Os modelos avaliados incluíram:
 
@@ -38,7 +38,7 @@ Os modelos avaliados incluíram:
 - DeepSeek Coder (6.7B)  
 - CodeLlama (7B)  
 
-A métrica utilizada foi Pass@1, seguindo o protocolo do benchmark.
+A métrica utilizada foi **Pass@1**, seguindo o protocolo do benchmark.
 
 ---
 
@@ -49,8 +49,7 @@ A métrica utilizada foi Pass@1, seguindo o protocolo do benchmark.
 A avaliação revelou comportamentos importantes:
 
 ### **1. O granite-4.0-h-small se destacou pela versatilidade**
-Ele superou 60% de Pass@1 em Java, C++ e JavaScript, além de manter mais de 50% em Python e Go.
-Esse desempenho consistente entre linguagens indica que o modelo é altamente versátil e confiável para cenários de desenvolvimento que envolvem múltiplos ecossistemas de programação.
+Ele superou 60% de Pass@1 em Java, C++ e JavaScript, além de manter mais de 50% em Python e Go. Esse desempenho consistente entre linguagens sugere que o modelo tem boa capacidade de generalização, mostrando-se promissor em cenários que envolvem diferentes ecossistemas de programação, embora análises adicionais em outros benchmarks sejam importantes para uma conclusão mais ampla.
 
 ### **2. O Granite Micro (3B) apresentou performance acima do esperado**
 Apesar de ser um modelo pequeno, o Granite Micro (3B) surpreendeu ao alcançar 65.85% em JavaScript e 68.90% em Java, superando inclusive modelos maiores avaliados.
@@ -60,7 +59,7 @@ Esse comportamento mostra que, mesmo com uma arquitetura compacta, ele consegue 
 Os resultados mostram que, à medida que avançamos pelos diferentes tamanhos da linha Granite, há uma evolução coerente no desempenho. Os modelos menores entregam resultados estáveis dentro da sua categoria, enquanto os maiores ampliam progressivamente a capacidade de resolver tarefas mais complexas. Essa distribuição ajuda a entender melhor onde cada modelo se encaixa no espectro de uso.
 
 ### **4. A comparação entre provedores ajuda a contextualizar os resultados**
-Ao lado dos modelos da IBM, também avaliamos modelos de outros provedores, como DeepSeek e Meta. Embora apresentem bons resultados em algumas linguagens, nenhum deles superou os modelos Granite em nenhuma das cinco linguagens avaliadas. A linha Granite manteve um desempenho consistente em todo o conjunto, permitindo visualizar claramente como cada provedor se posiciona no cenário atual de avaliação.
+Ao lado dos modelos da IBM, também avaliamos modelos de outros provedores, como DeepSeek e Meta. Em algumas linguagens, as diferenças foram pequenas, mas em todas elas houve ao menos um modelo da família Granite que alcançou a melhor pontuação. Os modelos Granite 4 Micro (3B) e Granite 4 h-small (30B) foram os destaques com resultados que ficaram próximos, e em alguns casos acima, de modelos reconhecidos por serem especialistas em código.
 
 ---
 

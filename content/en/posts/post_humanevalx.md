@@ -19,7 +19,7 @@ The goal was to answer key questions from the team:
 
 ---
 
-## Methodology / Process  
+## Methodology / Process   
 
 The evaluation was conducted using **OpenCompass**, a modern and extensible framework for large-scale LLM benchmarking. It allowed experiments to be executed in a standardized, reproducible way with consistent inference protocols.
 
@@ -38,7 +38,7 @@ The evaluated models included:
 - DeepSeek Coder (6.7B)  
 - CodeLlama (7B)  
 
-The metric used was Pass@1, following the benchmark protocol.
+The metric used was **Pass@1**, following the benchmark protocol.
 
 ---
 
@@ -49,7 +49,7 @@ The metric used was Pass@1, following the benchmark protocol.
 The evaluation revealed important behaviors:
 
 ### **1. granite-4.0-h-small stood out for its versatility**
-It surpassed 60% Pass@1 in Java, C++, and JavaScript, while maintaining over 50% in Python and Go. This consistent performance across languages indicates that the model is highly versatile and reliable for development scenarios involving multiple programming ecosystems.
+He surpassed 60% **Pass@1** in Java, C++, and JavaScript, while also maintaining over 50% in Python and Go. This consistent performance across languages suggests that the model has good generalization capability, showing promise in scenarios that involve different programming ecosystems, although additional benchmarks and evaluations are important before drawing broader conclusions.
 
 ### **2. Granite Micro (3B) performed above expectations**
 Despite being a small model, Granite Micro (3B) delivered 65.85% in JavaScript and 68.90% in Java, outperforming even some larger models evaluated. This shows that even with a compact architecture, it can deliver solid results, making it a highly efficient option for applications that require low computational cost without sacrificing performance.
@@ -58,7 +58,7 @@ Despite being a small model, Granite Micro (3B) delivered 65.85% in JavaScript a
 The results show that as we move through the different sizes of the Granite line, there is a coherent evolution in performance. Smaller models deliver stable results within their category, while larger ones gradually expand the ability to solve more complex tasks. This distribution helps clarify where each model fits in the usage spectrum.
 
 ### **4. Comparing different providers helps contextualize the results**
-Alongside the IBM models, we also evaluated models from other providers such as DeepSeek and Meta. While they showed good results in some languages, none of them outperformed the Granite models in any of the five evaluated languages. The Granite line maintained consistent performance across the entire benchmark, making it easier to visualize how each provider positions itself in the current evaluation landscape.
+Alongside the IBM models, we also evaluated models from other providers such as DeepSeek and Meta. In some languages, the differences were small, but in all of them there was at least one model from the Granite family that achieved the highest score. The Granite 4 Micro (3B) and Granite 4 h-small (30B) models were the standouts, with results that were close to, and in some cases above, those of models recognized as code specialists.
 
 ---
 
