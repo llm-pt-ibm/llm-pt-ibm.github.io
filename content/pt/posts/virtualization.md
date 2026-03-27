@@ -22,7 +22,7 @@ O fluxo é organizado nas seguintes camadas:
 
 {{< figure src="/images/kvm_virtualizacao.png" alt="Figura 1: Diagrama que representa a arquitetura de virtualização em 4 camadas." caption="Figura 1: Diagrama que representa a arquitetura de virtualização em 4 camadas." >}}
 
-Neste trabalho, exploramos a construção de um ambiente virtualizado utilizando KVM e Libvirt em um servidor Power9, com foco em isolamento, reprodutibilidade e uso compartilhado entre membros de uma equipe. 
+Neste trabalho, exploramos a construção de um ambiente virtualizado utilizando KVM e Libvirt em um servidor Power9, com foco em isolamento, reprodutibilidade e uso compartilhado entre membros de uma equipe.
 
 ## TL;DR
 * Implementamos um ambiente virtualizado no Power9 usando KVM + Libvirt.
@@ -268,7 +268,8 @@ Para facilitar o uso das GPUs Tesla V100 presentes no servidor, disponibilizamos
 
 Baixe e descompacte a imagem:
 ```
-wget <url_do_repositorio>/AlmaLinux-8-Power9-NVIDIA-drivers.qcow2.xz
+pip install --user gdown
+gdown --folder "https://drive.google.com/drive/u/2/folders/1WM8fHKWaMu-NJOzwqh6cdcET7mNE50du"
 xz -d AlmaLinux-8-Power9-NVIDIA-drivers.qcow2.xz
 ```
 
