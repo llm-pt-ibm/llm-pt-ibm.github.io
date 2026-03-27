@@ -269,7 +269,7 @@ Para facilitar o uso das GPUs Tesla V100 presentes no servidor, disponibilizamos
 Baixe e descompacte a imagem:
 ```
 pip install --user gdown
-gdown --folder "https://drive.google.com/drive/u/2/folders/1WM8fHKWaMu-NJOzwqh6cdcET7mNE50du"
+gdown --folder "https://drive.google.com/file/d/1coGmFTwLWdUP6AlOfwd-_VmN0eoNwFOT/view?usp=drive_link"
 xz -d AlmaLinux-8-Power9-NVIDIA-drivers.qcow2.xz
 ```
 
