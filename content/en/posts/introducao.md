@@ -17,4 +17,4 @@ This space brings together articles, tutorials, and research results produced by
 - **[Judo-AI](/projects/judo-ai)** — recognition of judo technique images using computer vision and machine learning.
 - **[MultiArq](/projects/multiarq)** — study and experimentation with IBM Power architecture, exploring its computational capabilities and environment configurations.
 
-Browse the posts, filter by project, and follow the latest updates!
+Browse the posts and follow the latest updates!
