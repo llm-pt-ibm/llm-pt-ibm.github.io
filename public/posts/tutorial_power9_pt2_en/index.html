@@ -1,19 +1,19 @@
 <html lang="pt">
 
-<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=38805&amp;path=livereload" data-no-instant defer></script><!doctype html>
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
 
 <html lang="pt">
 
 <head>
-  <title>Configurando Conda e PyTorch em um servidor IBM Power9 - LLM IBM UFCG</title>
+  <title>Configurando Conda e PyTorch em um servidor IBM Power9 - IBM UFCG</title>
   <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
-<meta name="author" content="" /><meta property="og:url" content="http://localhost:38805/posts/tutorial_power9_pt2_en/">
-  <meta property="og:site_name" content="LLM IBM UFCG">
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/tutorial_power9_pt2_en/">
+  <meta property="og:site_name" content="IBM UFCG">
   <meta property="og:title" content="Configurando Conda e PyTorch em um servidor IBM Power9">
   <meta property="og:description" content="Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o gerenciador de pacotes Conda e a biblioteca PyTorch.">
-  <meta property="og:locale" content="pt">
+  <meta property="og:locale" content="pt_br">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2025-06-30T00:00:00+00:00">
@@ -28,28 +28,28 @@
   <meta name="twitter:title" content="Configurando Conda e PyTorch em um servidor IBM Power9">
   <meta name="twitter:description" content="Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o gerenciador de pacotes Conda e a biblioteca PyTorch.">
 
-<meta name="generator" content="Hugo 0.147.9">
+<meta name="generator" content="Hugo 0.159.1">
     
-    <link rel="icon" href="http://localhost:38805/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
   
   
-    <link rel="icon" href="http://localhost:38805/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
   
   
-    <link rel="icon" href="http://localhost:38805/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
   
   
-    <link rel="apple-touch-icon" href="http://localhost:38805/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
   
 
   <link rel="stylesheet" href="/css/normalize.min.css" />
-  <link rel="stylesheet" href="http://localhost:38805/fontawesome/css/all.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
   
   
   <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
-  <link rel='stylesheet' href='http://localhost:38805/css/custom.css'><link rel='stylesheet' href='http://localhost:38805/css/font.css'>
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
   <style>
     .site-header {
       display: flex;
@@ -108,16 +108,16 @@
       <div class="site-header">
         <div class="title-tagline-wrapper">
           <h1>
-            <a href="http://localhost:38805/">LLM IBM UFCG</a>
+            <a href="http://localhost:1313/">IBM UFCG</a>
           </h1>
           
-          <p class="tagline"><em>Blog com relatórios periódicos das tarefas realizadas.</em></p>
+          <p class="tagline"><em>Pesquisa e desenvolvimento em IA, hardware de alto desempenho e infraestrutura em parceria entre UFCG e IBM.</em></p>
           
         </div>
         <div class="logo-wrapper">
           
 <div class="site_logo featured_image">
-    <a href="http://localhost:38805/">
+    <a href="http://localhost:1313/">
         <img class="" 
              src="/site_logo.png">
     </a>
@@ -157,6 +157,12 @@
         <li>
             <a class="" href="/tags">
                 <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projetos</span>
             </a>
         </li>
         
@@ -302,7 +308,7 @@ git submodule update --init --recursive
 </ol>
 <pre tabindex="0"><code>nano test_torch.py
 </code></pre><p>Esse arquivo deve conter as seguintes linhas:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#f92672">import</span> torch
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#f92672">import</span> torch
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>print(torch<span style="color:#f92672">.</span>__version__)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>print(<span style="color:#e6db74">&#34;CUDA disponível:&#34;</span>, torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available())
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>print(<span style="color:#e6db74">&#34;Número de GPUs:&#34;</span>, torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>device_count())
@@ -328,7 +334,7 @@ git submodule update --init --recursive
 </ol>
 <pre tabindex="0"><code>python test_gpu.py
 </code></pre><p>A saída deve ser algo semelhante a:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>2.6.0a0+git1eba9b3
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>2.6.0a0+git1eba9b3
 </span></span><span style="display:flex;"><span>CUDA disponível: True
 </span></span><span style="display:flex;"><span>Número de GPUs: <span style="color:#ae81ff">4</span>
 </span></span><span style="display:flex;"><span>Nome da GPU: Tesla V100-SXM2-16GB
@@ -348,12 +354,12 @@ git submodule update --init --recursive
     <ul>
         <li>
         
-            <a href="http://localhost:38805/posts/tutorial_power9_pt1_en/"><i class="fa fa-chevron-circle-left"></i> Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9</a>
+            <a href="http://localhost:1313/posts/tutorial_power9_pt1_en/"><i class="fa fa-chevron-circle-left"></i> Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9</a>
         
         </li>
         <li>
         
-            <a href="http://localhost:38805/posts/tutorial_power9_pt3_en/">Construindo API para inferências de LLMs em um servidor IBM Power9 <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="http://localhost:1313/posts/tutorial_power9_pt3_en/">Construindo API para inferências de LLMs em um servidor IBM Power9 <i class="fa fa-chevron-circle-right"></i> </a>
         
         </li>
     </ul>
@@ -371,7 +377,7 @@ git submodule update --init --recursive
     <ul>
         <li>
             <h6>IBM &amp; UFCG - 2025 
-                <a href="http://localhost:38805/index.xml"> </a></h6>
+                <a href="http://localhost:1313/index.xml"> </a></h6>
         </li>
         
         

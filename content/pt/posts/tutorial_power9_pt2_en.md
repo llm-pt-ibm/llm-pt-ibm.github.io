@@ -3,6 +3,7 @@ title: "Configurando Conda e PyTorch em um servidor IBM Power9"
 date: 2025-06-30 # ano-mês-dia
 authors: ["Caio Silva"] # Pode ser uma lista
 tags: ["LLM", "Power9", "Conda", "PyTorch"]
+projects: ["llm-eval"]
 translationKey: "tutorial_power9_pt2_en"
 summary: "Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o gerenciador de pacotes Conda e a biblioteca PyTorch."
 draft: false # Mude para true se quiser que o post fique como rascunho

@@ -3,6 +3,7 @@ title: "Evaluating Small-Scale LLMs (up to 8B) on PT-BR Benchmarks"
 date: 2025-06-02 
 authors: ["Lucas Pereira"]
 tags: ["LLM", "HELM", "PT-BR"]
+projects: ["llm-eval"]
 translationKey: "experimentos_benchmarks_pt_br"
 summary: "In this post, we present the results of evaluating small-scale LLMs on sentiment analysis and MQA tasks in Brazilian Portuguese, using the HELM framework."
 draft: false 

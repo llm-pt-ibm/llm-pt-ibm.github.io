@@ -1,7 +1,7 @@
 baseURL = "https://llm-pt-ibm.github.io/"
 languageCode = 'pt-br'
 theme = 'Kiera'
-title = 'LLM IBM UFCG'
+title = 'IBM UFCG'
 pagination.pagerSize = 10
 copyright = "IBM & UFCG - 2025"
 defaultContentLanguage = "pt"
@@ -25,6 +25,7 @@ defaultContentLanguageInSubdir = false
   author = "authors"
   tag = "tags"
   category = "categories"
+  project = "projects"
 
 [markup]
   [markup.goldmark]
@@ -46,12 +47,16 @@ defaultContentLanguageInSubdir = false
     weight = 1
     contentDir = "content/pt"
     [languages.pt.params]
-      tagline = "Blog com relatórios periódicos das tarefas realizadas."
+      tagline = "Pesquisa e desenvolvimento em IA, hardware de alto desempenho e infraestrutura em parceria entre UFCG e IBM."
     
     [languages.pt.menu]
       [[languages.pt.menu.main]]
         name = "Equipe"
         url = "team/"
+        weight = 4
+      [[languages.pt.menu.main]]
+        name = "Projetos"
+        url = "/projects"
         weight = 3
       [[languages.pt.menu.main]]
         name = "Tags"
@@ -67,12 +72,16 @@ defaultContentLanguageInSubdir = false
     weight = 2
     contentDir = "content/en/"
     [languages.en.params]
-      tagline = "Blog with periodic reports of the tasks performed."
+      tagline = "Research and development on AI, high-performance hardware, and infrastructure — a partnership between UFCG and IBM."
 
     [languages.en.menu]
       [[languages.en.menu.main]]
         name = "Team"
         url = "/en/team"
+        weight = 4
+      [[languages.en.menu.main]]
+        name = "Projects"
+        url = "/en/projects"
         weight = 3
       [[languages.en.menu.main]]
         name = "Tags"

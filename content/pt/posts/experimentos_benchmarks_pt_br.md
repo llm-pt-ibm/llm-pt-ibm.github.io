@@ -3,6 +3,7 @@ title: "Avaliando LLMs de Pequeno Porte (até 8B) em Benchmarks PT-BR"
 date: 2025-06-02 
 authors: ["Lucas Pereira"]
 tags: ["LLM", "HELM"]
+projects: ["llm-eval"]
 translationKey: "experimentos_benchmarks_pt_br"
 summary: "Neste post, apresentamos os resultados da avaliação de LLMs de pequeno porte em tarefas de análise de sentimentos e MQA em português brasileiro, utilizando o framework HELM."
 draft: false 

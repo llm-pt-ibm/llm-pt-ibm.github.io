@@ -3,6 +3,7 @@ title: "Computação@UFCG lidera contribuições do Brasil ao framework HELM-Sta
 date: 2025-07-09 
 authors: ["João Brunet"]
 tags: ["LLM", "HELM", "IBM"]
+projects: ["llm-eval"]
 translationKey: "contribuicao_helm"
 summary: "Colaboração entre Ciência da Computação da UFCG e a IBM faz da universidade a maior contribuinte brasileira para o framework de avaliação HELM-Stanford em 2025."
 draft: false

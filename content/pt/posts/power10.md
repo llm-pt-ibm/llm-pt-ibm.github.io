@@ -3,6 +3,7 @@ title: "Realizando Inferências em CPU na Power10"
 date: 2025-04-06 # ano-mês-dia
 authors: ["André Alves", "Ronaldd Matias"] # Pode ser uma lista
 tags: ["LLM", "Power10"]
+projects: ["llm-eval"]
 translationKey: "power10"
 summary: "Neste post é ensinado a como executar o modelo Granite-20b-Code-Instruct em CPU em uma máquina Power10. "
 draft: false # Mude para true se quiser que o post fique como rascunho

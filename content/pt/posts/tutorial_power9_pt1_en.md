@@ -3,6 +3,7 @@ title: "Configurando S.O, NVIDIA Drivers, CUDA e CUDNN em um servidor IBM Power9
 date: 2025-06-29 # ano-mês-dia
 authors: ["Caio Silva"] # Pode ser uma lista
 tags: ["LLM", "Power9", "Drivers", "CUDA", "NVIDIA"]
+projects: ["llm-eval"]
 translationKey: "tutorial_power9_pt1_en"
 summary: "Este post faz parte de uma série de tutoriais que tem como objetivo final construir uma API de Modelos de Linguagem em servidor Power9. Nesta etapa vamos configurar o sistema operacional, instalar drivers NVIDIA, CUDA e CUDNN."
 draft: false # Mude para true se quiser que o post fique como rascunho

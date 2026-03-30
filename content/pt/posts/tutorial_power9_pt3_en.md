@@ -3,6 +3,7 @@ title: "Construindo API para inferências de LLMs em um servidor IBM Power9"
 date: 2025-07-02 # ano-mês-dia
 authors: ["Caio Silva"] # Pode ser uma lista
 tags: ["LLM", "Power9", "API", "FastAPI"]
+projects: ["llm-eval"]
 translationKey: "tutorial_power9_pt3_en"
 summary: "Este post faz parte de uma série de tutoriais cujo objetivo final é construir uma API de Modelos de Linguagem em um servidor Power9. Nesta etapa, vamos desenvolver a API usando FastAPI e a biblioteca Transformers."
 draft: false # Mude para true se quiser que o post fique como rascunho

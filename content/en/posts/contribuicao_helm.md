@@ -3,6 +3,7 @@ title: "Computação@UFCG Leads Brazil's Contributions to the HELM-Stanford Fram
 date: 2025-07-09 
 authors: ["João Brunet"]
 tags: ["LLM", "HELM", "IBM"]
+projects: ["llm-eval"]
 translationKey: "contribuicao_helm"
 summary: "Collaboration between UFCG’s Computer Science department and IBM makes the university the top Brazilian contributor to the HELM-Stanford evaluation framework in 2025."
 draft: false

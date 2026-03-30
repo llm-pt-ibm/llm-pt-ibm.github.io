@@ -3,6 +3,7 @@ title: "API de inferência de Modelos de Linguagem no servidor Power9 IBM"
 date: 2025-07-03 # ano-mês-dia
 authors: ["Caio Silva"] # Pode ser uma lista
 tags: ["LLM", "Power9", "API"]
+projects: ["llm-eval"]
 translationKey: "tutorial_power9_pt4_en"
 summary: "Este post faz parte de uma série de tutoriais cujo objetivo final é construir uma API de Modelos de Linguagem em um servidor Power9. Nesta etapa, vamos apresentar a API e mostrar como realizar requisições."
 draft: false # Mude para true se quiser que o post fique como rascunho

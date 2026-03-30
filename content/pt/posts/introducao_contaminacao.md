@@ -3,6 +3,7 @@ title: "Contaminação por dados de Benchmark em LLMs: Fundamentos, Causas e Est
 date: 2025-07-21 
 authors: ["Iriedson Vilar"]
 tags: ["LLM", "Contaminação", "Benchmark"]
+projects: ["llm-eval"]
 summary: "Este post tem como objetivo introduzir e difundir o problema da contaminação por dados de benchmark, apresentando os fundamentos conceituais, causas recorrentes e as metodologias de detecção."
 draft: false 
 ---
