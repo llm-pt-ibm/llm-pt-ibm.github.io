@@ -3,6 +3,7 @@ title: "Performing CPU Inference on Power10"
 date: 2025-04-06 # ano-mês-dia
 authors: ["André Alves", "Ronaldd Matias"] # Pode ser uma lista
 tags: ["LLM", "Power10"]
+projects: ["llm-eval"]
 translationKey: "power10"
 summary: "This post explains how to run the Granite-20b-Code-Instruct model on CPU on a Power10 machine."
 draft: false # Mude para true se quiser que o post fique como rascunho

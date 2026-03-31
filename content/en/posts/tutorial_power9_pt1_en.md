@@ -3,6 +3,7 @@ title: "Setting Up the OS, NVIDIA Drivers, CUDA, and cuDNN on IBM Power 9 Server
 date: 2025-06-29 # ano-mês-dia
 authors: ["Caio Silva"] # Pode ser uma lista
 tags: ["LLM", "Power9", "Drivers", "CUDA", "NVIDIA"]
+projects: ["llm-eval"]
 translationKey: "tutorial_power9_pt1_en"
 summary: "This post is part of a tutorial series aimed at building a Large Language Model API on Power9 servers. In this step, we'll set up the operating system and install NVIDIA drivers, CUDA, and cuDNN."
 draft: false # Mude para true se quiser que o post fique como rascunho

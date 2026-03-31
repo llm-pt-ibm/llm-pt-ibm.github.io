@@ -3,6 +3,7 @@ title: "LLMs Inference API on IBM Power9 Server"
 date: 2025-07-03 # ano-mês-dia
 authors: ["Caio Silva"] # Pode ser uma lista
 tags: ["LLM", "Power9", "API"]
+projects: ["llm-eval"]
 translationKey: "tutorial_power9_pt4_en"
 summary: "This post is part of a tutorial series whose ultimate goal is to build a LLM API on Power9 servers. In this stage, we will present the API and show how to make requests."
 draft: false # Mude para true se quiser que o post fique como rascunho

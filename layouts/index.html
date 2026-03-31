@@ -1,0 +1,31 @@
+{{ define "main" }}
+
+<section id="home">
+  <ul>
+    {{ $featured := where site.RegularPages "Params.featured" true }}
+    {{ range $featured }}
+      <li class="featured">
+        <h1>{{ .Title }}</h1>
+        <div style="text-align: justify">{{ .Content }}</div>
+      </li>
+    {{ end }}
+
+    {{ $regular := where site.RegularPages "Type" "posts" }}
+    {{ $regular = where $regular "Params.featured" "!=" true }}
+    {{ $paginator := .Paginate $regular.ByDate.Reverse }}
+    {{ range $index, $page := $paginator.Pages }}
+      <li {{ if eq $index 0 }}class="first" {{ end }}>
+        <h1><a href="{{ $page.Permalink }}" title="{{ $page.Title }}">{{ $page.Title }}</a></h1>
+        <p><a href="{{ $page.Permalink }}">{{ $page.Summary }}</a></p>
+        {{ partial "featured_image" $page }}
+        {{ if $page.Truncated }}
+          <a href="{{ $page.RelPermalink }}">{{ T "readMore" }}</a>
+        {{ end }}
+      </li>
+    {{ end }}
+  </ul>
+</section>
+
+{{ template "_internal/pagination.html" . }}
+
+{{ end }}

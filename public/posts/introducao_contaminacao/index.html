@@ -1,0 +1,394 @@
+<html lang="pt">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="pt">
+
+<head>
+  <title>Contaminação por dados de Benchmark em LLMs: Fundamentos, Causas e Estratégias de Detecção - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/introducao_contaminacao/">
+  <meta property="og:site_name" content="IBM UFCG">
+  <meta property="og:title" content="Contaminação por dados de Benchmark em LLMs: Fundamentos, Causas e Estratégias de Detecção">
+  <meta property="og:description" content="Este post tem como objetivo introduzir e difundir o problema da contaminação por dados de benchmark, apresentando os fundamentos conceituais, causas recorrentes e as metodologias de detecção.">
+  <meta property="og:locale" content="pt_br">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-07-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-21T00:00:00+00:00">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="Contaminação">
+    <meta property="article:tag" content="Benchmark">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Contaminação por dados de Benchmark em LLMs: Fundamentos, Causas e Estratégias de Detecção">
+  <meta name="twitter:description" content="Este post tem como objetivo introduzir e difundir o problema da contaminação por dados de benchmark, apresentando os fundamentos conceituais, causas recorrentes e as metodologias de detecção.">
+
+<meta name="generator" content="Hugo 0.159.1">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Pesquisa e desenvolvimento em IA, hardware de alto desempenho e infraestrutura em parceria entre UFCG e IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                
+              
+                
+                    <a class="lang-link" href="/en">
+                        <img src="/images/traducao.png" alt="Tradução" >
+                        English Version
+                    </a>
+                
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/">
+                <i class="fa-li fa  fa-lg"></i><span>Início</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projetos</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/team/">
+                <i class="fa-li fa  fa-lg"></i><span>Equipe</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Contaminação por dados de Benchmark em LLMs: Fundamentos, Causas e Estratégias de Detecção</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2025-07-21T00:00:00Z">Jul 21, 2025</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Iriedson Vilar</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/tags/contamina%C3%A7%C3%A3o">#Contaminação</a>
+                
+                    , 
+                    <a href="/tags/benchmark">#Benchmark</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="contexto">Contexto</h2>
+<p><em>Benchmarks</em> são estruturas organizadas e padronizadas que podem ser utilizadas para avaliar o desempenho de grandes modelos de linguagem (LLMs). Compostos, em geral, por uma base de dados, um conjunto de tarefas e métricas de avaliação, esses recursos fornecem um ponto de referência comum para mensurar avanços, comparar arquiteturas e orientar decisões de desenvolvimento e implantação.</p>
+<p>Apesar de seu uso recorrente, os resultados obtidos em <em>benchmarks</em> podem ser influenciados por diversos fatores. Um dos fatores ocorre quando, de alguma forma, os dados de teste são previamente expostos ao modelo durante seu treinamento. Esse cenário caracteriza o fenômeno conhecido como <strong>contaminação por dados de <em>benchmark</em></strong>, que pode ocorrer de forma acidental ou deliberada. A presença desse tipo de contaminação tende a comprometer a avaliação, pois o modelo pode memorizar parcial ou integralmente os exemplos avaliados em uma determinada tarefa, distorcendo seu desempenho real.</p>
+<div style="text-align: center; display: table;">
+  <img src="/images/contaminacao_explicacao.png" alt="Explicação contaminação" style="max-width: 50%; box-shadow: none;">
+  <p style="margin-top: 0.3em; font-size: 0.8em; font-style: italic; color: #000000eb">Contaminação por dados de benchmark</p>
+</div>
+<p>Com o objetivo de introduzir e difundir esse tema, esta postagem apresenta os fundamentos conceituais da contaminação por dados de <em>benchmark</em>, suas causas recorrentes e as metodologias atualmente utilizadas para sua detecção.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>Modelos são vulneráveis à contaminação quando os dados utilizados para testá-lo são previamente expostos durante o treinamento.</li>
+<li>A contaminação pode ocorrer de forma acidental ou intencional e compromete a validade das avaliações.</li>
+<li>Existem diferentes formas de contaminação, que variam pelo conteúdo exposto, momento da exposição e nível de abstração.</li>
+<li>Métodos de detecção podem ser diretos (quando os dados de treinamento são acessíveis) ou indiretos (baseados em comportamento ou inferência).</li>
+<li>Ferramentas como LLMSanitize, BenBench, ConStat e CDD-TED auxiliam na identificação sistemática de contaminações.</li>
+</ul>
+<h2 id="impactos-da-contaminação">Impactos da contaminação</h2>
+<p>A contaminação por dados de <em>benchmarks</em> provoca distorções que afetam tanto o rigor científico das avaliações quanto a confiabilidade de aplicações baseadas em LLMs. Os principais impactos descritos abaixo, também são discutidos em estudos como <a href="#ref1">[1]</a> <a href="#ref5">[5]</a> <a href="#ref7">[7]</a>.</p>
+<div style="text-align: center; display: table; width: 100%;">
+  <img src="/images/icones_riscos_contaminacao.png" alt="Riscos da contaminação" style="max-width: 40%; box-shadow: none;">
+  <p style="margin-top: 0.3em; font-size: 0.8em; font-style: italic; color: #000000eb">Riscos da contaminação por dados de benchmark</p>
+</div>
+<ul>
+<li>
+<p><strong>Inflacionamento de métricas:</strong> A exposição prévia aos dados de avaliação pode elevar artificialmente o desempenho dos modelos, resultando em métricas superestimadas, como acurácia e calibragem. Isso dificulta a interpretação precisa de suas capacidades reais.</p>
+</li>
+<li>
+<p><strong>Avaliação comprometida:</strong> Quando um <em>benchmark</em> é aplicado a modelos que já tiveram acesso a seus dados, ele deixa de refletir a dificuldade real das tarefas, comprometendo sua função como instrumento de avaliação imparcial.</p>
+</li>
+<li>
+<p><strong>Redução da generalização:</strong> A contaminação favorece a memorização de exemplos específicos em vez da aprendizagem de padrões gerais, o que reduz a capacidade do modelo de lidar com dados não vistos, especialmente em casos de contaminação por rótulo ou semântica.</p>
+</li>
+<li>
+<p><strong>Riscos em aplicações sensíveis:</strong> Avaliações contaminadas podem levar à adoção de modelos em domínios críticos, como saúde, direito e finanças, com base em métricas distorcidas. Isso aumenta o risco de falhas operacionais e decisões inadequadas.</p>
+</li>
+<li>
+<p><strong>Comparações enviesadas e desperdício de recursos:</strong> A contaminação prejudica a equidade entre modelos, especialmente quando apenas alguns foram expostos previamente aos dados de <em>benchmark</em>. Isso compromete comparações, favorece modelos não auditáveis e pode levar à alocação ineficiente de recursos.</p>
+</li>
+<li>
+<p><strong>Comprometimento da integridade científica:</strong> Avaliações baseadas em <em>benchmarks</em> contaminados afetam a reprodutibilidade e podem resultar em conclusões inválidas, enfraquecendo a confiabilidade de estudos que utilizam esses resultados como base empírica.</p>
+</li>
+</ul>
+<h2 id="causas-da-contaminação-por-dados-de-benchmark">Causas da contaminação por dados de <em>benchmark</em></h2>
+<p>A contaminação por dados de <em>benchmarks</em> em LLMs pode ocorrer de forma <strong>acidental</strong> <a href="#ref1">[1]</a> <a href="#ref4">[4]</a> ou <strong>intencional</strong> <a href="#ref1">[1]</a> <a href="#ref3">[3]</a>, com diferentes origens e consequências, dependendo principalmente da forma como os dados de treinamento são coletados, utilizados e reaproveitados nos ciclos de desenvolvimento dos modelos.</p>
+<p>A contaminação <strong>acidental</strong> é a mais comum e ocorre, na maioria dos casos, devido ao uso de <strong>dados extraídos automaticamente da internet para pré-treinamento em larga escala</strong> <a href="#ref1">[1]</a> <a href="#ref4">[4]</a>. Esses corpora, por sua diversidade e volume, frequentemente incluem conteúdos associados a <em>benchmarks</em>, como exemplos idênticos, trechos brutos ou textos semanticamente relacionados. Isso se deve ao fato de <em>benchmarks</em> e dados de treinamento frequentemente compartilharem fontes públicas comuns, como Wikipedia, repositórios educacionais, artigos técnicos e redes sociais.</p>
+<div style="text-align: center; display: table;">
+  <img src="/images/contaminacao_nao_intencional.png" alt="Contaminação não intencional" caption="" style="max-width: 80%; box-shadow: none;">
+  <p style="margin-top: 0.3em; font-size: 0.8em; font-style: italic; color: #000000eb">Exemplo de fluxo de contaminação não intencional</p>
+</div>
+<p>Embora mecanismos de filtragem possam ser implementados para evitar a inclusão de <em>benchmarks</em> conhecidos, essa estratégia apresenta limitações <a href="#ref4">[4]</a>. É difícil garantir a exclusão de todos os <em>benchmarks</em> existentes, especialmente os lançados recentemente ou ainda não amplamente documentados. Além disso, a identificação de sobreposição semântica é complexa, o que torna a detecção de vazamentos indiretos ainda mais desafiadora.</p>
+<p>Outro vetor de contaminação acidental está relacionado à <strong>reutilização de interações com usuários</strong> para re-treinamento ou ajuste fino de modelos implantados em produção <a href="#ref7">[7]</a>. Sistemas comerciais podem reaproveitar entradas fornecidas por usuários durante testes, avaliações públicas ou uso real. Quando essas interações reproduzem exemplos derivados de <em>benchmarks</em>, há risco de contaminação retroativa, mesmo que não intencional, nos ciclos seguintes de treinamento.</p>
+<p>Além disso, a contaminação pode se propagar por meio da <strong>geração de conteúdo por LLMs</strong> <a href="#ref1">[1]</a>. Modelos contaminados podem gerar textos que replicam padrões ou trechos presentes em <em>benchmarks</em>, mesmo que de forma parafraseada ou reestruturada. Esses textos, quando reutilizados em novos <em>benchmarks</em> ou conjuntos de treinamento, perpetuam e amplificam a contaminação original. Apesar de, nesses casos, os desenvolvedores poderem estar cientes da contaminação prévia, a natureza recursiva do processo faz com que a propagação ocorra de forma indireta e, muitas vezes, incontrolável. Por esse motivo, esse tipo de exposição também pode ser considerado um caso de contaminação acidental.</p>
+<p>Por outro lado, a <strong>contaminação intencional</strong> ocorre quando dados de <em>benchmark</em> são deliberadamente incluídos no treinamento, com o objetivo de melhorar o desempenho do modelo em tarefas específicas <a href="#ref1">[1]</a> <a href="#ref3">[3]</a>. Essa prática pode ocorrer, por exemplo, ao incorporar conjuntos como MATH ou GSM8K com o propósito de otimizar a performance em raciocínio matemático <a href="#ref6">[6]</a>. Embora esse uso possa ser justificável como dado supervisionado, sua posterior reutilização como <em>benchmark</em> invalida a avaliação.</p>
+<div style="text-align: center; display: table;">
+  <img src="/images/contaminacao_intencional.png" alt="Contaminação intencional" caption="" style="max-width: 80%; box-shadow: none;">
+  <p style="margin-top: 0.3em; font-size: 0.8em; font-style: italic; color: #000000eb">Exemplo de fluxo de contaminação intencional</p>
+</div>
+<p>É fundamental que, em casos como esse, haja <strong>transparência na documentação dos modelos</strong>. <em>benchmarks</em> utilizados como parte do treinamento não devem ser reaplicados como instrumentos de avaliação. Ainda assim, essa distinção nem sempre é respeitada, especialmente em modelos comerciais cuja documentação é limitada ou inexistente <a href="#ref5">[5]</a>.</p>
+<h2 id="categorias-e-níveis-de-contaminação">Categorias e níveis de contaminação</h2>
+<p>A contaminação por dados de <em>benchmark</em> pode assumir diferentes formas, variando conforme o tipo de conteúdo exposto, o grau de abstração da informação vazada e o estágio do treinamento em que a contaminação ocorre. Essas categorias não são mutuamente exclusivas e frequentemente se combinam, o que torna o fenômeno difícil de rastrear e mitigar.</p>
+<p>Em muitos casos, a exposição ocorre devido a um <strong>vazamento de entrada</strong>, que é quando apenas as entradas dos <em>benchmarks</em> são expostas ao modelo <a href="#ref4">[4]</a>, como perguntas, comandos ou <em>prompts</em>. No entanto, há situações em que tanto as entradas quanto os rótulos ou respostas anotadas estão presentes no treinamento, e essa situação é conhecida como <strong>vazamento de entrada-saída</strong> <a href="#ref4">[4]</a>.</p>
+<p>Outra forma comum de categorizar a contaminação é quando os modelos são expostos ao <strong>texto bruto</strong> utilizado na construção de <em>benchmarks</em> <a href="#ref5">[5]</a>, como artigos da Wikipedia, decisões judiciais ou descrições técnicas. Complementarmente, há o caso que envolve a <strong>contaminação por diretrizes de anotação</strong> <a href="#ref5">[5]</a>, quando o modelo acessa instruções empregadas no processo de rotulagem dos dados. Esse tipo de vazamento pode induzir comportamentos compatíveis com os critérios esperados pelo <em>benchmark</em>, mesmo sem exposição direta aos exemplos.</p>
+<p>Além disso, a contaminação pode ocorrer em diferentes <strong>níveis de abstração</strong>. No <strong>nível semântico</strong>, o modelo é exposto a conteúdos conceitualmente semelhantes ou derivados dos <em>benchmarks</em>, como reformulações, tópicos correlatos ou textos provenientes da mesma fonte <a href="#ref1">[1]</a>. Essa forma de vazamento pode introduzir vieses temáticos e comprometer a capacidade de generalização do modelo, sendo difícil de detectar por não envolver cópia literal. No <strong>nível informacional</strong>, o vazamento ocorre por meio de estruturas secundárias associadas ao <em>benchmark</em>, como distribuições temporais, frequências de rótulos, metadados ou até análises externas sobre o conjunto de dados <a href="#ref1">[1]</a>. Essas informações, mesmo sem conter o conteúdo principal, podem influenciar sutilmente o comportamento do modelo. No <strong>nível de dados</strong>, ocorre a exposição literal de exemplos do conjunto de avaliação, mas sem os rótulos correspondentes, o que ainda assim permite que o modelo aprenda padrões específicos do <em>benchmark</em> <a href="#ref1">[1]</a>. Já no <strong>nível de rótulos</strong>, o caso mais crítico, tanto os exemplos quanto os rótulos estão presentes no treinamento, o que favorece memorização direta, reduz a capacidade de generalização e compromete seriamente a validade da avaliação <a href="#ref1">[1]</a>.</p>
+<p>Por fim, a contaminação pode ocorrer em diferentes fases do ciclo de treinamento <a href="#ref5">[5]</a>. Durante o <strong>pré-treinamento</strong>, é comum que corpora amplos e não curados incluam trechos relacionados a <em>benchmarks</em>, por compartilharem fontes comuns. No <strong>ajuste fino supervisionado</strong>, conjuntos rotulados podem conter instâncias próximas ou idênticas às utilizadas posteriormente nos dados de teste do modelo. Já na <strong>fase pós-implantação</strong>, dados derivados de interações com usuários ou gerados por outras LLMs também podem introduzir contaminação, especialmente quando reaproveitados para re-treinamento.</p>
+<p>Essas diferentes manifestações evidenciam que a contaminação por dados de <em>benchmarks</em> é um fenômeno multifacetado, que pode ser sutil ou direta, intencional ou não, com impactos relevantes para a validade das avaliações, a comparação entre modelos e a confiabilidade dos sistemas desenvolvidos.</p>
+<h2 id="metodologias-de-detecção">Metodologias de detecção</h2>
+<p>A identificação de contaminação em <em>benchmarks</em> exige metodologias específicas, que variam conforme o nível de acesso ao modelo avaliado. Esse acesso costuma ser classificado em três categorias. Modelos <strong>caixa branca</strong> permitem acesso completo aos pesos e aos dados de treinamento. Modelos <strong>caixa cinza</strong> têm documentação limitada e expõem distribuições de probabilidade ou valores de log‑probabilidade, mas não os dados originais. Já modelos <strong>caixa preta</strong> oferecem apenas as respostas finais, sem qualquer visibilidade sobre arquitetura ou treinamento.</p>
+<div style="text-align: center; display: table;">
+  <img src="/images/tipos_de_modelos.png" alt="Tipos de Modelos" caption="" style="max-width: 70%; box-shadow: none;">
+  <p style="margin-top: 0.3em; font-size: 0.8em; font-style: italic; color: #000000eb">Níveis de acesso a modelos</p>
+</div>
+<p>Cada configuração impõe limitações próprias e condiciona as técnicas de detecção disponíveis. Metodologias de detecção direta, como busca por duplicação literal ou análise de similaridade semântica, requerem transparência total sobre os dados de treinamento e, portanto, aplicam‑se principalmente a modelos caixa branca <a href="#ref1">[1]</a> <a href="#ref3">[3]</a> <a href="#ref4">[4]</a>. Já metodologias de detecção indireta, focadas em vazamentos comportamentais, manipulação de entrada, perturbações ou evidências temporais, podem ser empregadas inclusive em modelos caixa cinza ou caixa preta, pois não dependem de acesso direto aos dados utilizados no treinamento <a href="#ref3">[3]</a> <a href="#ref4">[4]</a>. A seguir, apresentam‑se as principais abordagens descritas na literatura, organizadas de acordo com a origem da evidência e o grau de inferência envolvido.</p>
+<h3 id="metodologias-de-detecção-direta">Metodologias de detecção direta</h3>
+<p>Algumas metodologias de detecção partem da premissa de que o conjunto de dados utilizado no treinamento do modelo é conhecido ou publicamente acessível. Nesses casos, é possível realizar comparações diretas entre os dados de teste (<em>benchmarks</em>) e os dados efetivamente utilizados no treinamento, o que permite evidenciar contaminações com alto grau de precisão.</p>
+<p>Modelos classificados como <strong>caixa branca</strong>, como o <a href="https://huggingface.co/TucanoBR" target="_blank" rel="noopener noreferrer"><strong>Tucano</strong></a>, disponibilizam não apenas a arquitetura e os pesos, mas também todo o processo de pré-processamento e os dados utilizados no treinamento, possibilitando esse tipo de verificação. Já para modelos <strong>caixa cinza</strong>, mesmo entre os de código aberto como o <a href="https://huggingface.co/meta-llama" target="_blank" rel="noopener noreferrer"><strong>LLaMA</strong></a> ou o <a href="https://huggingface.co/mistralai" target="_blank" rel="noopener noreferrer"><strong>Mistral</strong></a>, a ausência dos dados de treinamento impossibilita a aplicação dessas estratégias.</p>
+<p>Entre os métodos mais utilizados nesse cenário estão:</p>
+<ul>
+<li>
+<p><strong>String matching</strong>: busca por duplicações exatas entre exemplos do <em>benchmark</em> e entradas do conjunto de treinamento. Essa técnica utiliza substrings, n‑gramas ou trechos completos, sendo eficiente e de fácil implementação. Embora direta e objetiva, há limitação quanto à identificação de repetições literais, sem capturar variantes semânticas ou paráfrases <a href="#ref4">[4]</a>.</p>
+</li>
+<li>
+<p><strong>Similaridade via <em>embeddings</em></strong>: utiliza representações vetoriais de sentenças para medir a proximidade semântica entre exemplos do conjunto de treinamento e do <em>benchmark</em>. Essa técnica permite identificar contaminações menos explícitas, como reformulações e variações estruturais, sendo especialmente útil em casos em que não há duplicações literais. No entanto, além de mais custosa, sua eficácia depende da escolha apropriada do modelo de <em>embeddings</em> e da métrica de distância utilizada <a href="#ref4">[4]</a>.</p>
+</li>
+<li>
+<p><strong>Detecção de paráfrases</strong>: utiliza LLMs ou classificadores especializados para avaliar se exemplos do <em>benchmark</em> são paráfrases de conteúdos previamente vistos. Essa abordagem é útil quando há suspeita de reformulações, mas exige supervisão humana ou limiares bem definidos para reduzir falsos positivos <a href="#ref4">[4]</a>.</p>
+</li>
+</ul>
+<p>Essas técnicas são consideradas <strong>concretas e verificáveis</strong>, pois operam diretamente sobre os dados de treinamento e permitem mensurar de forma clara a sobreposição com os <em>benchmarks</em>. No entanto, apresentam alto custo metodológico, já que requerem acesso completo aos dados de treinamento e demandam recursos computacionais significativos para análise em larga escala.</p>
+<h3 id="metodologias-de-detecção-indireta">Metodologias de detecção indireta</h3>
+<p>Em contextos em que os dados de treinamento não são públicos, como no caso de modelos proprietários (<a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer"><strong>GPT-4</strong></a>, <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer"><strong>Claude</strong></a> ou <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer"><strong>Gemini</strong></a>), não é possível realizar comparações diretas com os <em>benchmarks</em>. Nessas situações, a detecção de contaminação depende de evidências indiretas, geralmente obtidas por meio de inferência estatística, análise cronológica ou observação de comportamentos em tarefas específicas.</p>
+<p>Essas abordagens são especialmente relevantes em modelos classificados como <strong>caixa preta</strong> e <strong>caixa cinza</strong>, nos quais não há acesso aos dados de treinamento. Ainda assim, também podem ser aplicadas a modelos <strong>caixa branca</strong>, especialmente em análises comparativas, complementares ou em cenários de validação cruzada.</p>
+<p>As principais estratégias empregadas nesse cenário incluem:</p>
+<ul>
+<li>
+<p><strong>Análise cronológica</strong>: busca comparar o desempenho do modelo em <em>benchmarks</em> publicados em momentos distintos. Uma melhora abrupta em <em>benchmarks</em> liberados após a data de corte do treinamento pode sugerir exposição posterior ao conteúdo de teste <a href="#ref4">[4]</a>.</p>
+</li>
+<li>
+<p><strong>Análise comportamental</strong>: avalia se o modelo responde corretamente a variações nos exemplos do <em>benchmark</em>, como <em>prompts</em> truncados, reordenados ou parafraseados. Técnicas como o <strong>TS-Guessing</strong> exploram esse princípio para detectar memorização implícita <a href="#ref2">[2]</a> <a href="#ref4">[4]</a>.</p>
+</li>
+<li>
+<p><strong>Inferência por confiança</strong>: abrange métodos que estimam a presença de exemplos de treinamento com base no padrão de respostas do modelo. Técnicas como os <strong>Membership Inference Attacks (MIA)</strong> e o <strong>BenBench</strong> comparam o grau de confiança ou perplexidade do modelo em exemplos suspeitos em relação a exemplos sabidamente fora do treinamento. Uma concentração anormal de confiança ou variação de perplexidade em itens específicos pode indicar memorização <a href="#ref4">[4]</a> <a href="#ref6">[6]</a>.</p>
+</li>
+</ul>
+<p>Essas metodologias são úteis para detectar contaminação em modelos sem transparência sobre seus dados de origem, mas envolvem maior grau de incerteza. Por dependerem de inferências comportamentais ou contextuais, os resultados exigem interpretação cuidadosa, especialmente quando utilizados de forma isolada. Ainda assim, úteis para a avaliação de modelos comerciais ou sem documentação disponível.</p>
+<h3 id="ferramentas-auxiliares-na-detecção-de-contaminação">Ferramentas auxiliares na detecção de contaminação</h3>
+<p>Com o aumento da preocupação em torno da contaminação por dados de <em>benchmarks</em>, diversas ferramentas têm sido desenvolvidas para automatizar e padronizar estratégias de detecção. Essas ferramentas integram métodos complementares baseados em correspondência literal, similaridade semântica, comportamento do modelo e análises estatísticas, permitindo investigações mais robustas mesmo em contextos com acesso restrito aos dados ou aos parâmetros dos modelos.</p>
+<p>O <a href="https://github.com/ntunlp/LLMSanitize" target="_blank" rel="noopener noreferrer"><strong>LLMSanitize</strong></a> implementa diversas técnicas descritas em diferentes estudos, oferecendo métodos voltados a modelos <strong>caixa branca</strong>, como <em>string matching</em>, truncamento de entrada e avaliação semântica com LLMs, bem como estratégias para modelos <strong>caixa cinza</strong> e <strong>caixa preta</strong>, como o <strong>TS-Guessing</strong> e o <strong>Sharded Likelihood</strong>, metodologias baseadas em análise comportamental.</p>
+<p>Algumas ferramentas são voltadas a metodologias específicas. O <a href="https://github.com/GAIR-NLP/benbench" target="_blank" rel="noopener noreferrer"><strong>BenBench</strong></a>, por exemplo, busca sinais de memorização implícita por meio da análise de perplexidade, similaridade e acurácia em versões originais e parafraseadas de <em>benchmarks</em>, sendo especialmente útil na avaliação de modelos <strong>caixa preta</strong> ou <strong>caixa cinza</strong>. O <a href="https://github.com/eth-sri/ConStat" target="_blank" rel="noopener noreferrer"><strong>ConStat</strong></a> é voltado à comparação estatística entre o desempenho do modelo em dados suspeitos e em outros <em>benchmarks</em> similares, visando detectar padrões de desempenho atípicos. Já o <a href="https://github.com/YihongDong/CDD-TED4LLMs" target="_blank" rel="noopener noreferrer"><strong>CDD-TED</strong></a> propõe o uso de <em>benchmarks</em> diagnósticos controlados para examinar discrepâncias na distribuição de confiança e entropia das respostas, oferecendo evidências indiretas de contaminação.</p>
+<p>Essas ferramentas representam meios práticos e sistemáticos para detectar exposições em diferentes níveis.</p>
+<h2 id="conclusão">Conclusão</h2>
+<p>A contaminação por dados de <em>benchmark</em> constitui um desafio relevante para a avaliação justa de modelos de linguagem. Como discutido ao longo do texto, esse fenômeno compromete a validade das métricas, dificulta comparações entre LLMs e pode levar à adoção de modelos com desempenho superestimado em aplicações reais.</p>
+<p>Para mitigar a contaminação, diversas estratégias têm sido indicadas na literatura. Entre elas, destacam-se a reformulação de <em>benchmarks</em> por meio de técnicas como <em>paraphrasing</em> e <em>back-translation</em>, a criação de conjuntos de teste dinâmicos, o uso de avaliações mediadas por modelos de linguagem mais robustos e a implementação de <em>benchmarks</em> privados com acesso controlado. No entanto, essas soluções ainda enfrentam limitações práticas, especialmente em idiomas sub-representados, nos quais a variedade e a qualidade dos dados disponíveis são restritas.</p>
+<p>Este artigo apresentou uma caracterização geral da contaminação por dados de <em>benchmark</em>, abordando suas causas, impactos e principais metodologias de detecção. Como continuidade, serão conduzidos estudos empíricos com foco em idiomas sub-representados. Embora a maioria dos trabalhos existentes se concentre em idiomas amplamente representados nos dados globais, como o inglês e o chinês, há indícios de que o problema seja ainda mais crítico em línguas com menor presença nos repositórios de treinamento. A escassez de <em>benchmarks</em> exclusivos e a ampla reutilização de fontes públicas aumentam a probabilidade de sobreposição entre dados de treinamento e teste nesse contexto.</p>
+<p>Tomando o português brasileiro como exemplo de idioma sub-representado, os estudos futuros utilizarão modelos multilíngues e especializados no idioma, com o objetivo de estimar o grau de exposição a dados de avaliação e contribuir para práticas mais consistentes de validação e comparação entre modelos.</p>
+<h2 id="referências">Referências</h2>
+<p><a name="ref1">[1]</a> Cheng Xu, Shuhao Guan, Derek Greene, and M-Tahar Kechadi. 2024. <em>Benchmark Data Contamination of Large Language Models: A Survey</em>. arXiv preprint arXiv:2406.04244.</p>
+<p><a name="ref2">[2]</a> Chunyuan Deng, Yilun Zhao, Xiangru Tang, Mark Gerstein, and Arman Cohan. 2024. <em>Investigating Data Contamination in Modern Benchmarks for Large Language Models</em>. In <em>Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)</em>, pages 8706–8719, Mexico City, Mexico. Association for Computational Linguistics.</p>
+<p><a name="ref3">[3]</a> Chunyuan Deng, Yilun Zhao, Yuzhao Heng, Yitong Li, Jiannan Cao, Xiangru Tang, and Arman Cohan. 2024. <em>Unveiling the Spectrum of Data Contamination in Language Model: A Survey from Detection to Remediation</em>. In <em>Findings of the Association for Computational Linguistics: ACL 2024</em>, pages 16078–16092, Bangkok, Thailand. Association for Computational Linguistics.</p>
+<p><a name="ref4">[4]</a> Mathieu Ravaut, Bosheng Ding, Fangkai Jiao, Hailin Chen, Xingxuan Li, Ruochen Zhao, Chengwei Qin, Caiming Xiong, and Shafiq Joty. 2024. <em>How much are LLMs contaminated? A Comprehensive Survey and the LLMSanitize Library</em>. arXiv preprint arXiv:2404.00699.</p>
+<p><a name="ref5">[5]</a> Oscar Sainz, Jon Campos, Iker García-Ferrero, Julen Etxaniz, Oier Lopez de Lacalle, and Eneko Agirre. 2023. <em>NLP Evaluation in Trouble: On the Need to Measure LLM Data Contamination for Each Benchmark</em>. In <em>Findings of the Association for Computational Linguistics: EMNLP 2023</em>, pages 10776–10787, Singapore. Association for Computational Linguistics.</p>
+<p><a name="ref6">[6]</a> Ruijie Xu, Zengzhi Wang, Run-Ze Fan, and Pengfei Liu. 2024. <em>Benchmarking Benchmark Leakage in Large Language Models</em>. arXiv preprint arXiv:2404.18824.</p>
+<p><a name="ref7">[7]</a> Simone Balloccu, Patrícia Schmidtová, Mateusz Lango, and Ondrej Dusek. 2024. <em>Leak, Cheat, Repeat: Data Contamination and Evaluation Malpractices in Closed-Source LLMs</em>. In <em>Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers)</em>, pages 67–93, St. Julian’s, Malta. Association for Computational Linguistics.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/contribuicao_helm/"><i class="fa fa-chevron-circle-left"></i> Computação@UFCG lidera contribuições do Brasil ao framework HELM-Stanford em parceria com a IBM</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:1313/posts/post_humanevalx/">Avaliação de Modelos IBM Granite para Tarefas de Geração de Código no HumanEvalX <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>

@@ -1,0 +1,322 @@
+<html lang="pt">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="pt">
+
+<head>
+  <title>Avaliação de Modelos IBM Granite para Tarefas de Geração de Código no HumanEvalX - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/post_humanevalx/">
+  <meta property="og:site_name" content="IBM UFCG">
+  <meta property="og:title" content="Avaliação de Modelos IBM Granite para Tarefas de Geração de Código no HumanEvalX">
+  <meta property="og:description" content="Avaliamos a família IBM Granite em tarefas de geração de código no benchmark HumanEvalX, abrangendo cinco linguagens de programação e analisando como modelos de diferentes tamanhos se comportam nesses cenários.">
+  <meta property="og:locale" content="pt_br">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-11-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-28T00:00:00+00:00">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="Benchmark">
+    <meta property="article:tag" content="HumanEvalX">
+    <meta property="article:tag" content="Granite">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Avaliação de Modelos IBM Granite para Tarefas de Geração de Código no HumanEvalX">
+  <meta name="twitter:description" content="Avaliamos a família IBM Granite em tarefas de geração de código no benchmark HumanEvalX, abrangendo cinco linguagens de programação e analisando como modelos de diferentes tamanhos se comportam nesses cenários.">
+
+<meta name="generator" content="Hugo 0.159.1">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Pesquisa e desenvolvimento em IA, hardware de alto desempenho e infraestrutura em parceria entre UFCG e IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/en/posts/post_humanevalx/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    English Version
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/">
+                <i class="fa-li fa  fa-lg"></i><span>Início</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projetos</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/team/">
+                <i class="fa-li fa  fa-lg"></i><span>Equipe</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Avaliação de Modelos IBM Granite para Tarefas de Geração de Código no HumanEvalX</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2025-11-28T00:00:00Z">Nov 28, 2025</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Ronaldd Matias</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/tags/benchmark">#benchmark</a>
+                
+                    , 
+                    <a href="/tags/humanevalx">#HumanEvalX</a>
+                
+                    , 
+                    <a href="/tags/granite">#Granite</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="contexto">Contexto</h2>
+<p>O uso de modelos de linguagem para <strong>geração e compreensão de código</strong> tem se tornado essencial em fluxos de desenvolvimento modernos.<br>
+Como parte do esforço conjunto entre o <strong>LSD/UFCG</strong> e a <strong>IBM Brasil</strong>, investigamos a performance da família <strong>IBM Granite 4</strong> no benchmark <strong>HumanEvalX</strong>, que avalia capacidades de programação em <em>cinco linguagens</em>: Python, Java, Go, C++, e JavaScript.</p>
+<p>O objetivo foi responder perguntas centrais da equipe:</p>
+<ul>
+<li><em>Quão versáteis são os modelos Granite entre linguagens diferentes?</em></li>
+<li><em>Modelos menores entregam performance útil?</em></li>
+<li><em>Como os Granite se posicionam frente a modelos open-source como DeepSeek Coder e CodeLlama?</em></li>
+</ul>
+<hr>
+<h2 id="metodologia--processo">Metodologia / Processo</h2>
+<p>A avaliação foi conduzida utilizando o <strong>OpenCompass</strong>, um framework moderno e extensível para benchmarking de LLMs em escala. Ele permitiu executar todos os experimentos de forma padronizada, reprodutível e com protocolos consistentes de inferência.</p>
+<p>Como o OpenCompass não possui suporte nativo aos modelos hospedados na <strong>IBM Cloud</strong>, foi necessário desenvolver um <em>client</em> personalizado para integrar o framework à IBM Cloud Inference API. Esse <em>client</em> permitiu que o processo de avaliação executasse requisições de forma transparente, tratasse autenticação, controlasse parâmetros de geração e retornasse as respostas no formato esperado pelo benchmark. Os experimentos também foram executados no <strong>Google Colab</strong>, que serviu como ambiente prático de prototipação e execução dos modelos.</p>
+<p>Utilizamos o benchmark HumanEvalX, uma extensão do HumanEval tradicional, cobrindo cinco linguagens com métricas consistentes de avaliação como, por exemplo ,<strong>Pass@1</strong>.</p>
+<p>Os modelos avaliados incluíram:</p>
+<ul>
+<li>Granite 4.0 Micro (3B)</li>
+<li>Granite 4.0 (1B)</li>
+<li>Granite 4.0 h-tiny (7B)</li>
+<li>Granite 4.0 h-small (30B) — via IBM Cloud</li>
+<li>granite 4.0 (350M)</li>
+<li>granite code instruct 8B — via IBM Cloud</li>
+<li>DeepSeek Coder (6.7B)</li>
+<li>CodeLlama (7B)</li>
+</ul>
+<p>A métrica utilizada foi <strong>Pass@1</strong>, seguindo o protocolo do benchmark.</p>
+<hr>
+<h2 id="resultados-e-conclusões">Resultados e Conclusões</h2>
+<figure><img src="/images/heatmap_humanevalX.png"
+    alt="Heatmap de desempenho"><figcaption>
+      <p>Heatmap do desempenho dos modelos no HumanEvalX.</p>
+    </figcaption>
+</figure>
+
+<p>A avaliação revelou comportamentos importantes:</p>
+<h3 id="1-o-granite-40-h-small-se-destacou-pela-versatilidade"><strong>1. O granite-4.0-h-small se destacou pela versatilidade</strong></h3>
+<p>Ele superou 60% de Pass@1 em Java, C++ e JavaScript, além de manter mais de 50% em Python e Go. Esse desempenho consistente entre linguagens sugere que o modelo tem boa capacidade de generalização, mostrando-se promissor em cenários que envolvem diferentes ecossistemas de programação, embora análises adicionais em outros benchmarks sejam importantes para uma conclusão mais ampla.</p>
+<h3 id="2-o-granite-micro-3b-apresentou-performance-acima-do-esperado"><strong>2. O Granite Micro (3B) apresentou performance acima do esperado</strong></h3>
+<p>Apesar de ser um modelo pequeno, o Granite Micro (3B) surpreendeu ao alcançar 65.85% em JavaScript e 68.90% em Java, superando inclusive modelos maiores avaliados.
+Esse comportamento mostra que, mesmo com uma arquitetura compacta, ele consegue entregar resultados sólidos, tornando-se uma opção altamente eficiente para aplicações que exigem baixo custo computacional sem abrir mão de desempenho.</p>
+<h3 id="3-a-progressão-de-tamanhos-350m--1b--3b--7b--30b-mostra-evolução-gradual-e-coerente"><strong>3. A progressão de tamanhos (350M → 1B → 3B → 7B → 30B) mostra evolução gradual e coerente</strong></h3>
+<p>Os resultados mostram que, à medida que avançamos pelos diferentes tamanhos da linha Granite, há uma evolução coerente no desempenho. Os modelos menores entregam resultados estáveis dentro da sua categoria, enquanto os maiores ampliam progressivamente a capacidade de resolver tarefas mais complexas. Essa distribuição ajuda a entender melhor onde cada modelo se encaixa no espectro de uso.</p>
+<h3 id="4-a-comparação-entre-provedores-ajuda-a-contextualizar-os-resultados"><strong>4. A comparação entre provedores ajuda a contextualizar os resultados</strong></h3>
+<p>Ao lado dos modelos da IBM, também avaliamos modelos de outros provedores, como DeepSeek e Meta. Em algumas linguagens, as diferenças foram pequenas, mas em todas elas houve ao menos um modelo da família Granite que alcançou a melhor pontuação. Os modelos Granite 4 Micro (3B) e Granite 4 h-small (30B) foram os destaques com resultados que ficaram próximos, e em alguns casos acima, de modelos reconhecidos por serem especialistas em código.</p>
+<hr>
+<h2 id="próximos-passos">Próximos Passos</h2>
+<ul>
+<li>Executar os mesmos modelos da família Granite no LiveCodeBench, um benchmark mais amplo que vai além de <strong>code-generation</strong>, avaliando também <strong>code execution</strong> e <strong>test-output</strong>.</li>
+<li>Realizar um <strong>fine-tuning de um modelo Granite 4.0 Micro (3B) utilizando o InstructLab</strong> e observar o impacto dessa adaptação no desempenho do modelo no <strong>HumanEvalX</strong>, comparando antes e depois do ajuste.</li>
+</ul>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/introducao_contaminacao/"><i class="fa fa-chevron-circle-left"></i> Contaminação por dados de Benchmark em LLMs: Fundamentos, Causas e Estratégias de Detecção</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:1313/posts/virtualization/">Virtualização em Power9: como estruturamos um ambiente isolado com KVM e Libvirt <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>
