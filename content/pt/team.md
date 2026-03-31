@@ -20,6 +20,7 @@ Bruno Almeida: bruno.osorio.carvalho.almeida@ccc.ufcg.edu.br
 [José Gama](/authors/josé-gama): jose.gama@copin.ufcg.edu.br  
 Mateus Ribeiro: mateus.ribeiro@ccc.ufcg.edu.br  
 Wendell Nascimento: wendell.nascimento@splab.ufcg.edu.br  
+Miguel Rodrigues: miguel.rodrigues@ccc.ufcg.edu.br  
 
 #### AgentOps
 Ramoni Negreiros: ramoni.reus.barros.negreiros@ccc.ufcg.edu.br  
