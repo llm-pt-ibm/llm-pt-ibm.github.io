@@ -1,9 +1,9 @@
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
  <channel>
-   <title>Llm-Eval on IBM UFCG</title>
+   <title>LLM Evaluation on IBM UFCG</title>
    <link>http://localhost:1313/projects/llm-eval/</link>
-   <description>Recent content in Llm-Eval on IBM UFCG</description>
+   <description>Recent content in LLM Evaluation on IBM UFCG</description>
    <generator>Hugo -- gohugo.io</generator>
    <language>pt-br</language>
    <copyright>IBM &amp; UFCG - 2025</copyright>
@@ -108,7 +108,7 @@
        <pubDate>Wed, 12 Mar 2025 00:00:00 +0000</pubDate>
        
        <guid>http://localhost:1313/posts/introducao/</guid>
-       <description>&lt;p&gt;Bem-vindo ao blog da parceria entre a &lt;strong&gt;Universidade Federal de Campina Grande (UFCG)&lt;/strong&gt; e a &lt;strong&gt;IBM&lt;/strong&gt;!&lt;/p&gt;&lt;p&gt;Este espaço reúne artigos, tutoriais e resultados de pesquisa produzidos pela nossa equipe ao longo de diferentes projetos. Cada projeto aborda uma área de investigação distinta:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/llm-eval/&#34;&gt;LLM Eval&lt;/a&gt;&lt;/strong&gt; — avaliação de modelos de linguagem de grande porte, com foco em benchmarks para o português brasileiro.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/agents-ai&#34;&gt;Agents&lt;/a&gt;&lt;/strong&gt; — criação de agentes de inteligência artificial capazes de executar múltiplas tarefas de forma autônoma.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/judo-ai&#34;&gt;Judo-AI&lt;/a&gt;&lt;/strong&gt; — reconhecimento de imagens de golpes de judô utilizando técnicas de visão computacional e aprendizado de máquina.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/multiarq/&#34;&gt;MultiArq&lt;/a&gt;&lt;/strong&gt; — estudo e experimentação sobre a arquitetura IBM Power, explorando suas capacidades computacionais e configurações de ambiente.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Explore os posts e acompanhe as novidades!&lt;/p&gt;</description>
+       <description>&lt;p&gt;Bem-vindo ao blog da parceria entre a &lt;strong&gt;Universidade Federal de Campina Grande (UFCG)&lt;/strong&gt; e a &lt;strong&gt;IBM&lt;/strong&gt;!&lt;/p&gt;&lt;p&gt;Este espaço reúne artigos, tutoriais e resultados de pesquisa produzidos pela nossa equipe ao longo de diferentes projetos. Cada projeto aborda uma área de investigação distinta:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/llm-eval/&#34;&gt;LLM Evaluation&lt;/a&gt;&lt;/strong&gt; — avaliação de modelos de linguagem de grande porte, com foco em benchmarks para o português brasileiro.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/agents-ai&#34;&gt;AgentOps&lt;/a&gt;&lt;/strong&gt; — criação de agentes de inteligência artificial capazes de executar múltiplas tarefas de forma autônoma.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/judo-ai/&#34;&gt;Judo-AI&lt;/a&gt;&lt;/strong&gt; — uso de modelos de IA para análise de partidas e sessões de treinamento de judô, usando técnicas de visão computacional e deep learning para detecção de movimentos e reconhecimento de ações.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/5g/&#34;&gt;5G&lt;/a&gt;&lt;/strong&gt; — interação de técnicas de IA em ambientes de rede 5G, com controle inteligente, otimização e mecanismos de gestão de rede.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;&lt;a href=&#34;http://localhost:1313/projects/multiarq/&#34;&gt;MultiArq&lt;/a&gt;&lt;/strong&gt; — provisão de ferramentas comuns para novas arquiteturas (ppc64le), buscando e adaptando ferramentas específicas e criando documentações técnicas acerca da arquitetura.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Explore os posts e acompanhe as novidades!&lt;/p&gt;</description>
      </item>
    
  </channel>

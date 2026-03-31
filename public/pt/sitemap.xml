@@ -81,16 +81,6 @@
     <lastmod>2026-03-27T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/projects/multiarq/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/projects/multiarq/"
-                />
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
     <lastmod>2026-03-27T00:00:00+00:00</lastmod>
@@ -251,16 +241,6 @@
     <lastmod>2025-11-28T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/projects/llm-eval/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/projects/llm-eval/"
-                />
   </url><url>
     <loc>http://localhost:1313/authors/ronaldd-matias/</loc>
     <lastmod>2025-11-28T00:00:00+00:00</lastmod>
@@ -637,6 +617,14 @@
                 href="http://localhost:1313/authors/jos%C3%A9-gama/"
                 />
   </url><url>
+    <loc>http://localhost:1313/projects/5g/</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url><url>
+    <loc>http://localhost:1313/projects/agents-ai/</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
@@ -664,5 +652,9 @@
                 hreflang="pt-br"
                 href="http://localhost:1313/team/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/projects/judo-ai/</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
