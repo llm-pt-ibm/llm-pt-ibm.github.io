@@ -18,10 +18,10 @@ Virtualization is widely used in x86 environments, with mature tooling and estab
 The flow is organized into the following layers:
 
 <!--<div style="text-align: center;">
-  <img src="/images/kvm_virtualizacao.png" style="max-width: 90%;">
+  <img src="/images/kvm_virtualization-en.png" style="max-width: 90%;">
 </div> -->
 
-{{< figure src="/images/kvm_virtualizacao.png" alt="Figure 1: Diagram representing a 4-layer virtualization architecture." caption="Figure 1: Diagram representing a 4-layer virtualization architecture." >}}
+{{< figure src="/images/kvm_virtualization-en.png" alt="Figure 1: Diagram representing a 4-layer virtualization architecture." caption="Figure 1: Diagram representing a 4-layer virtualization architecture." >}}
 
 In this work, we explore how to build a virtualized environment using KVM and Libvirt on a Power9 server, with focus on isolation, reproducibility, and shared team usage.
 
