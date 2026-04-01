@@ -3,6 +3,7 @@ title: "Inferência de LLMs com Ollama na IBM Power9 Utilizando CPU"
 date: 2026-04-01 # ano-mês-dia
 authors: ["Maria Luísa Gomes"] # Pode ser uma lista
 tags: ["LLM", "Ollama", "Power9", "Inferência"]
+projects: ["multiarq"]
 translationKey: "ollama-cpu"
 summary: "Neste post, apresentamos um guia prático para a realização de inferência de modelos LLM com o Ollama na IBM Power9 (arquitetura ppc64le), utilizando a CPU."
 draft: false # Mude para true se quiser que o post fique como rascunho
