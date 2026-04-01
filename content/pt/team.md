@@ -34,7 +34,7 @@ Lucas Santos: lucasraniere@copin.ufcg.edu.br
 
 #### MultiArq
 [Lucas Pereira](/authors/lucas-pereira): lucas.pereira@lsd.ufcg.edu.br  
-Maria Gomes: maria.luisa.pereira.gomes@ccc.ufcg.edu.br  
+[Maria Gomes](/authors/maria-luisa-gomes): maria.luisa.pereira.gomes@ccc.ufcg.edu.br  
 [Gabrielly Lima](/authors/gabrielly-lima): gabrielly.lima@lsd.ufcg.edu.br  
 Yalle Silva: yalle.silva@lsd.ufcg.edu.br  
 Isaac Silva: isaac.silva@lsd.ufcg.edu.br  

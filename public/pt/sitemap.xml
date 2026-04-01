@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/authors/</loc>
-    <lastmod>2026-03-27T00:00:00+00:00</lastmod>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
@@ -15,6 +15,131 @@
                 rel="alternate"
                 hreflang="pt-br"
                 href="http://localhost:1313/authors/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/inferencia/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url><url>
+    <loc>http://localhost:1313/posts/ollama_cpu/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/ollama_cpu/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/ollama_cpu/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/llm/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/llm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/llm/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/authors/maria-lu%C3%ADsa-gomes/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/maria-lu%C3%ADsa-gomes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/maria-lu%C3%ADsa-gomes/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/ollama/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/ollama/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/ollama/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/power9/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/power9/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/power9/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2026-04-01T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/gabrielly-lima/</loc>
@@ -30,21 +155,6 @@
                 rel="alternate"
                 hreflang="pt-br"
                 href="http://localhost:1313/authors/gabrielly-lima/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2026-03-27T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/kvm/</loc>
@@ -92,36 +202,6 @@
                 href="http://localhost:1313/projects/multiarq/"
                 />
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2026-03-27T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/tags/power9/</loc>
-    <lastmod>2026-03-27T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/power9/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/power9/"
-                />
-  </url><url>
     <loc>http://localhost:1313/projects/</loc>
     <lastmod>2026-03-27T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
@@ -135,21 +215,6 @@
                 rel="alternate"
                 hreflang="pt-br"
                 href="http://localhost:1313/projects/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2026-03-27T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/virtualiza%C3%A7%C3%A3o/</loc>
@@ -230,21 +295,6 @@
                 rel="alternate"
                 hreflang="pt-br"
                 href="http://localhost:1313/tags/humanevalx/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/tags/llm/</loc>
-    <lastmod>2025-11-28T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/llm/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/llm/"
                 />
   </url><url>
     <loc>http://localhost:1313/projects/llm-eval/</loc>
