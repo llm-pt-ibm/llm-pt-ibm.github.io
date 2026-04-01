@@ -33,7 +33,7 @@ Também é importante reforçar que o Docker Engine é compatível com Rocky Lin
 1. **Removendo pacotes conflitantes**:
 O Rocky Linux geralmente traz Podman e Buildah por padrão. Esses pacotes conflitam com o Docker Engine e devem ser removidos, junto com versões antigas do próprio Docker, caso existam:
 
-```
+```bash
 sudo dnf remove -y podman \
 				   buildah \
 				   docker \
@@ -51,7 +51,7 @@ O método recomendado é usar o repositório oficial. Para distribuições basea
 
 Instale o plugin de gerenciamento de repositórios e adicione o repositório:
 
-```
+```bash
 sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 ```
@@ -59,14 +59,14 @@ sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/dock
 3. **Instalando os pacotes do Docker**:
 Com o repositório configurado, instale o Docker Engine e os plugins de build e compose:
 
-```
+```bash
 sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 4. **Iniciando e habilitando o serviço**:
 No Rocky Linux/AlmaLinux, o serviço do Docker não inicia automaticamente após a instalação. Inicie manualmente e habilite no boot:
 
-```
+```bash
 sudo systemctl start docker
 sudo systemctl enable docker
 ```
@@ -74,7 +74,7 @@ sudo systemctl enable docker
 5. **Verificando a instalação**:
 Para confirmar que tudo foi instalado corretamente, execute a imagem de teste:
 
-```
+```bash
 sudo docker run hello-world
 ```
 
@@ -85,13 +85,13 @@ Por padrão, apenas root (ou usuários com sudo) podem executar comandos Docker.
 
 1. **Criando o grupo docker (se necessário)**:
 
-```
+```bash
 sudo groupadd docker
 ```
 
 2. **Adicionando o usuário ao grupo**:
 
-```
+```bash
 sudo usermod -aG docker $USER
 ```
 
@@ -102,13 +102,13 @@ No IBM Power9, nem todas as imagens do Docker Hub são compatíveis com ppc64le.
 
 Para validar se o daemon Docker está ativo e reconhecendo corretamente a arquitetura do servidor, execute:
 
-```
+```bash
 docker version --format '{{.Server.Arch}}'
 ```
 
 A saída esperada é:
 
-```
+```bash
 ppc64le
 ```
 
