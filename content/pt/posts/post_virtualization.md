@@ -1,12 +1,12 @@
 ---
 title: "Virtualização em Power9: como estruturamos um ambiente isolado com KVM e Libvirt"
-date: 2026-03-27 # ano-mês-dia
-authors: ["Gabrielly Lima"] # Pode ser uma lista
+date: 2026-03-27
+authors: ["Gabrielly Lima"]
 tags: ["Virtualização", "Power9", "KVM", "Libvirt"]
 projects: ["multiarq"]
 translationKey: "power9-virtualization"
 summary: "Neste post, exploramos a construção de um ambiente virtualizado utilizando KVM e Libvirt em um servidor Power9, com foco em isolamento, reprodutibilidade e uso compartilhado entre membros de uma equipe."
-draft: false # Mude para true se quiser que o post fique como rascunho
+draft: false
 ---
 
 ## Contexto
