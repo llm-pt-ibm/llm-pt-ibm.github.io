@@ -1,37 +1,34 @@
 ---
-title: "Installing Docker in a ppc64le (Power9) Environment"
+title: "Installing Docker in an Architecture ppc64le (Power9) Environment"
 date: 2026-04-01
 authors: ["Gabrielly Lima"]
 tags: ["Docker", "Power9", "ppc64le", "AlmaLinux", "Containers"]
 projects: ["multiarq"]
 translationKey: "power9-docker-installation"
-summary: "In this post, we walk through how to install and configure Docker Engine on IBM Power9 (ppc64le), including removing conflicting packages, validating the installation, and following image compatibility best practices."
+summary: "This post walks through how to install Docker Engine on AlmaLinux 8.10 on IBM Power9 (ppc64le), including removing conflicting packages, configuring the official repository, and handling image compatibility concerns."
 draft: false
 ---
 
 ## Context
-This post is part of our tutorial series on building a language model infrastructure on an IBM Power9 server. After configuring the operating system and NVIDIA drivers, the next step is installing Docker Engine, an essential tool for packaging and running containerized applications in an isolated and reproducible way.
+Given the need to standardize software execution on our IBM Power9 (ppc64le) server, containers are a robust solution for avoiding environment conflicts. This post continues the work of structuring our infrastructure by detailing the installation of Docker Engine on AlmaLinux. Adopting this technology is strategically important for ensuring strict dependency isolation and portability across applications. With it, we can package everything from general-purpose libraries to more complex services, ensuring a clean, secure, and highly reproducible runtime environment.
 
-Docker Engine has official support for Rocky Linux on x86_64, arm64, s390x, and ppc64le architectures, which allows direct use on Power9 without special adaptations. Even so, some care is needed during installation, such as removing tools that conflict with Docker and ensuring selected images are compatible with ppc64le.
+Docker Engine has official support for AlmaLinux on the x86_64, arm64, s390x, and ppc64le architectures, which allows us to use it directly on Power9 without special adaptations. However, some care is required before and during installation, such as uninstalling tools that conflict with Docker and ensuring the images used are compatible with ppc64le.
 
 ## TL;DR
-* This post provides a step-by-step guide to installing Docker Engine on Rocky Linux/AlmaLinux with ppc64le architecture.
-* You must remove Podman and Buildah before installation, since these packages conflict with Docker.
-* Docker Hub images must explicitly support ppc64le to run correctly on Power9.
+* This post presents the step-by-step process for installing Docker Engine on AlmaLinux in the ppc64le architecture.
+* You must remove Podman and Buildah before installing, because they conflict with Docker.
+* Docker Hub images need explicit ppc64le support to work on Power9.
 
 ## Environment Used
-* **Architecture**: IBM Power9 server (ppc64le architecture).
-* **Operating System (OS)**: AlmaLinux 8.10 binary compatible with Red Hat Enterprise Linux (RHEL) 8.9/8.10.
-* **RAM**: 512GB.
+* **Architecture**: IBM Power9 server (ppc64le architecture)
+* **Operating System (OS)**: AlmaLinux 8.10 binary compatible with Red Hat Enterprise Linux (RHEL) 8.9/8.10
+* **RAM**: 512GB
 
 ## Prerequisites
-Before installing Docker, consider an important firewall limitation: when exposing container ports with Docker, those ports bypass default firewalld rules. Verify whether this behavior is acceptable for your environment before proceeding.
+Before installing Docker, it is important to be aware of a firewall limitation: when exposing container ports with Docker, those ports bypass the default firewalld rules. Make sure this does not pose a problem for your environment before proceeding. It is also important to note that Docker Engine is compatible with Rocky Linux 8 and 9 and AlmaLinux 8 on the ppc64le architecture.
 
-It is also important to reinforce that Docker Engine is compatible with Rocky Linux 8 and 9, and with AlmaLinux 8 on ppc64le architecture.
-
-## Installing Docker Engine on Power9
-1. **Removing conflicting packages**:
-Rocky Linux usually includes Podman and Buildah by default. These packages conflict with Docker Engine and should be removed, along with any older Docker versions that might already exist:
+## Removing Conflicting Packages
+AlmaLinux includes Podman and Buildah by default. These packages conflict with Docker Engine and must be removed before installation. It is also recommended to remove any older Docker versions that might be present:
 
 ```bash
 sudo dnf remove -y podman \
@@ -46,75 +43,66 @@ sudo dnf remove -y podman \
 				   docker-engine
 ```
 
-2. **Adding the official Docker repository**:
-The recommended method is to use the official repository. For RHEL-based distributions such as AlmaLinux, Docker uses the CentOS repository, which is an officially supported flow.
-
-Install the repository management plugin and add the repository:
+## Adding the Docker Repository and Installing Required Packages
+### Repository Setup
+The recommended installation method is to use Docker's official repository. It is worth mentioning that Docker uses the CentOS repository for RHEL-based distributions such as AlmaLinux, and this is officially supported. First, install the dnf-plugins-core package and add the repository:
 
 ```bash
 sudo dnf install -y dnf-plugins-core
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 ```
 
-3. **Installing Docker packages**:
-With the repository configured, install Docker Engine and the build and compose plugins:
+### Installing Docker Engine
+With the repository configured, install the latest version of Docker Engine along with the build and compose plugins:
 
 ```bash
 sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-4. **Starting and enabling the service**:
-On Rocky Linux/AlmaLinux, the Docker service does not start automatically after installation. Start it manually and enable it at boot:
+### Starting the service
+Unlike Debian-based distributions such as Ubuntu, Docker does not start automatically on AlmaLinux after installation. You need to start the service manually and enable it so it comes up with the system:
 
 ```bash
 sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-5. **Verifying the installation**:
-To confirm everything was installed correctly, run the test image:
+## Verifying the Installation
+To confirm that everything was installed correctly, run the hello-world image. Docker will automatically detect the ppc64le architecture and pull the correct image:
 
 ```bash
 sudo docker run hello-world
 ```
 
-The expected output is a message confirming Docker is working correctly.
+The expected output is a message confirming that Docker is working correctly.
 
 ## Post-installation Configuration
-By default, only root (or users with sudo privileges) can run Docker commands. To use Docker without sudo for every command:
-
-1. **Creating the docker group (if needed)**:
+By default, only the root user or users with sudo privileges can run Docker commands. To avoid using sudo on every command, add your user to the docker group. First, create the group if it does not already exist:
 
 ```bash
 sudo groupadd docker
 ```
 
-2. **Adding your user to the group**:
+Then add your user to the group:
 
 ```bash
 sudo usermod -aG docker $USER
 ```
 
-You need to log out and back in again for permissions to take effect.
+You need to log out and log back in for the permissions to take effect.
 
 ## Tips for Power9 Architecture
-On IBM Power9, not all Docker Hub images are compatible with ppc64le. Images published only for x86_64 will fail to run. Always check whether the image explicitly supports ppc64le architecture.
+Because we are using IBM Power9, a few additional considerations matter when working with Docker Hub. The first point is image compatibility: not all images available on Docker Hub support ppc64le. Images built only for x86_64 will fail on Power9, so always verify that the desired image has the ppc64le tag before using it.
 
-To validate that the Docker daemon is running and correctly recognizing the server architecture, run:
+To validate that Docker is running correctly and recognizing the machine architecture, use:
 
 ```bash
 docker version --format '{{.Server.Arch}}'
 ```
 
-The expected output is:
-
-```text
-ppc64le
-```
+The expected output is ppc64le.
 
 ## Final Considerations
-Installing Docker Engine on Rocky Linux/AlmaLinux (ppc64le) follows a straightforward flow, as long as conflicts with Podman and Buildah are resolved before installation.
+Installing Docker Engine on AlmaLinux (ppc64le) follows a straightforward path as long as conflicts with Podman and Buildah are resolved beforehand. Official ppc64le support from Docker provides a stable experience on Power9, with the important caveat that image compatibility must always be checked before use.
 
-With official support for ppc64le architecture, Docker provides a stable foundation for running containers on Power9. The main ongoing concern is selecting images that are compatible with this architecture.
-
-With Docker installed and configured, the environment is ready to move forward to the next steps in the language model infrastructure.
+With Docker installed and configured, the environment is ready to run containers and move on to the next steps in our language model infrastructure.
