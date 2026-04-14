@@ -263,20 +263,20 @@ Para facilitar o uso das GPUs Tesla V100 presentes no servidor, disponibilizamos
 | Imagem | Conteúdo |
 | :--- | :--- |
 | AlmaLinux-8-Power9-NVIDIA-drivers.qcow2.xz | AlmaLinux 8.10 + drivers NVIDIA 535 + CUDA 12.2 + cuDNN 9.0 | 
-
+| InstructLab-Power9-0.25.0.qcow2.xz | AlmaLinux 8.10 + InstructLab 0.25.0 + dependências necessárias para execução no Power9 (ppc64le). |
 
 2. **Como usar imagens pré-configuradas**:
 
-Baixe e descompacte a imagem:
+Baixe a imagem da pasta compartilhada e descompacte:
 ```bash
 pip install --user gdown
-gdown --folder "https://drive.google.com/file/d/1coGmFTwLWdUP6AlOfwd-_VmN0eoNwFOT/view?usp=drive_link"
-xz -d AlmaLinux-8-Power9-NVIDIA-drivers.qcow2.xz
+gdown --folder "https://drive.google.com/drive/u/1/folders/1WM8fHKWaMu-NJOzwqh6cdcET7mNE50du"
+xz -d InstructLab-Power9-0.25.0.qcow2.xz
 ```
 
 Mova para o diretório de discos e crie a VM a partir dela:
 ```bash
-cp AlmaLinux-8-Power9-NVIDIA-drivers.qcow2 /home/user/discos/minha-vm-gpu.qcow2
+cp InstructLab-Power9-0.25.0.qcow2 /home/user/discos/minha-vm-gpu.qcow2
 ```
 
 Crie a VM normalmente:
