@@ -1,0 +1,427 @@
+<html lang="pt">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="pt">
+
+<head>
+  <title>Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/ollama_gpu/">
+  <meta property="og:site_name" content="IBM UFCG">
+  <meta property="og:title" content="Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU">
+  <meta property="og:description" content="Este post documenta como executar inferência de LLMs com Ollama na IBM Power9 utilizando GPU, com foco em um fork compatível com NVIDIA Tesla V100 em POWER9.">
+  <meta property="og:locale" content="pt_br">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-04-16T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-04-16T00:00:00+00:00">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="Ollama">
+    <meta property="article:tag" content="Power9">
+    <meta property="article:tag" content="GPU">
+    <meta property="article:tag" content="Inferência">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU">
+  <meta name="twitter:description" content="Este post documenta como executar inferência de LLMs com Ollama na IBM Power9 utilizando GPU, com foco em um fork compatível com NVIDIA Tesla V100 em POWER9.">
+
+<meta name="generator" content="Hugo 0.160.1">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Pesquisa e desenvolvimento em IA, hardware de alto desempenho e infraestrutura em parceria entre UFCG e IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/en/posts/ollama_gpu/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    English Version
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/">
+                <i class="fa-li fa  fa-lg"></i><span>Início</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projetos</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/team/">
+                <i class="fa-li fa  fa-lg"></i><span>Equipe</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2026-04-16T00:00:00Z">Apr 16, 2026</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Maria Luísa Gomes</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/tags/ollama">#Ollama</a>
+                
+                    , 
+                    <a href="/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/tags/gpu">#GPU</a>
+                
+                    , 
+                    <a href="/tags/infer%C3%AAncia">#Inferência</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="contexto">Contexto</h2>
+<p>Este é o segundo post da série sobre inferência de modelos de linguagem na POWER9 com o <a href="https://ollama.com/" rel="external"><span class="link-personalizado"><em>Ollama</em></span></a>. Neste post, abordaremos como enviar requisições utilizando GPU, obtendo um ganho significativo de desempenho em relação à abordagem via CPU apresentada no <a href="https://llm-pt-ibm.github.io/posts/ollama_cpu/" rel="external"><span class="link-personalizado"><em>post anterior</em></span></a>.</p>
+<p>O principal desafio é que o Ollama não oferece suporte oficial para a arquitetura <em>ppc64le</em> com <a href="https://developer.nvidia.com/cuda-12-2-0-download-archive?target_os=Linux&target_arch=ppc64le&Distribution=RHEL&target_version=8&target_type=rpm_local" rel="external"><span class="link-personalizado"><em>CUDA</em></span></a>. A solução encontrada foi através de um blog da  <a href="https://community.ibm.com/community/user/blogs/andrey-klyachkin/2025/03/06/run-ollama-on-almalinux-ppc64le-ibm-power" rel="external"><span class="link-personalizado"><em>comunidade oficial IBM</em></span></a>, onde um contribuidor disponibilizou um <a href="https://github.com/naveedus/ollama-ppc64le" rel="external"><span class="link-personalizado"><em>fork</em></span></a> do Ollama adaptado para suportar GPUs NVIDIA na POWER9 via CUDA, voltado especificamente para o IBM Power AC922 com Tesla V100. No entanto, o simples uso do repositório não é suficiente — é necessário compilar corretamente para que o Ollama consiga detectar e utilizar a GPU. Este tutorial explica exatamente como fazer esse processo.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>Este post apresenta detalhes sobre a configuração do ambiente para realizar inferências utilizando a infraestrutura da IBM POWER9;</li>
+<li>O Ollama não oferece suporte oficial para <em>ppc64le</em> com CUDA;</li>
+<li>A solução foi utilizar um fork desenvolvido por um contribuidor da IBM, encontrado em um blog oficial da comunidade IBM;</li>
+<li>O fork foi compilado do zero utilizando <code>make</code>, apontando para CUDA 12.2 e especificando a arquitetura do V100 (<code>sm_70</code>);</li>
+<li>Com isso, foi possível executar inferência de LLMs na IBM POWER9 com aceleração GPU.</li>
+</ul>
+<h2 id="ambiente-utilizado">Ambiente utilizado</h2>
+<p><strong>Hardware</strong>:</p>
+<ul>
+<li>Arquitetura <em>ppc64le</em>;</li>
+<li>RAM: mínimo recomendado de ~64GB;</li>
+<li>GPU: NVIDIA Tesla V100;</li>
+<li><em>Driver</em> NVIDIA: 535.54.03;</li>
+<li>CUDA: versão 12.2.</li>
+</ul>
+<p><strong>Sistema Operacional:</strong> Alma Linux 8.10 (<em>ppc64le</em>), binário compatível com <em>Red Hat Enterprise Linux (RHEL)</em> 8.9/8.10.</p>
+<h2 id="verificações-iniciais">Verificações iniciais</h2>
+<ol>
+<li>Verificar se o driver e a GPU estão visíveis</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nvidia-smi
+</span></span></code></pre></div><ol start="2">
+<li>Verificar se o CUDA está instalado</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nvcc --version
+</span></span></code></pre></div><p>OBS: Se não aparecer nada, tente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>/usr/local/cuda-12.2/bin:$PATH
+</span></span><span style="display:flex;"><span>export CUDACXX<span style="color:#f92672">=</span>/usr/local/cuda-12.2/bin/nvcc
+</span></span></code></pre></div><ol start="3">
+<li>Verifique também se o CUDA 12 existe:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -la /usr/local/cuda-12
+</span></span></code></pre></div><h2 id="execução-em-ambiente-virtual">Execução em Ambiente Virtual</h2>
+<p>Neste tutorial, estamos fazendo as configurações necessárias em um ambiente virtual para isolar o ambiente de execução e as configurações utilizadas. Essa execução é opcional, mas recomendada.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda create -n ollamaGPU python<span style="color:#f92672">=</span>3.11 -y
+</span></span><span style="display:flex;"><span>conda activate ollamaGPU
+</span></span></code></pre></div><p>Para desativar o ambiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda deactivate
+</span></span></code></pre></div><h2 id="setup-inicial"><em>Setup</em> inicial</h2>
+<p>Para executar o Ollama na arquitetura POWER9, é necessário preparar o ambiente com as dependências adequadas. O primeiro passo é atualizar o sistema e instalar os utilitários básicos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf update -y
+</span></span><span style="display:flex;"><span>sudo dnf install -y wget git tar make gcc gcc-c++ cmake gcc-toolset-11
+</span></span></code></pre></div><p>Embora esse comando instale parte das dependências, é necessário garantir que as versões corretas estejam sendo utilizadas.</p>
+<h3 id="configuração-do-go">Configuração do <em>Go</em></h3>
+<p>O Ollama é desenvolvido em <em>Go</em>, portanto é necessário garantir a versão adequada.</p>
+<p><strong>Versão esperada:</strong> 1.25.7.</p>
+<h4 id="caso-não-esteja-instalado-ou-esteja-com-uma-versão-diferente">Caso não esteja instalado ou esteja com uma versão diferente:</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://go.dev/dl/go1.25.7.linux-ppc64le.tar.gz
+</span></span><span style="display:flex;"><span>sudo tar -C /usr/local -xzf go1.25.7.linux-ppc64le.tar.gz
+</span></span><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>/usr/local/go/bin:$PATH
+</span></span></code></pre></div><p>Para adicionar ao <em>PATH</em> permanentemente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;export PATH=/usr/local/go/bin:$PATH&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span style="display:flex;"><span>source ~/.bashrc
+</span></span></code></pre></div><p>Verifique se a versão está correta: <code>go version</code></p>
+<h3 id="configuração-do-cmake">Configuração do <em>CMake</em></h3>
+<p>Verifique se a versão está correta: <code>cmake --version</code></p>
+<p><strong>Versão esperada:</strong> 3.26.5.</p>
+<h4 id="caso-necessário-realize-a-instalação-manual">Caso necessário, realize a instalação manual:</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://github.com/Kitware/CMake/releases/download/v3.26.5/cmake-3.26.5.tar.gz
+</span></span><span style="display:flex;"><span>tar -xzf cmake-3.26.5.tar.gz
+</span></span><span style="display:flex;"><span>cd cmake-3.26.5
+</span></span><span style="display:flex;"><span>./bootstrap
+</span></span><span style="display:flex;"><span>make -j<span style="color:#66d9ef">$(</span>nproc<span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>sudo make install
+</span></span></code></pre></div><h3 id="configuração-do-gcc">Configuração do <em>GCC</em></h3>
+<p><strong>Versão esperada:</strong> 11.2.1.</p>
+<p><strong>Importante:</strong> No AlmaLinux 8, o <code>gcc-toolset</code> não é ativado automaticamente. A forma de ativá-lo depende se você está usando ambiente virtual conda ou não:</p>
+<p>Sem ambiente virtual conda:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>scl enable gcc-toolset-11 bash
+</span></span></code></pre></div><p>Com ambiente virtual conda ativo: o comando <code>scl enable</code> abre um <em>subshell</em> que conflita com o conda e corrompe o <code>PATH</code>. Use o <code>export</code> manual:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>/opt/rh/gcc-toolset-11/root/usr/bin:$PATH
+</span></span><span style="display:flex;"><span>export LD_LIBRARY_PATH<span style="color:#f92672">=</span>/opt/rh/gcc-toolset-11/root/usr/lib64:$LD_LIBRARY_PATH
+</span></span></code></pre></div><p>Em ambos os casos, verifique a versão:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gcc --version
+</span></span></code></pre></div><p>Importante: a ativação do GCC precisa ser feita toda vez que abrir um novo terminal, antes de compilar.</p>
+<h2 id="clonando-e-compilando-o-ollama">Clonando e compilando o Ollama</h2>
+<p>Com o ambiente configurado, podemos realizar o <em>build</em> do Ollama. Aqui vamos clonar o repositório do <em>fork</em> de um contribuidor da IBM, que fez um repositório com foco para a GPU. Esse <em>fork</em> foi encontrado em um <em>blog</em> oficial da comunidade IBM e contém os ajustes necessários para que o <em>build</em> e a detecção da GPU funcionem corretamente na arquitetura da POWER9:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/naveedus/ollama-ppc64le.git ollama-gpu
+</span></span><span style="display:flex;"><span>cd ollama-gpu
+</span></span><span style="display:flex;"><span>git checkout witherspoon
+</span></span></code></pre></div><p>Verifique se está no branch correto: <code>git branch</code> (deve aparecer <code>witherspoon</code>).</p>
+<h3 id="compilando-com-suporte-a-cuda">Compilando com suporte a CUDA:</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>make CUDA_ARCHITECTURES<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;70&#34;</span>
+</span></span></code></pre></div><p>No tutorial anterior, quando compilamos o Ollama para a CPU, usamos o <code>go build</code>, que compila apenas o código Go do Ollama, sem as bibliotecas CUDA do <code>llama.cpp</code>. Aqui precisamos utilizar uma abordagem diferente: usar o <code>make</code> para compilar os <em>kernels</em> do CUDA com <code>nvcc</code>, gerar o <em>runner</em> CUDA como biblioteca compartilhada e só então chamar o <code>go build</code>.</p>
+<p>Por que <code>CUDA_ARCHITECTURES=&quot;70&quot;</code>? Cada GPU NVIDIA possui uma arquitetura específica, identificada por um código <code>sm_XX</code>. O V100 é da arquitetura Volta, cujo código é <code>sm_70</code>. Por padrão, o <em>build</em> compila para todas as arquiteturas suportadas pelo CUDA (sm_60 até sm_90), o que aumenta o tempo de compilação significativamente. Ao especificar <code>CUDA_ARCHITECTURES=&quot;70&quot;</code>, instruímos o <em>build</em> a compilar apenas para o V100, tornando o processo um pouco mais rápido.</p>
+<p>O <em>build</em> vai demorar alguns minutos. Ao finalizar, verifique se o <em>runner</em> CUDA foi gerado:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -lh llama/build/linux-ppc64le/runners/cuda_v12/
+</span></span></code></pre></div><p>Você deve ver dois arquivos: <code>libggml_cuda_v12.so</code> e <code>ollama_llama_server</code>. Confirme que o runner está linkado com CUDA:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ldd llama/build/linux-ppc64le/runners/cuda_v12/libggml_cuda_v12.so | grep -i cuda
+</span></span></code></pre></div><p>A saída deve mostrar <code>libcuda.so</code>, <code>libcublas.so</code>, <code>libcudart.so</code> e <code>libcublasLt.so</code>.</p>
+<h2 id="realizando-a-inferência">Realizando a inferência</h2>
+<p>Com o Ollama compilado, podemos iniciar o servidor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./ollama serve
+</span></span></code></pre></div><p>Para verificar se deu certo: <code>ps aux | grep ollama</code>.</p>
+<p>Em outro terminal, aguarde alguns segundos e verifique os logs para confirmar que o servidor detectou as GPUs corretamente. Procure por estas linhas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Dynamic LLM libraries runners<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[cpu cuda_v12]&#34;</span>
+</span></span><span style="display:flex;"><span>inference compute ... library<span style="color:#f92672">=</span>cuda compute<span style="color:#f92672">=</span>7.0 ... total<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;15.0 GiB&#34;</span>
+</span></span></code></pre></div><h2 id="baixar-o-modelo-de-teste-e-executar-a-inferência">Baixar o modelo de teste e executar a inferência</h2>
+<p>Para validação, utilizamos o modelo <code>llama3.1:8b</code>. Para isso, em outro terminal, rode:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./ollama pull llama3.1:8b
+</span></span></code></pre></div><p>Para executar a inferência:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./ollama run llama3.1:8b <span style="color:#e6db74">&#34;me fale todos os números ímpares até 100&#34;</span>
+</span></span></code></pre></div><h2 id="confirmar-o-uso-da-gpu">Confirmar o uso da GPU</h2>
+<p>Em outro terminal, com a inferência em execução, rode:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nvidia-smi
+</span></span></code></pre></div><p>Na seção de processos, você deve ver o <code>ollama_llama_server</code> com memória alocada em uma das GPUs:</p>
+<figure><img src="/images/ollama_inference_gpu.png"
+    alt="Figura 1"><figcaption>
+      <p>Ollama usando a GPU</p>
+    </figcaption>
+</figure>
+
+<h2 id="considerações-finais">Considerações finais</h2>
+<p>Com os passos apresentados, foi possível configurar o ambiente para executar inferências de LLMs em uma máquina IBM POWER9, utilizando as GPUs NVIDIA Tesla V100. Com essa abordagem, a inferência de modelos possui um ganho de desempenho significativo em relação à execução via CPU. Utilizando o modelo Meta Llama 3.1 8B Instruct como referência, a execução via GPU atingiu uma maior geração de tokens por segundo em relação à execução via CPU.</p>
+<p>Vejamos os dados coletados para uma mesma requisição (<code>Me fale todos os números ímpares até 100</code>) com os dois tipos de execução:</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>CPU</th>
+          <th>GPU</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Taxa de geração de <em>tokens</em></td>
+          <td>0.71 tokens/s</td>
+          <td>79.82 tokens/s</td>
+      </tr>
+      <tr>
+          <td>Duração total</td>
+          <td>3m49s</td>
+          <td>4.52s</td>
+      </tr>
+      <tr>
+          <td>Taxa de avaliação do <em>prompt</em></td>
+          <td>10.67 tokens/s</td>
+          <td>295.77 tokens/s</td>
+      </tr>
+  </tbody>
+</table>
+<p>Com os dados apresentados na tabela, percebemos que a execução com GPU foi aproximadamente 112 vezes mais rápida na geração de <em>tokens</em>, com o tempo total de resposta reduzido de 3 minutos e 49 segundos para 4.52 segundos.</p>
+<h2 id="próximos-passos">Próximos Passos</h2>
+<ul>
+<li>Avaliar a execução com GPU e CPU em um post comparativo e com outras arquiteturas;</li>
+<li>Testar a inferência em GPU com modelos maiores, com mais de 8 bilhões de parâmetros, por exemplo;</li>
+<li>Compilar o Ollama para uma versão mais recente, para carregar modelos novos e avaliar o desempenho;</li>
+</ul>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/vllm_gpu/"><i class="fa fa-chevron-circle-left"></i> Inferência de LLMs com vLLM Utilizando GPU em Power9</a>
+        
+        </li>
+        <li>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>

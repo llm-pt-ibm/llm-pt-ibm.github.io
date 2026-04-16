@@ -1,0 +1,324 @@
+<html lang="en">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>LLM Inference with vLLM Using GPU on Power9 - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/en/posts/vllm_gpu/">
+  <meta property="og:site_name" content="IBM UFCG">
+  <meta property="og:title" content="LLM Inference with vLLM Using GPU on Power9">
+  <meta property="og:description" content="Guide to install and run vLLM on Power9 (ppc64le) with GPU, including LLVM, Triton, PyTorch, and containerization.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-04-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-04-10T00:00:00+00:00">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="VLLM">
+    <meta property="article:tag" content="Power9">
+    <meta property="article:tag" content="GPU">
+    <meta property="article:tag" content="Inference">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="LLM Inference with vLLM Using GPU on Power9">
+  <meta name="twitter:description" content="Guide to install and run vLLM on Power9 (ppc64le) with GPU, including LLVM, Triton, PyTorch, and containerization.">
+
+<meta name="generator" content="Hugo 0.160.1">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Research and development on AI, high-performance hardware, and infrastructure — a partnership between UFCG and IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/posts/vllm_gpu/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    Versão em Português
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/en/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projects</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/team">
+                <i class="fa-li fa  fa-lg"></i><span>Team</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>LLM Inference with vLLM Using GPU on Power9</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2026-04-10T00:00:00Z">Apr 10, 2026</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Lucas Pereira</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/en/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/en/tags/vllm">#vLLM</a>
+                
+                    , 
+                    <a href="/en/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/en/tags/gpu">#GPU</a>
+                
+                    , 
+                    <a href="/en/tags/inference">#Inference</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="background">Background</h2>
+<p>This post aims to present the steps necessary to install <a href="https://github.com/vllm-project/vllm" rel="external"><span class="link-personalizado">vLLM</span></a> in an IBM POWER9 environment (ppc64le architecture). The main required resources, modifications, dependencies, versions used, and installation steps necessary to run inference with a given model will be detailed.</p>
+<p>vLLM is a tool focused on serving and efficient inference of large language models (LLMs), allowing models to be exposed through an API and execute inference in an optimized way, especially in GPU environments.</p>
+<p>The need to install vLLM arose during the data generation process with the <a href="https://github.com/instructlab" rel="external"><span class="link-personalizado">InstructLab</span></a> tool. In that workflow, it is necessary to use a teacher model to generate synthetic data that will later be used for training or fine-tuning other models. For this, it is possible to use tools such as llama-cpp, already compatible with the IBM POWER9 environment, or vLLM, which was not yet available due to installation difficulties on this architecture. Unlike llama-cpp, which is more geared towards local execution and smaller-scale scenarios, vLLM stands out for better GPU utilization and the ability to handle multiple requests simultaneously in an efficient manner, being more suitable for large-scale inference scenarios and production environments.</p>
+<p>Thus, we will present the technical steps required to make the vLLM installation feasible in the IBM POWER9 environment (ppc64le), describing the adaptations made so that the tool works correctly in this context.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>Compilation and installation of LLVM, required as build infrastructure for subsequent dependencies.</li>
+<li>Compilation and adaptation of Triton, including adjustments for compatibility with the Power9 architecture.</li>
+<li>Installation and configuration of vLLM, considering its dependencies and specific runtime requirements.</li>
+<li>Development of containers containing the entire configured environment for executing the tool.</li>
+<li>Practical demonstration of using the images, including server startup and running inference using GPU.</li>
+</ul>
+<h2 id="execution-environment">Execution Environment</h2>
+<p>The environment used for the vLLM installation includes:</p>
+<ul>
+<li><strong>Architecture:</strong> IBM Power9 Server (ppc64le architecture).</li>
+<li><strong>Operating System (OS):</strong> AlmaLinux 8.10 binary compatible with Red Hat Enterprise Linux (RHEL) 8.9/8.10.</li>
+<li><strong>RAM:</strong> 512GB.</li>
+<li><strong>GPUs:</strong> 4x NVIDIA Tesla V100 SXM2 16GB (NVLink2).</li>
+</ul>
+<h2 id="dependencies-and-installation">Dependencies and Installation</h2>
+<p>During the vLLM build process, three main dependencies stand out: <a href="https://github.com/llvm/llvm-project" rel="external"><span class="link-personalizado">LLVM</span></a>, <a href="https://github.com/triton-lang/triton" rel="external"><span class="link-personalizado">Triton</span></a>, and <a href="https://github.com/pytorch/pytorch" rel="external"><span class="link-personalizado">PyTorch</span></a>. These dependencies are problematic for the correct functioning of the tool.</p>
+<p>LLVM constitutes the foundation of the compilation infrastructure used throughout the process, being responsible for generating, optimizing, and transforming intermediate representation into executable low-level code. In the context of vLLM, its role is essential to enable efficient execution of GPU kernels, especially those defined by Triton, which rely directly on its compilation backends (components responsible for generating optimized code for different hardware architectures). Triton, in turn, acts as the component responsible for defining and executing GPU-optimized kernels, playing a central role in the inference efficiency of language models. Its integration with LLVM allows generating highly optimized code for different architectures. PyTorch provides the foundation for tensor manipulation and model execution, offering the fundamental operations for GPU inference, in addition to serving as an interface to acceleration mechanisms and low-level libraries.</p>
+<figure><img src="/images/vllm_dependencias.png"
+    alt="Figure 1"><figcaption>
+      <p>Dependency flow for compiling vLLM on Power9.</p>
+    </figcaption>
+</figure>
+
+<p>Due to the lack of native support for these packages on the ppc64le architecture, their use on IBM POWER9 required several adaptations based on the official repositories of these tools. These modifications ranged from fixing incompatibilities in specific methods to adjusting sub-dependencies that did not support the ppc64le architecture, as well as using Conda to help manage environments and dependencies. In some cases, manual compilation of additional components was also necessary. After overcoming these challenges, it became possible to install and run vLLM on the IBM POWER9 environment.</p>
+<p>Due to the large number of steps involved, the step-by-step detailed procedures are presented in this link: <a href="https://github.com/llm-pt-ibm/vllm_gpu/blob/main/manual-installation-guide.md" rel="external"><span class="link-personalizado">vllm installation guide</span></a>. It is worth noting that each of the steps described is essential to guarantee the correct compilation and execution of vLLM in the proposed environment.</p>
+<h2 id="containerization">Containerization</h2>
+<p>During the installation process, it was observed that the large number of involved steps could make environment reproduction difficult and lead to inconsistent scenarios. Because of this, we chose containerization of the solution as a way to make the experiment reproducible, portable, and simpler to use for other users.</p>
+<p>For this, we provide (in this <a href="https://github.com/llm-pt-ibm/vllm_gpu" rel="external"><span class="link-personalizado">repository</span></a>) scripts responsible for both building the images and automating execution, organizing all necessary steps. These scripts perform tasks such as identifying available resources, copying required CUDA binaries, and starting vLLM properly.</p>
+<p>Execution was simplified so that the user only needs to provide the local path of the model to be used. Parameters such as port, number of GPUs, and image to be executed are optional and have predefined default values.</p>
+<figure><img src="/images/repositorio_git_vllm.png"
+    alt="Figure 2"><figcaption>
+      <p>Repository developed for running vLLM via containers.</p>
+    </figcaption>
+</figure>
+
+<p>Additionally, we provide a video (<a href="https://drive.google.com/file/d/1chIuklLfjQBMMu6XlgpohP08rTW04Keg/view" rel="external"><span class="link-personalizado">vLLM Power9 demonstration</span></a>) that demonstrates the use of vLLM from the provided repository.</p>
+<h2 id="final-considerations">Final Considerations</h2>
+<p>With the resources provided in this repository, it became possible to automate the process of installing and using vLLM on ppc64le architectures with V100 GPUs.</p>
+<p>In the context of the IBM-MultiArq project, this solution proves especially relevant for using InstructLab, enabling local execution of teacher models via vLLM, expanding experimentation and development possibilities within the proposed environment.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>As a continuation of this work, we propose conducting a comparative performance study between llama-cpp and vLLM. Additionally, the repository was structured to provide continuous support for vLLM, including its adaptation to future versions, the identification of remaining limitations, and the evolution of solutions as new challenges arise.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/en/posts/post_docker/"><i class="fa fa-chevron-circle-left"></i> Installing Docker in an Architecture ppc64le (Power9) Environment</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:1313/en/posts/ollama_gpu/">LLM Inference with Ollama on IBM Power9 Using GPU <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>

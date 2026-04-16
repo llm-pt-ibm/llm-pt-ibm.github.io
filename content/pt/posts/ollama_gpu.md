@@ -1,6 +1,6 @@
 ---
 title: "Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU"
-date: 2026-04-15 # ano-mês-dia
+date: 2026-04-16 # ano-mês-dia
 authors: ["Maria Luísa Gomes"] # Pode ser uma lista
 tags: ["LLM", "Ollama", "Power9", "GPU", "Inferência"]
 projects: ["multiarq"]
@@ -169,7 +169,7 @@ No tutorial anterior, quando compilamos o Ollama para a CPU, usamos o `go build`
 
 Por que `CUDA_ARCHITECTURES="70"`? Cada GPU NVIDIA possui uma arquitetura específica, identificada por um código `sm_XX`. O V100 é da arquitetura Volta, cujo código é `sm_70`. Por padrão, o *build* compila para todas as arquiteturas suportadas pelo CUDA (sm_60 até sm_90), o que aumenta o tempo de compilação significativamente. Ao especificar `CUDA_ARCHITECTURES="70"`, instruímos o *build* a compilar apenas para o V100, tornando o processo um pouco mais rápido.
 
-O build vai demorar alguns minutos. Ao finalizar, verifique se o runner CUDA foi gerado:
+O *build* vai demorar alguns minutos. Ao finalizar, verifique se o *runner* CUDA foi gerado:
 
 ```bash
 ls -lh llama/build/linux-ppc64le/runners/cuda_v12/
@@ -195,8 +195,10 @@ Para verificar se deu certo: `ps aux | grep ollama`.
 
 Em outro terminal, aguarde alguns segundos e verifique os logs para confirmar que o servidor detectou as GPUs corretamente. Procure por estas linhas:
 
-- `Dynamic LLM libraries runners="[cpu cuda_v12]"`
-- `inference compute ... library=cuda compute=7.0 ... total="15.0 GiB"`
+```bash
+Dynamic LLM libraries runners="[cpu cuda_v12]"
+inference compute ... library=cuda compute=7.0 ... total="15.0 GiB"
+```
 
 ## Baixar o modelo de teste e executar a inferência
 
@@ -220,7 +222,9 @@ Em outro terminal, com a inferência em execução, rode:
 nvidia-smi
 ```
 
-Na seção de processos, você deve ver o `ollama_llama_server` com memória alocada em uma das GPUs.
+Na seção de processos, você deve ver o `ollama_llama_server` com memória alocada em uma das GPUs:
+
+{{< figure src="/images/ollama_inference_gpu.png" alt="Figura 1" caption="Ollama usando a GPU">}}
 
 ## Considerações finais
 
@@ -230,14 +234,14 @@ Vejamos os dados coletados para uma mesma requisição (`Me fale todos os númer
 
 |          | CPU         | GPU         |
 |----------|-------------|-------------|
-| Taxa de geração de tokens | 0.71 tokens/s | 79.82 tokens/s |
+| Taxa de geração de *tokens* | 0.71 tokens/s | 79.82 tokens/s |
 | Duração total | 3m49s | 4.52s |
-| Taxa de avaliação do prompt | 10.67 tokens/s | 295.77 tokens/s |
+| Taxa de avaliação do *prompt* | 10.67 tokens/s | 295.77 tokens/s |
 
-Com os dados apresentados na tabela, percebemos que a execução com GPU foi aproximadamente 112 vezes mais rápida na geração de tokens, com o tempo total de resposta reduzido de 3 minutos e 49 segundos para 4.52 segundos.
+Com os dados apresentados na tabela, percebemos que a execução com GPU foi aproximadamente 112 vezes mais rápida na geração de *tokens*, com o tempo total de resposta reduzido de 3 minutos e 49 segundos para 4.52 segundos.
 
 ## Próximos Passos
 
 - Avaliar a execução com GPU e CPU em um post comparativo e com outras arquiteturas;
 - Testar a inferência em GPU com modelos maiores, com mais de 8 bilhões de parâmetros, por exemplo;
-- Compilar o Ollama para uma versão mais recente;
+- Compilar o Ollama para uma versão mais recente, para carregar modelos novos e avaliar o desempenho;

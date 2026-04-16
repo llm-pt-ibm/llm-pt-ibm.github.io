@@ -1,0 +1,503 @@
+<html lang="pt">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="pt">
+
+<head>
+  <title>Virtualização em Power9: como estruturamos um ambiente isolado com KVM e Libvirt - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/post_virtualization/">
+  <meta property="og:site_name" content="IBM UFCG">
+  <meta property="og:title" content="Virtualização em Power9: como estruturamos um ambiente isolado com KVM e Libvirt">
+  <meta property="og:description" content="Neste post, exploramos a construção de um ambiente virtualizado utilizando KVM e Libvirt em um servidor Power9, com foco em isolamento, reprodutibilidade e uso compartilhado entre membros de uma equipe.">
+  <meta property="og:locale" content="pt_br">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-03-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-03-27T00:00:00+00:00">
+    <meta property="article:tag" content="Virtualização">
+    <meta property="article:tag" content="Power9">
+    <meta property="article:tag" content="KVM">
+    <meta property="article:tag" content="Libvirt">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Virtualização em Power9: como estruturamos um ambiente isolado com KVM e Libvirt">
+  <meta name="twitter:description" content="Neste post, exploramos a construção de um ambiente virtualizado utilizando KVM e Libvirt em um servidor Power9, com foco em isolamento, reprodutibilidade e uso compartilhado entre membros de uma equipe.">
+
+<meta name="generator" content="Hugo 0.160.1">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Pesquisa e desenvolvimento em IA, hardware de alto desempenho e infraestrutura em parceria entre UFCG e IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/en/posts/post_virtualization/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    English Version
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/">
+                <i class="fa-li fa  fa-lg"></i><span>Início</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projetos</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/team/">
+                <i class="fa-li fa  fa-lg"></i><span>Equipe</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Virtualização em Power9: como estruturamos um ambiente isolado com KVM e Libvirt</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2026-03-27T00:00:00Z">Mar 27, 2026</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Gabrielly Lima</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/tags/virtualiza%C3%A7%C3%A3o">#Virtualização</a>
+                
+                    , 
+                    <a href="/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/tags/kvm">#KVM</a>
+                
+                    , 
+                    <a href="/tags/libvirt">#Libvirt</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="contexto">Contexto</h2>
+<p>Diante da necessidade de estabelecer ambientes isolados e seguros para a instalação de bibliotecas, frameworks e ferramentas de uso geral, o encapsulamento de um ambiente surgiu como alternativa para resolução desse problema, fazendo-se presente através do KVM gerenciado por meio do virt-manager e do virsh.</p>
+<p>A virtualização é amplamente utilizada em ambientes x86, com ferramentas e fluxos bem consolidados. No entanto, quando migramos para arquiteturas como o IBM Power9 (ppc64le), muitos desses processos deixam de ser diretos e exigem adaptações específicas. Abaixo, temos um diagrama que demonstra essa comunicação dividida em 4 camadas.</p>
+<h2 id="fluxo-de-comunicação-entre-hardware-power9-e-máquinas-virtuais">Fluxo de comunicação entre Hardware (Power9) e Máquinas Virtuais</h2>
+<p>O fluxo é organizado nas seguintes camadas:</p>
+<!--<div style="text-align: center;">
+  <img src="/images/kvm_virtualizacao.png" style="max-width: 90%;">
+</div> -->
+<figure><img src="/images/kvm_virtualizacao.png"
+    alt="Figura 1: Diagrama que representa a arquitetura de virtualização em 4 camadas."><figcaption>
+      <p>Figura 1: Diagrama que representa a arquitetura de virtualização em 4 camadas.</p>
+    </figcaption>
+</figure>
+
+<p>Neste trabalho, exploramos a construção de um ambiente virtualizado utilizando KVM e Libvirt em um servidor Power9, com foco em isolamento, reprodutibilidade e uso compartilhado entre membros de uma equipe.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>Implementamos um ambiente virtualizado no Power9 usando KVM + Libvirt.</li>
+<li>Adaptamos fluxos comuns de virtualização para arquitetura ppc64le, resolvendo problemas de permissão, lock de escrita e provisionamento.</li>
+<li>O ambiente permite isolamento seguro entre usuários e fácil gerenciamento de VMs.</li>
+<li>Disponibilizamos imagens prontas com drivers NVIDIA/CUDA para uso imediato.</li>
+</ul>
+<h2 id="ambiente-utilizado">Ambiente utilizado</h2>
+<ul>
+<li><strong>Arquitetura</strong>: Servidor IBM Power9 (Arquitetura ppc64le).</li>
+<li><strong>Sistema Operacional (SO)</strong>: AlmaLinux 8.10 binário compatível com Red Hat Enterprise Linux (RHEL) 8.9/8.10.</li>
+<li><strong>RAM</strong>: 512GB.</li>
+<li><strong>Execução</strong>: Virtual Manager para gerenciamento de Máquinas Virtuais (VMs).</li>
+<li><strong>Hypervisor</strong>: KVM (Kernel-based Virtual Machine) / QEMU.</li>
+<li><strong>Gerenciamento</strong>: Libvirt (virsh, virt-install, virt-customize).</li>
+<li><strong>Armazenamento</strong>: Discos virtuais no formato .qcow2.</li>
+<li><strong>GPUs</strong>: 4x NVIDIA Tesla V100 SXM2 16GB (NVLink2).</li>
+</ul>
+<h2 id="instalando-o-ambiente-de-virtualização-kvm--libvirt">Instalando o ambiente de virtualização (KVM + Libvirt)</h2>
+<p>Antes de criar qualquer VM, é necessário instalar e configurar o KVM e o Libvirt no servidor Power9.</p>
+<ol>
+<li><strong>Instalação dos pacotes</strong>:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf install -y qemu-kvm libvirt libvirt-client libvirt-daemon libvirt-daemon-kvm virt-install virt-viewer guestfs-tools <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>libguestfs-tools python3-libvirt
+</span></span></code></pre></div><ol start="2">
+<li><strong>Iniciando serviço</strong>:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable --now libvirtd
+</span></span><span style="display:flex;"><span>sudo systemctl status libvirtd
+</span></span></code></pre></div><ol start="3">
+<li><strong>Adicionando o usuário ao grupo libvirt</strong>:
+Para que usuários não-root possam gerenciar VMs sem precisar de sudo em todo comando:</li>
+</ol>
+<p>Execute o comando abaixo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo usermod -aG libvirt <span style="color:#66d9ef">$(</span>whoami<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><p>Faça logout e login novamente para aplicar a mudança.</p>
+<ol start="4">
+<li><strong>Verificando instalação</strong>:</li>
+</ol>
+<p>Verifique a versão do <code>virsh</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh version
+</span></span></code></pre></div><p>Valide o suporte à virtualização no processador:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virt-host-validate
+</span></span></code></pre></div><h2 id="setup">Setup</h2>
+<ol>
+<li><strong>Preparação de ambiente</strong>:
+No KVM, a forma mais rápida de provisionar VMs é clonar uma imagem &ldquo;semente&rdquo; (.qcow2) e expandi-la, em vez de fazer uma instalação limpa via ISO. Portanto, para manter a organização, todos os discos virtuais ficarão em um diretório separado:</li>
+</ol>
+<p>Baixe a imagem base do Alma Linux 8:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd /home/user/
+</span></span><span style="display:flex;"><span>wget https://repo.almalinux.org/almalinux/8/cloud/ppc64le/images/AlmaLinux-8-GenericCloud-latest.ppc64le.qcow2 -O alma8_base.qcow2
+</span></span></code></pre></div><ol start="2">
+<li><strong>Gerenciamento do Hipervisor</strong>:
+A administração do hipervisor e das instâncias segue protocolos específicos para garantir a estabilidade do sistema. Comandos para o Administrador controlar o serviço no Power9:</li>
+</ol>
+<p>Desative o sistema KVM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl stop libvirtd
+</span></span></code></pre></div><p>Reative o sistema KVM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start libvirtd
+</span></span></code></pre></div><p>Habilite no boot:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable libvirtd
+</span></span></code></pre></div><ol start="3">
+<li><strong>Resolução de permissões</strong>:
+O usuário do sistema que executa o KVM (chamado qemu) precisa ter permissão para acessar os discos da VM. Se o diretório estiver dentro de uma home pessoal, o Linux bloqueará o acesso por padrão. Para permitir que o hipervisor acesse a pasta de discos sem expor seus arquivos pessoais, conceda permissão de execução (o+x) nos diretórios:</li>
+</ol>
+<p>Permita que o qemu &ldquo;atravesse&rdquo; a home (apenas travessia, não leitura):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod o+x /home/user
+</span></span></code></pre></div><p>Permita que o qemu acesse a pasta de discos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod o+x /home/user/discos
+</span></span></code></pre></div><ol start="4">
+<li><strong>Configuração de rede virtual (Libvirt)</strong>:
+O Libvirt cria uma rede NAT padrão (default) que coloca as VMs na faixa 192.168.122.0/24. As VMs têm acesso à internet via NAT, mas não são acessíveis diretamente da rede externa sem configuração adicional.</li>
+</ol>
+<p>Verifique o status da rede:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-list --all
+</span></span></code></pre></div><p>Se estiver inativa, inicie e habilite no boot:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-start default
+</span></span><span style="display:flex;"><span>sudo virsh net-autostart default
+</span></span></code></pre></div><p>Se a rede não existir, defina e inicialize:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-define /usr/share/libvirt/networks/default.xml
+</span></span><span style="display:flex;"><span>sudo virsh net-start default
+</span></span><span style="display:flex;"><span>sudo virsh net-autostart default
+</span></span></code></pre></div><p>Se o XML não for encontrado, instale o pacote de configuração de rede:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf install -y libvirt-daemon-config-network
+</span></span></code></pre></div><ol start="5">
+<li><strong>Criando novas VMs</strong>:</li>
+</ol>
+<p>Clone a imagem base:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp /home/user/alma8_base.qcow2 /home/user/discos/nome_vm.qcow2
+</span></span></code></pre></div><p>Expanda o disco (a expansão deve ser feita ANTES de criar a VM):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>qemu-img resize /home/user/discos/nome_vm.qcow2 +100G
+</span></span></code></pre></div><p>Crie a VM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virt-install <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --connect qemu:///system <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --name vm_nome <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --memory <span style="color:#ae81ff">131072</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --vcpus <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --cpu host <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --disk path<span style="color:#f92672">=</span>/home/user/discos/nome_vm.qcow2,format<span style="color:#f92672">=</span>qcow2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --import <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --os-variant almalinux8 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --network network<span style="color:#f92672">=</span>default <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --graphics none <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --noautoconsole
+</span></span></code></pre></div><ol start="6">
+<li><strong>Customização após criar as VMs</strong>:
+Após criar a VM, é necessário definir a senha root, pois a imagem cloud vem sem senha por padrão. Utilizamos o virt-customize para isso. <strong>Importante</strong>: A VM deve estar desligada para que o disco possa ser editado em segurança.</li>
+</ol>
+<p>Desligue a VM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh shutdown vm_nome
+</span></span></code></pre></div><p>Aguarde o desligamento completo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh list --all
+</span></span></code></pre></div><p>Injete a senha no disco:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virt-customize -a /home/user/discos/nome_vm.qcow2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --root-password password:senha_desejada
+</span></span></code></pre></div><p>Ligue a VM novamente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh start vm_nome
+</span></span></code></pre></div><ol start="7">
+<li><strong>Acessando VMs</strong>:</li>
+</ol>
+<p><strong>Via console serial</strong></p>
+<p>Conecte ao console da VM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh console vm_nome
+</span></span></code></pre></div><p>Para sair do console, use <code>Ctrl + ]</code>.</p>
+<p><strong>Via SSH</strong></p>
+<p>Descubra o IP da VM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domifaddr vm_nome
+</span></span></code></pre></div><p>Acesse via SSH:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh root@&lt;ip_da_vm&gt;
+</span></span></code></pre></div><ol start="8">
+<li><strong>Gerenciar e apagar VMs</strong>:
+Se você precisar destruir um ambiente para recriá-lo do zero, siga os 3 passos obrigatórios para limpar tudo:</li>
+</ol>
+<p>Force o desligamento da VM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh destroy nome_da_vm
+</span></span></code></pre></div><p>Remova a definição da VM do Libvirt:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh undefine nome_da_vm
+</span></span></code></pre></div><p>Apague o disco virtual para liberar espaço no Power9:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -f /home/user/discos/nome_da_vm.qcow2
+</span></span></code></pre></div><ol start="9">
+<li><strong>Criar VM a partir de imagem existente (clonagem)</strong>:
+Para criar uma nova VM a partir de uma imagem já configurada, como as imagens prontas com drivers NVIDIA:</li>
+</ol>
+<p>Opção A: clonar via <code>qemu-img</code> (mantém a imagem original intacta):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>qemu-img create -f qcow2 -b imagem-base.qcow2 -F qcow2 nova-vm.qcow2
+</span></span></code></pre></div><p>Opção B: clonar via <code>virt-clone</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>virt-clone <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --original vm-base <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --name vm-nova <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --file /home/user/discos/nova-vm.qcow2
+</span></span></code></pre></div><p>Caso seja necessário, pode-se executar o passo de excluir a VM e recriá-la conforme a etapa 5.</p>
+<h2 id="imagens-prontas-com-drivers-nvidia">Imagens prontas com drivers NVIDIA</h2>
+<p>Para facilitar o uso das GPUs Tesla V100 presentes no servidor, disponibilizamos imagens .qcow2 pré-configuradas com os drivers NVIDIA, CUDA e cuDNN instalados. Isso elimina a necessidade de configurar o ambiente base a cada novo uso.</p>
+<ol>
+<li>
+<p><strong>Imagens disponíveis</strong>:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Imagem</th>
+          <th style="text-align: left">Conteúdo</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">AlmaLinux-8-Power9-NVIDIA-drivers.qcow2.xz</td>
+          <td style="text-align: left">AlmaLinux 8.10 + drivers NVIDIA 535 + CUDA 12.2 + cuDNN 9.0</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">InstructLab-Power9-0.25.0.qcow2.xz</td>
+          <td style="text-align: left">AlmaLinux 8.10 + InstructLab 0.25.0 + dependências necessárias para execução no Power9 (ppc64le).</td>
+      </tr>
+  </tbody>
+</table>
+</li>
+<li>
+<p><strong>Como usar imagens pré-configuradas</strong>:</p>
+</li>
+</ol>
+<p>Baixe a imagem da pasta compartilhada e descompacte:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install --user gdown
+</span></span><span style="display:flex;"><span>gdown --folder <span style="color:#e6db74">&#34;https://drive.google.com/drive/u/1/folders/1WM8fHKWaMu-NJOzwqh6cdcET7mNE50du&#34;</span>
+</span></span><span style="display:flex;"><span>xz -d InstructLab-Power9-0.25.0.qcow2.xz
+</span></span></code></pre></div><p>Mova para o diretório de discos e crie a VM a partir dela:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp InstructLab-Power9-0.25.0.qcow2 /home/user/discos/minha-vm-gpu.qcow2
+</span></span></code></pre></div><p>Crie a VM normalmente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virt-install <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --connect qemu:///system <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --name vm_gpu <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --memory <span style="color:#ae81ff">131072</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --vcpus <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --cpu host <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --disk path<span style="color:#f92672">=</span>/home/user/discos/minha-vm-gpu.qcow2,format<span style="color:#f92672">=</span>qcow2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --import <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --os-variant almalinux8 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --network network<span style="color:#f92672">=</span>default <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --graphics none <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> --noautoconsole
+</span></span></code></pre></div><p>Para que a VM tenha acesso às GPUs físicas, é necessário configurar o passthrough PCIe conforme descrito no próximo post desta série.</p>
+<ol start="3">
+<li><strong>Como gerar nova imagem a partir de VM configurada</strong>:
+Após instalar drivers ou qualquer software dentro de uma VM, você pode exportar o estado atual como nova imagem para reuso:</li>
+</ol>
+<p>Desligue a VM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh shutdown vm_nome
+</span></span></code></pre></div><p>Converta e compacte a imagem (remove espaço não utilizado):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>qemu-img convert -O qcow2 -c <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> /home/user/discos/vm_nome.qcow2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> /home/user/discos/AlmaLinux-8-Power9-minha-imagem.qcow2
+</span></span></code></pre></div><p>Comprima para distribuição:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>xz -T0 -v /home/user/discos/AlmaLinux-8-Power9-minha-imagem.qcow2
+</span></span></code></pre></div><p>Saída esperada: <code>AlmaLinux-8-Power9-minha-imagem.qcow2.xz</code>.</p>
+<p>Verifique a integridade:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>qemu-img check AlmaLinux-8-Power9-minha-imagem.qcow2
+</span></span><span style="display:flex;"><span>qemu-img info AlmaLinux-8-Power9-minha-imagem.qcow2
+</span></span></code></pre></div>
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/post_humanevalx/"><i class="fa fa-chevron-circle-left"></i> Avaliação de Modelos IBM Granite para Tarefas de Geração de Código no HumanEvalX</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:1313/posts/post_docker/">Instalação do Docker em ambiente Arquitetura ppc64le (Power9) <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>
