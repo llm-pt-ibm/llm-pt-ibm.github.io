@@ -73,6 +73,9 @@ With Bazel 7 functional on ppc64le architecture, we attacked the problem of herm
 - **Python stub:** Redirects to the Python in our conda environment, bypassing the download of the hermetic Python that doesn't exist for ppc64le.
 
 All stubs are injected via `--override_repository` in the `bazel build` call, without altering the TensorFlow source code.
+ 
+{{< figure src="/images/tf221_bypass_strategy.png" alt="Bypass Strategy" caption="Bypass Strategy — Stub Repositories" >}}
+
 
 ### Step 3: Surgical Patches in the Source Code
 

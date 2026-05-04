@@ -73,6 +73,9 @@ Com o Bazel 7 funcional em arquitetura ppc64le, atacamos o problema das dependê
 - **Python stub:** Redireciona para o Python do nosso ambiente conda, contornando o download do Python hermético que não existe para ppc64le.
 
 Todos os stubs são injetados via `--override_repository` na chamada do `bazel build`, sem alterar o código-fonte do TensorFlow.
+ 
+{{< figure src="/images/tf221_bypass_strategy.png" alt="Estratégia de Bypass" caption="Estratégia de Bypass - Repositórios Stub">}}
+
 
 ### Etapa 3: Patches Cirúrgicos no Código-Fonte
 
