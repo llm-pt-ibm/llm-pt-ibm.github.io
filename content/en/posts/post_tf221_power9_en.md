@@ -1,5 +1,5 @@
 ---
-title: "TensorFlow 2.21 on IBM Power9 (ppc64le)"
+title: "TensorFlow 2.21 CPU on IBM Power9 (ppc64le)"
 date: 2026-05-04 # year-month-day
 authors: ["Yalle Rocha Silva"] # Can be a list
 tags: ["TensorFlow", "Power9", "ppc64le", "Deep Learning", "CPU", "Compilation"]

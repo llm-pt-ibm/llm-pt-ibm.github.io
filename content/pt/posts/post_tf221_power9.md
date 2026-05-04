@@ -1,11 +1,11 @@
 ---
-title: "TensorFlow 2.21 no IBM Power9 (ppc64le)"
+title: "TensorFlow 2.21 CPU na IBM Power9 (ppc64le)"
 date: 2026-05-04 # year-month-day
 authors: ["Yalle Rocha Silva"] # Can be a list
 tags: ["TensorFlow", "Power9", "ppc64le", "Deep Learning", "CPU", "Compilação"]
 projects: ["multiarq"]
 translationKey: "tf221-power9"
-summary: "Este post documenta a compilação nativa do TensorFlow 2.21 no IBM Power9 (ppc64le), superando desafios com Bazel 7 e dependências herméticas para alcançar um build funcional apenas para CPU."
+summary: "Este post documenta a compilação nativa do TensorFlow 2.21 na IBM Power9 (ppc64le), superando desafios com Bazel 7 e dependências herméticas para alcançar um build funcional apenas para CPU."
 draft: false # Change to true if you want the post to remain as a draft
 ---
 
