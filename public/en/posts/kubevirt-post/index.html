@@ -1,0 +1,384 @@
+<html lang="en">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Running VMs with KubeVirt on IBM Power9 (ppc64le) - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/en/posts/kubevirt-post/">
+  <meta property="og:site_name" content="IBM UFCG">
+  <meta property="og:title" content="Running VMs with KubeVirt on IBM Power9 (ppc64le)">
+  <meta property="og:description" content="This post documents how we adapted KubeVirt to create and manage virtual machines via Kubernetes on IBM Power9 (ppc64le), an architecture not officially supported by the project.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-05-22T00:00:00+00:00">
+    <meta property="article:tag" content="KubeVirt">
+    <meta property="article:tag" content="Power9">
+    <meta property="article:tag" content="Ppc64le">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Virtualization">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Running VMs with KubeVirt on IBM Power9 (ppc64le)">
+  <meta name="twitter:description" content="This post documents how we adapted KubeVirt to create and manage virtual machines via Kubernetes on IBM Power9 (ppc64le), an architecture not officially supported by the project.">
+
+<meta name="generator" content="Hugo 0.161.1">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Research and development on AI, high-performance hardware, and infrastructure — a partnership between UFCG and IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/posts/kubevirt-post/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    Versão em Português
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/en/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projects</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/team">
+                <i class="fa-li fa  fa-lg"></i><span>Team</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Running VMs with KubeVirt on IBM Power9 (ppc64le)</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2026-05-22T00:00:00Z">May 22, 2026</time>
+        </li>
+        
+        
+
+        
+        
+        <li>João Ramalho</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/en/tags/kubevirt">#KubeVirt</a>
+                
+                    , 
+                    <a href="/en/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/en/tags/ppc64le">#ppc64le</a>
+                
+                    , 
+                    <a href="/en/tags/kubernetes">#Kubernetes</a>
+                
+                    , 
+                    <a href="/en/tags/virtualization">#Virtualization</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="context">Context</h2>
+<p>This post aims to present the process of adapting <a href="https://kubevirt.io/" rel="external">KubeVirt</a> for the IBM POWER9 (ppc64le) architecture. It covers the main challenges encountered, the modifications made to the source code, the role of each component, and the results obtained at the end of the process.</p>
+<p>KubeVirt is an operator that extends Kubernetes to manage virtual machines (VMs) as native resources. In traditional environments, VMs are managed by tools like libvirt/virsh, separate from the container ecosystem. KubeVirt eliminates this separation: with it, you can create, start, stop, and monitor VMs using the same Kubernetes commands and workflows — <code>kubectl</code>, YAML, namespaces, and RBAC. VMs run as real QEMU/KVM processes inside pods managed by Kubernetes.</p>
+<p>The motivation for this work arose in the context of the Frente Multiarq project, which maintains a shared HPC infrastructure on IBM POWER9. The ability to manage VMs and containers in the same Kubernetes cluster simplifies environment administration and opens the door to scenarios such as GPU passthrough for AI/ML workloads inside VMs, isolation of research environments, and multi-architecture compatibility testing.</p>
+<p>The main challenge is that KubeVirt <strong>does not officially support ppc64le</strong>. Only x86_64 (amd64), arm64, and s390x are supported. This means the build system, API validations, configuration defaults, and the libvirt domain generation pipeline do not recognize ppc64le, defaulting everything to amd64.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>KubeVirt does not officially support ppc64le; the entire pipeline assumes amd64 as a fallback.</li>
+<li>We compiled Go binaries directly, bypassing the Bazel build system that does not recognize the architecture.</li>
+<li>Patches were required across ~14 Go files and 4 new files were created to add ppc64le support.</li>
+<li>Docker images were built with custom Dockerfiles and served via a local registry.</li>
+<li>With these adaptations, it was possible to run a CirrOS ppc64le VM via KubeVirt on POWER9, managed entirely by Kubernetes.</li>
+</ul>
+<h2 id="execution-environment">Execution Environment</h2>
+<ul>
+<li><strong>Architecture:</strong> IBM Power9 server (ppc64le).</li>
+<li><strong>Operating System:</strong> AlmaLinux 8.10, binary compatible with RHEL 8.9/8.10.</li>
+<li><strong>GPUs:</strong> 4x NVIDIA Tesla V100-SXM2-16GB.</li>
+<li><strong>Docker:</strong> Docker CE 26.1.3.</li>
+<li><strong>Kubernetes:</strong> v1.35.0 via minikube v1.38.0 (docker driver, containerd runtime).</li>
+<li><strong>KubeVirt:</strong> v1.8.2.</li>
+<li><strong>Go:</strong> 1.24.9.</li>
+</ul>
+<h2 id="what-kubevirt-is-and-how-it-works">What KubeVirt Is and How It Works</h2>
+<p>KubeVirt is composed of several components that work together to translate a Kubernetes resource (the VirtualMachineInstance, or VMI) into a real QEMU/KVM VM running on the host.</p>
+<p>The <strong>virt-operator</strong> is the entry point: when the administrator creates the KubeVirt Custom Resource in the cluster, the operator provisions all other components — deployments, daemonsets, services, RBAC. It acts as a permanent installer that reconciles the desired state.</p>
+<p>The <strong>virt-api</strong> handles Kubernetes API calls for KubeVirt resources. When the user runs <code>kubectl apply</code> on a VMI, virt-api validates the YAML (e.g., is the architecture supported? does the machine type exist?) and injects defaults (e.g., firmware UUID, CPU topology).</p>
+<p>The <strong>virt-controller</strong> watches VMIs and decides where they should run. It creates a special pod — the virt-launcher — on the appropriate node, with all necessary configurations (volumes, devices, node selectors).</p>
+<p>The <strong>virt-handler</strong> runs as a DaemonSet (one per node) and is the local agent that bridges Kubernetes and libvirt/QEMU. When the virt-launcher pod appears on the node, virt-handler reads the VMI spec, generates the libvirt domain XML, and instructs libvirt to create the VM. It also registers device plugins with the kubelet (<code>/dev/kvm</code>, <code>/dev/net/tun</code>, <code>/dev/vhost-net</code>) so pods can access the required devices.</p>
+<p>The <strong>virt-launcher</strong> is the pod that encapsulates the VM. Each VMI generates a dedicated pod with three containers: compute (QEMU + libvirt), guest-console-log, and container disk. Inside the compute container, the QEMU process runs the actual VM — with its own kernel, memory, and virtual CPU.</p>
+<p>The full flow is:</p>
+<ol>
+<li><code>kubectl apply</code> → API Server → virt-api (validates, injects defaults)</li>
+<li>virt-controller detects the VMI → creates the virt-launcher pod on the appropriate node</li>
+<li>kubelet starts the virt-launcher pod on the node</li>
+<li>virt-handler detects the pod → reads the VMI spec → generates libvirt XML → calls libvirt</li>
+<li>libvirt starts QEMU → VM runs inside the pod</li>
+</ol>
+<p>It is important to note that the VM <strong>does not become a container</strong> — it runs as a real QEMU process inside a pod. Kubernetes manages the pod lifecycle, and KubeVirt translates between the two worlds.</p>
+<h2 id="challenges-and-adaptations">Challenges and Adaptations</h2>
+<h3 id="build-system">Build System</h3>
+<p>KubeVirt&rsquo;s build system uses Bazel, which does not recognize ppc64le. The <code>format_archname</code> function in the build script only accepts <code>x86_64</code>, <code>aarch64</code>, and <code>s390x</code>. The solution was to compile the Go binaries directly with <code>go build</code>, bypassing Bazel.</p>
+<p>An additional dependency is <strong>libnbd</strong>: virt-launcher requires version 1.18+, but AlmaLinux 8 only provides 1.6. It was necessary to compile libnbd 1.20 from source. The <strong>container-disk</strong> component is a C program (not Go) that requires static compilation to run in <code>FROM scratch</code> containers.</p>
+<h3 id="api-validation">API Validation</h3>
+<p>The virt-api validation webhook rejects VMIs with an unknown architecture. Without the patch, a VMI with <code>architecture: ppc64le</code> would be rejected before even reaching the scheduler. It was necessary to add cases in the admitter and create a specific validation function for ppc64le.</p>
+<h3 id="configuration-defaults">Configuration Defaults</h3>
+<p>KubeVirt needs to know which machine type to use for each architecture (e.g., <code>pc-q35</code> for amd64, <code>virt</code> for arm64). For ppc64le, we configured <code>pseries</code> as the default machine type — the virtual machine type for POWER.</p>
+<h3 id="libvirt-domain-generation">Libvirt Domain Generation</h3>
+<p>This was the central challenge. KubeVirt converts the VMI spec into a libvirt domain XML that QEMU interprets. This pipeline has two parts:</p>
+<p>The <strong>arch-defaulter</strong> sets default OS type values (<code>arch</code> and <code>machine</code>) in the XML. Without the patch, it returned <code>x86_64</code> for ppc64le, causing libvirt to attempt creating an x86 VM on a POWER machine — resulting in the error <code>No emulator found for arch 'x86_64'</code>.</p>
+<p>The <strong>converter</strong> is an interface with ~12 methods that define architecture-specific behaviors: whether USB is needed, SMBIOS, PCIe placement, ROM tuning, etc. Implementations existed for amd64, arm64, and s390x, but not for ppc64le. The code fell back to <code>converterAMD64</code>, generating incompatible configurations. We created <code>converterPPC64LE</code> with values appropriate for POWER: no USB, no SMBIOS, no PCIe placement, with VirtIO as the disk model.</p>
+<p>After resolving the converter, an <strong>USB device</strong> error appeared: the graphics/video pipeline had no case for ppc64le, causing libvirt to add a default VGA video device that depended on USB — but the USB controller was disabled (<code>IsUSBNeeded: false</code>). The solution was to add a ppc64le case in the video configurator with <code>virtio</code> as the video device, following the same pattern as s390x and arm64.</p>
+<p>Finally, the <strong>CPU model</strong>: KubeVirt uses <code>host-model</code> as the default, which does not work with nested virtualization on POWER9. The solution was to specify <code>POWER9</code> as the CPU model in the VMI.</p>
+<h3 id="docker-images">Docker Images</h3>
+<p>With no Dockerfiles in the project (everything is generated by Bazel), we created custom Dockerfiles for each component. The simpler components (virt-operator, virt-api, virt-controller, virt-exportproxy) use <code>ubi8/ubi-minimal</code> as the base. virt-handler requires additional system tools. virt-launcher is the most complex, using <code>almalinux:8</code> as the base and dependencies on qemu-kvm, libvirt, and the compiled libnbd. A local registry (<code>registry:2</code> on port 5000) serves the images to minikube.</p>
+<h2 id="results">Results</h2>
+<p>With all adaptations applied, it was possible to run a CirrOS ppc64le VM via KubeVirt on POWER9, managed entirely by Kubernetes:</p>
+<pre tabindex="0"><code>$ kubectl get vmi test-vmi -o wide
+NAME       AGE     PHASE     IP               NODENAME   READY
+test-vmi   2m43s   Running   10.244.120.124   minikube   True
+</code></pre><p>Data collected from inside the VM confirms correct execution:</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Architecture</td>
+          <td>ppc64le</td>
+      </tr>
+      <tr>
+          <td>CPU</td>
+          <td>POWER9 (architected), altivec supported</td>
+      </tr>
+      <tr>
+          <td>Hypervisor</td>
+          <td>KVM</td>
+      </tr>
+      <tr>
+          <td>Platform</td>
+          <td>pSeries</td>
+      </tr>
+      <tr>
+          <td>Model</td>
+          <td>IBM pSeries (emulated by qemu)</td>
+      </tr>
+      <tr>
+          <td>Kernel</td>
+          <td>5.15.0-71-generic ppc64le</td>
+      </tr>
+  </tbody>
+</table>
+<p>These results confirm that KubeVirt is generating the correct libvirt domain for ppc64le, with machine type <code>pseries</code>, POWER9 CPU, and KVM/QEMU virtualization with VirtIO paravirtualization.</p>
+<h2 id="final-considerations">Final Considerations</h2>
+<p>With the adaptations made, it became possible to use KubeVirt to create and manage virtual machines on an IBM POWER9 via Kubernetes. The VM that runs is a real KVM/QEMU VM — with its own kernel, isolated memory, and virtual CPU — managed like any other Kubernetes resource.</p>
+<p>In the context of the Multiarq project, this solution allows unifying the management of containers and VMs in the same cluster, simplifying administration of the shared infrastructure. Workloads that require kernel isolation or direct hardware access (such as GPU passthrough) can run in VMs without leaving the Kubernetes ecosystem.</p>
+<p>The patches made are potentially contributable to the upstream KubeVirt project. KubeVirt&rsquo;s architecture already provides for extensibility by architecture — the interface pattern (Converter, ArchDefaulter) and per-arch switches make it straightforward to add new platforms. ppc64le follows the same pattern as s390x, which was also added to the project at a later stage.</p>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li>Resolve the USB/Graphics conflict to allow VNC without the <code>autoattachGraphicsDevice: false</code> workaround, enabling graphical access to VMs;</li>
+<li>Adjust the default CPU model in the code so that ppc64le automatically uses <code>POWER9</code> without requiring manual specification in the VMI;</li>
+<li>Explore GPU passthrough of the V100s via KubeVirt to run AI/ML workloads inside VMs managed by Kubernetes;</li>
+<li>Test other distributions as containerDisk (Fedora, Ubuntu Server, AlmaLinux ppc64le) to validate compatibility beyond CirrOS;</li>
+<li>Configure masquerade networking to enable live migration between nodes;</li>
+<li>Document the changes in PR format for contribution to the KubeVirt upstream;</li>
+<li>Validate KubeVirt on the Single Node OpenShift (OCP 4.21) already installed on the machine, using OpenShift Virtualization as the operator.</li>
+</ul>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/en/posts/post_tf221_power9_en/"><i class="fa fa-chevron-circle-left"></i> TensorFlow 2.21 CPU on IBM Power9 (ppc64le)</a>
+        
+        </li>
+        <li>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>
