@@ -92,6 +92,10 @@ Por fim, o **CPU model**: o KubeVirt usa `host-model` como default, que não fun
 
 Sem Dockerfiles no projeto (tudo é gerado pelo Bazel), criamos Dockerfiles customizados para cada componente. Os componentes mais simples (virt-operator, virt-api, virt-controller, virt-exportproxy) usam `ubi8/ubi-minimal` como base. O virt-handler requer ferramentas de sistema adicionais. O virt-launcher é o mais complexo, com `almalinux:8` como base e dependências de qemu-kvm, libvirt e o libnbd compilado. Um registry local (`registry:2` na porta 5000) serve as imagens para o minikube.
 
+### Passo a Passo Técnico
+ 
+Devido à grande quantidade de etapas envolvidas, o passo a passo com os procedimentos detalhados, incluindo todos os patches no código Go, Dockerfiles, comandos de compilação e configuração, está disponível neste link: [guia-instalacao-kubevirt-ppc64le](https://github.com/llm-pt-ibm/kubevirt-ppc64le).
+
 ## Resultados
 
 Com todas as adaptações aplicadas, foi possível executar uma VM CirrOS ppc64le via KubeVirt no POWER9, gerenciada inteiramente pelo Kubernetes:
