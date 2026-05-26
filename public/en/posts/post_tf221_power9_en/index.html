@@ -1,0 +1,374 @@
+<html lang="en">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>TensorFlow 2.21 CPU on IBM Power9 (ppc64le) - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/en/posts/post_tf221_power9_en/">
+  <meta property="og:site_name" content="IBM UFCG">
+  <meta property="og:title" content="TensorFlow 2.21 CPU on IBM Power9 (ppc64le)">
+  <meta property="og:description" content="This post documents the native compilation of TensorFlow 2.21 on IBM Power9 (ppc64le), covering the bootstrap of Bazel 7, bypass strategies for hermetic dependencies, and surgical patches for GCC compatibility.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-05-04T00:00:00+00:00">
+    <meta property="article:tag" content="TensorFlow">
+    <meta property="article:tag" content="Power9">
+    <meta property="article:tag" content="Ppc64le">
+    <meta property="article:tag" content="Deep Learning">
+    <meta property="article:tag" content="CPU">
+    <meta property="article:tag" content="Compilation">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TensorFlow 2.21 CPU on IBM Power9 (ppc64le)">
+  <meta name="twitter:description" content="This post documents the native compilation of TensorFlow 2.21 on IBM Power9 (ppc64le), covering the bootstrap of Bazel 7, bypass strategies for hermetic dependencies, and surgical patches for GCC compatibility.">
+
+<meta name="generator" content="Hugo 0.161.1">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Research and development on AI, high-performance hardware, and infrastructure — a partnership between UFCG and IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/posts/post_tf221_power9/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    Versão em Português
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/en/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projects</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/team">
+                <i class="fa-li fa  fa-lg"></i><span>Team</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>TensorFlow 2.21 CPU on IBM Power9 (ppc64le)</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2026-05-04T00:00:00Z">May 4, 2026</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Yalle Rocha Silva</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/en/tags/tensorflow">#TensorFlow</a>
+                
+                    , 
+                    <a href="/en/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/en/tags/ppc64le">#ppc64le</a>
+                
+                    , 
+                    <a href="/en/tags/deep-learning">#Deep Learning</a>
+                
+                    , 
+                    <a href="/en/tags/cpu">#CPU</a>
+                
+                    , 
+                    <a href="/en/tags/compilation">#Compilation</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="context">Context</h2>
+<p>TensorFlow (TF) is the most globally adopted machine learning framework. However, since 2021, Google ended official support for pre-compiled binaries for the ppc64le architecture, and the <code>tensorflow/community</code> repository was archived in 2025.</p>
+<h2 id="environment-used">Environment Used</h2>
+<ul>
+<li><strong>Hardware:</strong> ppc64le architecture;</li>
+<li><strong>RAM:</strong> ~64GB;</li>
+<li><strong>Execution:</strong> Virtual Machine (VM);</li>
+<li><strong>Operating System:</strong> Alma Linux 8.10 (ppc64le), binary compatible with Red Hat Enterprise Linux (RHEL) 8.9/8.10.</li>
+</ul>
+<h2 id="initial-setup-installing-tf-214">Initial Setup (Installing TF 2.14)</h2>
+<p>As a starting point, we validated the installation of TensorFlow 2.14.1 (via RocketCE) on an IBM Power9 VM (ppc64le architecture) with AlmaLinux, using Miniforge (conda). Here are the commands for installation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda create -n tf214 python<span style="color:#f92672">=</span>3.11 -y
+</span></span><span style="display:flex;"><span>conda activate tf214
+</span></span><span style="display:flex;"><span>conda install -c rocketce tensorflow-cpu<span style="color:#f92672">=</span>2.14.1 -y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># expected output: 2.14.1</span>
+</span></span><span style="display:flex;"><span>python -c <span style="color:#e6db74">&#34;import tensorflow as tf; print(tf.__version__)&#34;</span>
+</span></span></code></pre></div><p>As a result, functional TensorFlow 2.14.1 is expected. This same version is also available on the Open-CE channels of Oregon State University and MIT. With TF 2.14 working, we have access to: Keras, TensorBoard, TensorFlow Hub, tensorflow-text, Hugging Face Transformers, Jupyter, and the entire classic ML stack.</p>
+<h2 id="tf-214-vs-tf-221-the-latest">TF 2.14 vs TF 2.21 (The Latest)</h2>
+<p>Version 2.14 is functional but is several versions behind the latest, 2.21. The most significant differences focus on incompatibility with two very important tools:</p>
+<ul>
+<li><strong>Keras 3:</strong> a complete rewrite that transforms Keras into a multi-backend framework, allowing the same model and code to run on TensorFlow, PyTorch, or JAX without any changes. TF 2.14 only supports Keras 2.</li>
+<li><strong>NumPy 2:</strong> In addition to correcting dozens of historical API inconsistencies, NumPy 2.0 brings significant efficiency gains. TF 2.14 does not support NumPy 2.</li>
+</ul>
+<h2 id="compiling-tensorflow-221-natively-on-power9-cpu-only">Compiling TensorFlow 2.21 Natively on Power9 (CPU-Only)</h2>
+<p>Initially, we successfully compiled TensorFlow 2.21 (CPU-Only) directly from source code. This compilation was performed on an IBM Power9 VM and generated a native <code>.whl</code> package for <code>linux_ppc64le</code>. Subsequently, TF 2.21 had its functionality validated through a complete suite of tests. This is a fundamental milestone upon which GPU support will be built in the next stage.</p>
+<h2 id="challenges-hermeticity-and-x86-dependency">Challenges: Hermeticity and x86 Dependency</h2>
+<p>The modern architecture of TensorFlow (and its build system, Bazel 7) embraced the &ldquo;Hermetic&rdquo; model: forcing the use of pre-compiled binaries and logic tied to x86_64, aarch64 architectures, and NVIDIA accelerators. For ppc64le, this means that a naive compilation simply fails when trying to download tools for incompatible architectures.</p>
+<h3 id="we-identified-four-categories-of-blockage">We identified four categories of blockage:</h3>
+<ol>
+<li><strong>Bazel 7:</strong> Google does not distribute Bazel 7 for PowerPC. It would be necessary to compile it from scratch.</li>
+<li><strong>Hermetic Toolchains:</strong> TF 2.21 tries to download pre-compiled LLVM/Clang for x86 or aarch64, which doesn&rsquo;t run on Power9.</li>
+<li><strong>CUDA/GPU Dependencies:</strong> Even in CPU-only mode, the build system tries to download and link giant NVIDIA libraries. Our strategy was to completely isolate GPU support with empty stubs, ensuring a stable CPU-only foundation before adding any accelerators.</li>
+<li><strong>Latent C++ Bugs:</strong> XLA and MLIR code contain constructs that work in Google&rsquo;s Clang but break in the system&rsquo;s default GCC 8.5, from AVX-512 flags to template ambiguities in <code>absl::NoDestructor</code>.</li>
+</ol>
+<h2 id="compilation-process">Compilation Process</h2>
+<h3 id="step-1-compiling-bazel-710-from-scratch">Step 1: Compiling Bazel 7.1.0 from Scratch</h3>
+<p>Since Google does not distribute Bazel 7 for ppc64le, the first step to enable its use on ppc64le architecture was to compile Bazel itself from its source code, using the <code>-dist.zip</code> file, which already includes the necessary bootstrap artifacts for Bazel to self-build without depending on a previous version of itself. The process requires Java 21 and takes between 1 and 2 hours depending on the cores available in the VM. The critical point here is passing the correct variables to the <code>compile.sh</code> script. Without this step, none of the following steps are possible. The <code>bazel build</code> command simply doesn&rsquo;t exist for ppc64le otherwise. We created a <a href="https://github.com/llm-pt-ibm/TensorFlow-2.21-Power9/blob/main/bazel/tutorial_bazel7_power9.md" rel="external">tutorial</a> with the Bazel 7.1 installation process which can be accessed in the repository.</p>
+<h3 id="step-2-bypass-strategy--stub-repositories">Step 2: Bypass Strategy — Stub Repositories</h3>
+<p>With Bazel 7 functional on ppc64le architecture, we attacked the problem of hermetic dependencies. Our solution was to create &ldquo;stub&rdquo; repositories, empty local directories that satisfy Bazel&rsquo;s dependency declarations without downloading anything:</p>
+<ul>
+<li><strong>LLVM stubs:</strong> Empty filegroups that satisfy toolchain rules without trying to install LLVM.</li>
+<li><strong>CUDA/ROCm/TensorRT stubs:</strong> Empty C++ libraries and Starlark rules that allow the build to proceed without missing dependency errors.</li>
+<li><strong>PyPI stubs:</strong> Stub Python modules that simulate the dependencies of Google&rsquo;s hermetic pip, forcing the use of libraries from the conda environment.</li>
+<li><strong>Python stub:</strong> Redirects to the Python in our conda environment, bypassing the download of the hermetic Python that doesn&rsquo;t exist for ppc64le.</li>
+</ul>
+<p>All stubs are injected via <code>--override_repository</code> in the <code>bazel build</code> call, without altering the TensorFlow source code.</p>
+<figure><img src="/images/tf221_bypass_strategy.png"
+    alt="Bypass Strategy"><figcaption>
+      <p>Bypass Strategy — Stub Repositories</p>
+    </figcaption>
+</figure>
+
+<h3 id="step-3-surgical-patches-in-the-source-code">Step 3: Surgical Patches in the Source Code</h3>
+<p>With the build infrastructure resolved, we found 21 incompatibilities in TensorFlow&rsquo;s C++ and Python code that manifest exclusively in the GCC 13 + ppc64le combination. The problems focused on three categories:</p>
+<ol>
+<li>Clang-exclusive compilation flags that GCC rejects.</li>
+<li>C++ template ambiguities in XLA and MLIR components that Google&rsquo;s compiler masks but GCC 13 exposes.</li>
+<li>References to CUDA and TensorRT headers that cease to exist when replaced by stubs.</li>
+</ol>
+<p>Each incompatibility was resolved with a precise Python patch, without altering TensorFlow&rsquo;s functional logic. The <a href="https://github.com/llm-pt-ibm/TensorFlow-2.21-Power9/blob/main/cpu/tutorial_tf221_power9.md" rel="external">complete table with all 21 patches</a> is available in the repository.</p>
+<h3 id="step-4-the-compilation">Step 4: The Compilation</h3>
+<p>With all patches applied, the final compilation is triggered with a single <code>bazel build</code> command. In addition to standard optimization flags, the command injects all stub repositories via <code>--override_repository</code>, totaling about 80 flags. Bazel&rsquo;s incremental cache is fundamental here: each time a patch is needed and compilation is resumed, only the affected targets are recompiled. This transformed the &ldquo;patch → compile → error → patch&rdquo; cycle from unfeasible to manageable (about 4 hours).</p>
+<h2 id="the-definitive-solution-conda-package-and-binaries-ready-for-use">The Definitive Solution: Conda Package and Binaries (Ready for Use)</h2>
+<p>So that the community doesn&rsquo;t need to redo all this complex build engineering, we packaged the result of this engineering into a &ldquo;plug and play&rdquo; solution.</p>
+<p>We made an <a href="https://github.com/llm-pt-ibm/tensorflow/releases/tag/v2.21.0-cpu-only" rel="external">official Release</a> available in the repository containing the source code already with all patches applied and the generated native <code>.whl</code> binary. More importantly: we created and published a complete Conda recipe that automatically resolves classic C++ library compatibility issues (GLIBCXX and GCC mismatch) common on Power9.</p>
+<p>Now, native TensorFlow 2.21 can be installed directly through our Conda channel, providing the same installation experience as official corporate distributions.</p>
+<h2 id="how-to-install-quick-tutorial">How to Install (Quick Tutorial)</h2>
+<p>To use TensorFlow 2.21 in your Power9 environment immediately, simply run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda create -n tf221 python<span style="color:#f92672">=</span>3.11 -y
+</span></span><span style="display:flex;"><span>conda activate tf221
+</span></span><span style="display:flex;"><span>conda install -c ufcg-ibm -c conda-forge tensorflow-cpu<span style="color:#f92672">=</span>2.21.0 -y
+</span></span></code></pre></div><p>A <a href="https://github.com/llm-pt-ibm/TensorFlow-2.21-Power9/blob/main/cpu/install-tensorflow-ppc64le.md" rel="external">detailed installation tutorial via Conda</a> is also available in our repository.</p>
+<h2 id="functional-result-on-ibm-power9-server">Functional Result on IBM Power9 server</h2>
+<p>We installed the final package and executed a complete suite of 35 tests, covering eight functional categories: from basic tensor operations to model save/load and stress tests. All 35 tests passed. The stress test (5000×5000 matrix multiplication) successfully executed on the IBM Power9 CPU, and training an MLP for 20 epochs confirmed loss convergence, indicating that automatic differentiation, optimizers, and numerical operations are all working correctly from end to end.</p>
+<h2 id="ibm-tools-using-tensorflow">IBM Tools using TensorFlow</h2>
+<p>IBM AI tools like AIF360, AIX360, and ART were already compatible with TensorFlow 2.14, as they are Python libraries that use the environment&rsquo;s TF without binary coupling. The real value of native TensorFlow 2.21 compiled for Power9 lies in continuity: these libraries were already starting to declare dependencies on TF versions higher than 2.14, which meant that without this build, the Power9 environment would remain stuck on old and unsupported versions. Additionally, the improvements accumulated in TF between versions 2.14 and 2.21 bring incremental performance gains to fairness, explainability, and adversarial robustness analysis pipelines.</p>
+<h2 id="reproducibility-and-materials">Reproducibility and Materials</h2>
+<p>The entire process and generated artifacts are documented and available in our repository:</p>
+<ul>
+<li><strong><a href="https://github.com/llm-pt-ibm/tensorflow/releases/tag/v2.21.0-cpu-only" rel="external">Official Release</a>:</strong> Altered source code and ready-to-use <code>.whl</code> binary.</li>
+<li><strong><a href="https://github.com/llm-pt-ibm/TensorFlow-2.21-Power9/blob/main/cpu/install-tensorflow-ppc64le.md" rel="external">Conda Installation Tutorial</a>:</strong> Practical guide to install version 2.21 directly through our Conda channel.</li>
+<li><strong><a href="https://github.com/llm-pt-ibm/TensorFlow-2.21-Power9/blob/main/bazel/tutorial_bazel7_power9.md" rel="external">Bazel 7.1.0 Compilation Tutorial</a>:</strong> Step-by-step guide to compile Bazel 7.1.0 from source.</li>
+<li><strong><a href="https://github.com/llm-pt-ibm/TensorFlow-2.21-Power9/blob/main/cpu/tutorial_tf221_power9.md" rel="external">TensorFlow 2.21 Compilation Tutorial</a>:</strong> Full guide to compile TensorFlow 2.21 with all necessary patches.</li>
+</ul>
+<h2 id="impact">Impact</h2>
+<p>This compilation represents the latest version of TensorFlow natively available for ppc64le and with it:</p>
+<ul>
+<li><strong>Keras 3</strong> becomes available for ppc64le for the first time.</li>
+<li><strong>NumPy 2.0</strong> ceases to be a bottleneck for the Python scientific ecosystem on IBM Power9.</li>
+<li><strong>Hugging Face Transformers stack</strong> with more models compatible with Power9.</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>The TF 2.21 we compiled runs exclusively on CPU. The next challenge is to repeat the process with CUDA enabled on IBM Power9 servers equipped with NVIDIA GPUs. The stubs we created to isolate the GPU in this compilation were designed precisely to facilitate this transition: by replacing them with real CUDA libraries, we will have a solid starting point for GPU compilation. If successful, Power9 would have the latest deep learning framework with hardware acceleration, something non-existent today in any distribution for ppc64le.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/en/posts/ollama_gpu/"><i class="fa fa-chevron-circle-left"></i> LLM Inference with Ollama on IBM Power9 Using GPU</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:1313/en/posts/kubevirt-post/">Running VMs with KubeVirt on IBM Power9 (ppc64le) <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>
