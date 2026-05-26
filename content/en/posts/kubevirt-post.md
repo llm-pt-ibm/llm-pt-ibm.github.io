@@ -15,7 +15,7 @@ This post aims to present the process of adapting [KubeVirt](https://kubevirt.io
 
 KubeVirt is an operator that extends Kubernetes to manage virtual machines (VMs) as native resources. In traditional environments, VMs are managed by tools like libvirt/virsh, separate from the container ecosystem. KubeVirt eliminates this separation: with it, you can create, start, stop, and monitor VMs using the same Kubernetes commands and workflows — `kubectl`, YAML, namespaces, and RBAC. VMs run as real QEMU/KVM processes inside pods managed by Kubernetes.
 
-The motivation for this work arose in the context of the Frente Multiarq project, which maintains a shared HPC infrastructure on IBM POWER9. The ability to manage VMs and containers in the same Kubernetes cluster simplifies environment administration and opens the door to scenarios such as GPU passthrough for AI/ML workloads inside VMs, isolation of research environments, and multi-architecture compatibility testing.
+The motivation for this work arose in the context of the Multiarq project, which maintains a shared HPC infrastructure on IBM POWER9. The ability to manage VMs and containers in the same Kubernetes cluster simplifies environment administration and opens the door to scenarios such as GPU passthrough for AI/ML workloads inside VMs, isolation of research environments, and multi-architecture compatibility testing.
 
 The main challenge is that KubeVirt **does not officially support ppc64le**. Only x86_64 (amd64), arm64, and s390x are supported. This means the build system, API validations, configuration defaults, and the libvirt domain generation pipeline do not recognize ppc64le, defaulting everything to amd64.
 
