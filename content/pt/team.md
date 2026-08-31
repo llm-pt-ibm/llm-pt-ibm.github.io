@@ -36,9 +36,9 @@ Lucas Santos: lucasraniere@copin.ufcg.edu.br
 [Lucas Pereira](/authors/lucas-pereira): lucas.pereira@lsd.ufcg.edu.br  
 [Maria Gomes](/authors/maria-luísa-gomes): maria.luisa.pereira.gomes@ccc.ufcg.edu.br  
 [Gabrielly Lima](/authors/gabrielly-lima): gabrielly.lima@lsd.ufcg.edu.br  
-Yalle Silva: yalle.silva@lsd.ufcg.edu.br  
+[Yalle Silva](/authors/yalle-rocha-silva): yalle.silva@lsd.ufcg.edu.br  
 Isaac Silva: isaac.silva@lsd.ufcg.edu.br  
-João Ramalho: joao.ramalho@ccc.ufcg.edu.br  
+[João Ramalho](/authors/joão-ramalho): joao.ramalho@ccc.ufcg.edu.br  
 
 #### 5G
 Victor Veríssimo: victor.verissimo@ccc.ufcg.edu.br  

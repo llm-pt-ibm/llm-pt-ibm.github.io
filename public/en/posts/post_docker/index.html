@@ -1,0 +1,335 @@
+<html lang="en">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="en">
+
+<head>
+  <title>Installing Docker in an Architecture ppc64le (Power9) Environment - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/en/posts/post_docker/">
+  <meta property="og:site_name" content="IBM UFCG">
+  <meta property="og:title" content="Installing Docker in an Architecture ppc64le (Power9) Environment">
+  <meta property="og:description" content="This post walks through how to install Docker Engine on AlmaLinux 8.10 on IBM Power9 (ppc64le), including removing conflicting packages, configuring the official repository, and handling image compatibility concerns.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-04-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-04-01T00:00:00+00:00">
+    <meta property="article:tag" content="Docker">
+    <meta property="article:tag" content="Power9">
+    <meta property="article:tag" content="Ppc64le">
+    <meta property="article:tag" content="AlmaLinux">
+    <meta property="article:tag" content="Containers">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Installing Docker in an Architecture ppc64le (Power9) Environment">
+  <meta name="twitter:description" content="This post walks through how to install Docker Engine on AlmaLinux 8.10 on IBM Power9 (ppc64le), including removing conflicting packages, configuring the official repository, and handling image compatibility concerns.">
+
+<meta name="generator" content="Hugo 0.161.1">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Research and development on AI, high-performance hardware, and infrastructure — a partnership between UFCG and IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/posts/post_docker/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    Versão em Português
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/en/">
+                <i class="fa-li fa  fa-lg"></i><span>Home</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projects</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/en/team">
+                <i class="fa-li fa  fa-lg"></i><span>Team</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Installing Docker in an Architecture ppc64le (Power9) Environment</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2026-04-01T00:00:00Z">Apr 1, 2026</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Gabrielly Lima</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/en/tags/docker">#Docker</a>
+                
+                    , 
+                    <a href="/en/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/en/tags/ppc64le">#ppc64le</a>
+                
+                    , 
+                    <a href="/en/tags/almalinux">#AlmaLinux</a>
+                
+                    , 
+                    <a href="/en/tags/containers">#Containers</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="context">Context</h2>
+<p>Given the need to standardize software execution on our IBM Power9 (ppc64le) server, containers are a robust solution for avoiding environment conflicts. This post continues the work of structuring our infrastructure by detailing the installation of Docker Engine on AlmaLinux. Adopting this technology is strategically important for ensuring strict dependency isolation and portability across applications. With it, we can package everything from general-purpose libraries to more complex services, ensuring a clean, secure, and highly reproducible runtime environment.</p>
+<p>Docker Engine has official support for AlmaLinux on the x86_64, arm64, s390x, and ppc64le architectures, which allows us to use it directly on Power9 without special adaptations. However, some care is required before and during installation, such as uninstalling tools that conflict with Docker and ensuring the images used are compatible with ppc64le.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>This post presents the step-by-step process for installing Docker Engine on AlmaLinux in the ppc64le architecture.</li>
+<li>You must remove Podman and Buildah before installing, because they conflict with Docker.</li>
+<li>Docker Hub images need explicit ppc64le support to work on Power9.</li>
+</ul>
+<h2 id="environment-used">Environment Used</h2>
+<ul>
+<li><strong>Architecture</strong>: IBM Power9 server (ppc64le architecture)</li>
+<li><strong>Operating System (OS)</strong>: AlmaLinux 8.10 binary compatible with Red Hat Enterprise Linux (RHEL) 8.9/8.10</li>
+<li><strong>RAM</strong>: 512GB</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before installing Docker, it is important to be aware of a firewall limitation: when exposing container ports with Docker, those ports bypass the default firewalld rules. Make sure this does not pose a problem for your environment before proceeding. It is also important to note that Docker Engine is compatible with Rocky Linux 8 and 9 and AlmaLinux 8 on the ppc64le architecture.</p>
+<h2 id="removing-conflicting-packages">Removing Conflicting Packages</h2>
+<p>AlmaLinux includes Podman and Buildah by default. These packages conflict with Docker Engine and must be removed before installation. It is also recommended to remove any older Docker versions that might be present:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf remove -y podman <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   buildah <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   docker <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   docker-client <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   docker-client-latest <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   docker-common <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   docker-latest <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   docker-latest-logrotate <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   docker-logrotate <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>				   docker-engine
+</span></span></code></pre></div><h2 id="adding-the-docker-repository-and-installing-required-packages">Adding the Docker Repository and Installing Required Packages</h2>
+<h3 id="repository-setup">Repository Setup</h3>
+<p>The recommended installation method is to use Docker&rsquo;s official repository. It is worth mentioning that Docker uses the CentOS repository for RHEL-based distributions such as AlmaLinux, and this is officially supported. First, install the dnf-plugins-core package and add the repository:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf install -y dnf-plugins-core
+</span></span><span style="display:flex;"><span>sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+</span></span></code></pre></div><h3 id="installing-docker-engine">Installing Docker Engine</h3>
+<p>With the repository configured, install the latest version of Docker Engine along with the build and compose plugins:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</span></span></code></pre></div><h3 id="starting-the-service">Starting the service</h3>
+<p>Unlike Debian-based distributions such as Ubuntu, Docker does not start automatically on AlmaLinux after installation. You need to start the service manually and enable it so it comes up with the system:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start docker
+</span></span><span style="display:flex;"><span>sudo systemctl enable docker
+</span></span></code></pre></div><h2 id="verifying-the-installation">Verifying the Installation</h2>
+<p>To confirm that everything was installed correctly, run the hello-world image. Docker will automatically detect the ppc64le architecture and pull the correct image:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo docker run hello-world
+</span></span></code></pre></div><p>The expected output is a message confirming that Docker is working correctly.</p>
+<h2 id="post-installation-configuration">Post-installation Configuration</h2>
+<p>By default, only the root user or users with sudo privileges can run Docker commands. To avoid using sudo on every command, add your user to the docker group. First, create the group if it does not already exist:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo groupadd docker
+</span></span></code></pre></div><p>Then add your user to the group:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo usermod -aG docker $USER
+</span></span></code></pre></div><p>You need to log out and log back in for the permissions to take effect.</p>
+<h2 id="tips-for-power9-architecture">Tips for Power9 Architecture</h2>
+<p>Because we are using IBM Power9, a few additional considerations matter when working with Docker Hub. The first point is image compatibility: not all images available on Docker Hub support ppc64le. Images built only for x86_64 will fail on Power9, so always verify that the desired image has the ppc64le tag before using it.</p>
+<p>To validate that Docker is running correctly and recognizing the machine architecture, use:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker version --format <span style="color:#e6db74">&#39;{{.Server.Arch}}&#39;</span>
+</span></span></code></pre></div><p>The expected output is ppc64le.</p>
+<h2 id="final-considerations">Final Considerations</h2>
+<p>Installing Docker Engine on AlmaLinux (ppc64le) follows a straightforward path as long as conflicts with Podman and Buildah are resolved beforehand. Official ppc64le support from Docker provides a stable experience on Power9, with the important caveat that image compatibility must always be checked before use.</p>
+<p>With Docker installed and configured, the environment is ready to run containers and move on to the next steps in our language model infrastructure.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/en/posts/ollama_cpu/"><i class="fa fa-chevron-circle-left"></i> LLM Inference with Ollama on IBM Power9 Using CPU</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:1313/en/posts/vllm_gpu/">LLM Inference with vLLM Using GPU on Power9 <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>
