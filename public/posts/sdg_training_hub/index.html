@@ -1,0 +1,317 @@
+<html lang="pt">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="pt">
+
+<head>
+  <title>Compilando e Executando o SDG Hub e o Training Hub da Red Hat na IBM Power9 - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/sdg_training_hub/">
+	<meta property="og:site_name" content="IBM UFCG">
+	<meta property="og:title" content="Compilando e Executando o SDG Hub e o Training Hub da Red Hat na IBM Power9">
+	<meta property="og:description" content="Guia para compilar e executar o SDG Hub e o Training Hub da Red Hat na IBM Power9 (ppc64le), abordando a stack de dependências com PyTorch, xFormers, Triton e Ray, além de um ambiente totalmente conteinerizado para geração de dados sintéticos e fine-tuning.">
+	<meta property="og:locale" content="pt_br">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-08-31T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-08-31T00:00:00+00:00">
+		<meta property="article:tag" content="LLM">
+		<meta property="article:tag" content="SDG Hub">
+		<meta property="article:tag" content="Training Hub">
+		<meta property="article:tag" content="Power9">
+		<meta property="article:tag" content="GPU">
+		<meta property="article:tag" content="Fine-Tuning">
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Compilando e Executando o SDG Hub e o Training Hub da Red Hat na IBM Power9">
+	<meta name="twitter:description" content="Guia para compilar e executar o SDG Hub e o Training Hub da Red Hat na IBM Power9 (ppc64le), abordando a stack de dependências com PyTorch, xFormers, Triton e Ray, além de um ambiente totalmente conteinerizado para geração de dados sintéticos e fine-tuning.">
+
+<meta name="generator" content="Hugo 0.165.0">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Pesquisa e desenvolvimento em IA, hardware de alto desempenho e infraestrutura em parceria entre UFCG e IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/en/posts/sdg_training_hub/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    English Version
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/">
+                <i class="fa-li fa  fa-lg"></i><span>Início</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projetos</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/team/">
+                <i class="fa-li fa  fa-lg"></i><span>Equipe</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Compilando e Executando o SDG Hub e o Training Hub da Red Hat na IBM Power9</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2026-08-31T00:00:00Z">Aug 31, 2026</time>
+        </li>
+        
+        
+
+        
+        
+        <li>Lucas Pereira</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/tags/sdg-hub">#SDG Hub</a>
+                
+                    , 
+                    <a href="/tags/training-hub">#Training Hub</a>
+                
+                    , 
+                    <a href="/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/tags/gpu">#GPU</a>
+                
+                    , 
+                    <a href="/tags/fine-tuning">#Fine-tuning</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="contexto">Contexto</h2>
+<p>O <a href="https://github.com/instructlab" rel="external"><span class="link-personalizado"><em>InstructLab</em></span></a> é uma ferramenta para <em>fine-tuning</em> de modelos de linguagem de grande porte. Embora ainda esteja em uso, o projeto passou recentemente por uma reorganização. Agora mantido pela <em>Red Hat</em>, o <em>InstructLab</em> foi dividido em duas ferramentas independentes: o <em>SDG Hub</em> (<em>Synthetic Data Generation Hub</em>) e o <em>Training Hub</em>.</p>
+<p>O <em>SDG Hub</em> é responsável pela etapa de geração de dados sintéticos, enquanto o <em>Training Hub</em> cuida de todo o processo de treinamento dos modelos. O objetivo deste post é demonstrar como compilar e executar essas ferramentas em um sistema IBM Power9, destacando as adaptações necessárias para que funcionem nessa arquitetura, já que algumas de suas dependências ainda não possuem suporte nativo para a plataforma.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>Compilação e execução do <em>SDG Hub</em> na Power9 (<em>ppc64le</em>) para geração de dados sintéticos, utilizando o <em>Conda</em> para gerenciar <em>PyArrow</em>, <em>Pandas</em>, <em>NumPy</em> e <em>Matplotlib</em>.</li>
+<li>Compilação de toda a <em>stack</em> de dependências do <em>Training Hub</em> na <em>ppc64le</em>, incluindo <em>PyTorch</em>, <em>xFormers</em>, <em>LLVM</em>, <em>Triton</em>, <em>TorchVision</em> e <em>Ray</em>.</li>
+<li>Solução para o requisito de <em>glibc</em> 2.34 do <em>Ray</em>, indisponível no AlmaLinux 8, por meio de uma solução híbrida baseada em <em>containers</em>.</li>
+<li><em>Fine-tuning</em> de modelos de linguagem com o <em>Training Hub</em> na IBM Power9, utilizando GPUs NVIDIA V100.</li>
+<li>Ambiente totalmente conteinerizado (<code>build.sh</code> / <code>run.sh</code>) que automatiza a instalação e torna as duas ferramentas reproduzíveis em novos sistemas.</li>
+</ul>
+<h2 id="ambiente-de-execução">Ambiente de Execução</h2>
+<p>O ambiente utilizado para compilar e executar o <em>SDG Hub</em> e o <em>Training Hub</em> inclui:</p>
+<ul>
+<li><strong>Arquitetura:</strong> Servidor IBM Power9.</li>
+<li><strong>Sistema Operacional (SO):</strong> AlmaLinux 8.10 binário compatível com <em>Red Hat Enterprise Linux (RHEL)</em> 8.9/8.10.</li>
+<li><strong>RAM:</strong> 512GB.</li>
+<li><strong>GPUs:</strong> 4x NVIDIA Tesla V100 SXM2 16GB.</li>
+</ul>
+<h2 id="entendendo-a-stack-de-dependências">Entendendo a <em>Stack</em> de Dependências</h2>
+<p>Para o <em>SDG Hub</em>, foram necessárias poucas adaptações. Como esse módulo depende majoritariamente de serviços baseados em API para a geração de dados sintéticos, foi suficiente utilizar o <em>Conda</em> para instalar as dependências necessárias, incluindo <em>PyArrow</em> 25.0.0, <em>Pandas</em> 2.3.0, <em>NumPy</em> 1.26.4 e <em>Matplotlib</em> 3.10.0.</p>
+<p>O <em>Training Hub</em>, por outro lado, exigiu um trabalho significativamente maior. Suas principais dependências incluem o <em>PyTorch</em> 2.7, que fornece o <em>framework</em> de <em>deep learning</em> utilizado durante o treinamento; o <em>xFormers</em> 0.0.35, que oferece implementações otimizadas de mecanismos de atenção; o <em>LLVM</em> e o <em>Triton</em>, utilizados para compilar <em>kernels</em> de GPU altamente otimizados para <em>hardware</em> NVIDIA; e o <em>TorchVision</em>, exigido por componentes do ecossistema <em>PyTorch</em>.</p>
+<p>Outra biblioteca que exigiu atenção especial foi o <em>Ray</em>, responsável pela execução distribuída e pela orquestração do treinamento. Para a arquitetura <em>ppc64le</em>, utilizamos uma <em>build</em> fornecida pela IBM, compilada contra a <em>glibc</em> 2.34, disponível no AlmaLinux 9, enquanto nosso ambiente alvo executa o AlmaLinux 8. Por conta disso, desenvolvemos uma solução híbrida baseada em <em>containers</em> que combina componentes das duas distribuições, garantindo a compatibilidade entre todas as dependências exigidas pelo <em>Training Hub</em>.</p>
+<h2 id="conteinerizando-a-solução">Conteinerizando a Solução</h2>
+<p>Para simplificar a implantação e a reprodutibilidade, desenvolvemos um repositório contendo uma solução totalmente conteinerizada que empacota todas as dependências e configurações necessárias para executar o <em>SDG Hub</em> e o <em>Training Hub</em> na arquitetura IBM Power9.</p>
+<p>Repositório: <a href="https://github.com/llm-pt-ibm/sdg_training_hub" rel="external"><span class="link-personalizado"><em>sdg_training_hub</em></span></a>.</p>
+<p>O repositório automatiza praticamente todo o processo de instalação e execução. Ao rodar <code>bash build.sh</code>, as imagens dos <em>containers</em> são construídas e o <em>Training Hub</em> 0.9.0 é instalado junto com o <em>SDG Hub</em> 0.9.4. Concluída a <em>build</em>, o ambiente pode ser iniciado com <code>bash run.sh</code>, deixando os módulos de geração de dados sintéticos e de treinamento de modelos imediatamente disponíveis.</p>
+<figure><img src="/images/sdg_training_hub_run.gif"
+			alt="Figura 1"><figcaption>
+			<p>Training Hub em execução na arquitetura IBM Power9.</p>
+		</figcaption>
+</figure>
+
+<p>A Figura 1 mostra o <em>Training Hub</em> em execução em um servidor IBM Power9.</p>
+<h2 id="considerações-finais">Considerações Finais</h2>
+<p>Este trabalho demonstra como os módulos de geração de dados sintéticos e de treinamento de modelos da <em>Red Hat</em> podem ser adaptados para funcionar em servidores IBM Power9. Apesar da falta de suporte oficial para algumas dependências na arquitetura <em>ppc64le</em>, as adaptações apresentadas aqui viabilizam o pleno aproveitamento da capacidade computacional da plataforma, utilizando quatro GPUs NVIDIA Tesla V100 tanto para a geração de dados sintéticos quanto para o <em>fine-tuning</em> de modelos de linguagem. Além disso, a solução conteinerizada torna o ambiente fácil de reproduzir e simplifica a implantação em novos sistemas.</p>
+<h2 id="disclaimer"><em>Disclaimer</em></h2>
+<p>Este trabalho não é um lançamento oficial da IBM nem uma distribuição de <em>software</em>, e não é desenvolvido ou suportado pela IBM.</p>
+<p>Este trabalho foi desenvolvido pela Universidade Federal de Campina Grande (UFCG), universidade pública brasileira, como parte de um projeto de Pesquisa, Desenvolvimento e Inovação conduzido em parceria com a IBM e a Flex Brazil.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/mlx_cpu/"><i class="fa fa-chevron-circle-left"></i> Portando o MLX para a IBM Power9 (ppc64le): do build à inferência de LLM</a>
+        
+        </li>
+        <li>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>

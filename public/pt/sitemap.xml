@@ -3,113 +3,328 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/authors/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/"
+                />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
                 href="http://localhost:1313/en/authors/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/posts/sdg_training_hub/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="pt-br"
-                href="http://localhost:1313/authors/"
+                href="http://localhost:1313/posts/sdg_training_hub/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/sdg_training_hub/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/fine-tuning/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/fine-tuning/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/fine-tuning/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/gpu/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/gpu/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/gpu/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/infer%C3%AAncia/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url><url>
+    <loc>http://localhost:1313/authors/jo%C3%A3o-ramalho/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/jo%C3%A3o-ramalho/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/jo%C3%A3o-ramalho/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/llm/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/llm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/llm/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/authors/lucas-pereira/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/lucas-pereira/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/lucas-pereira/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/mlx/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/mlx/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/mlx/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/projects/multiarq/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/projects/multiarq/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/projects/multiarq/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/portabilidade/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+  </url><url>
+    <loc>http://localhost:1313/posts/mlx_cpu/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/mlx_cpu/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/mlx_cpu/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/power9/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/power9/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/power9/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/ppc64le/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/ppc64le/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/ppc64le/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/projects/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/projects/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/projects/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/sdg-hub/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/sdg-hub/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/sdg-hub/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/training-hub/</loc>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/training-hub/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/training-hub/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/kubevirt-post/</loc>
     <lastmod>2026-05-22T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/"
-                />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt-br"
-                href="http://localhost:1313/"
+                href="http://localhost:1313/posts/kubevirt-post/"
                 />
-  </url><url>
-    <loc>http://localhost:1313/authors/jo%C3%A3o-ramalho/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/kubevirt-post/"
+                />
   </url><url>
     <loc>http://localhost:1313/tags/kubernetes/</loc>
     <lastmod>2026-05-22T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/kubernetes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/kubernetes/"
+                />
   </url><url>
     <loc>http://localhost:1313/tags/kubevirt/</loc>
     <lastmod>2026-05-22T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/"
-                />
     <xhtml:link
                 rel="alternate"
                 hreflang="pt-br"
-                href="http://localhost:1313/posts/"
+                href="http://localhost:1313/tags/kubevirt/"
                 />
-  </url><url>
-    <loc>http://localhost:1313/tags/power9/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/en/tags/power9/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/power9/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/tags/ppc64le/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/ppc64le/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/ppc64le/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/"
+                href="http://localhost:1313/en/tags/kubevirt/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/virtualiza%C3%A7%C3%A3o/</loc>
@@ -128,13 +343,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/cpu/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/cpu/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/cpu/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/cpu/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/deep-learning/</loc>
@@ -143,43 +358,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/deep-learning/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="pt-br"
                 href="http://localhost:1313/tags/deep-learning/"
                 />
-  </url><url>
-    <loc>http://localhost:1313/projects/multiarq/</loc>
-    <lastmod>2026-05-04T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/en/projects/multiarq/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/projects/multiarq/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/projects/</loc>
-    <lastmod>2026-05-04T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/projects/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/projects/"
+                href="http://localhost:1313/en/tags/deep-learning/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/tensorflow/</loc>
@@ -188,13 +373,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/tensorflow/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/tensorflow/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/tensorflow/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/tensorflow/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/post_tf221_power9/</loc>
@@ -203,13 +388,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/post_tf221_power9_en/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/post_tf221_power9/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/post_tf221_power9/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/post_tf221_power9_en/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/yalle-rocha-silva/</loc>
@@ -218,34 +403,14 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/authors/yalle-rocha-silva/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="pt-br"
                 href="http://localhost:1313/authors/yalle-rocha-silva/"
                 />
-  </url><url>
-    <loc>http://localhost:1313/tags/gpu/</loc>
-    <lastmod>2026-04-16T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/en/tags/gpu/"
+                href="http://localhost:1313/en/authors/yalle-rocha-silva/"
                 />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/gpu/"
-                />
-  </url><url>
-    <loc>http://localhost:1313/tags/infer%C3%AAncia/</loc>
-    <lastmod>2026-04-16T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
   </url><url>
     <loc>http://localhost:1313/posts/ollama_gpu/</loc>
     <lastmod>2026-04-16T00:00:00+00:00</lastmod>
@@ -253,28 +418,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/ollama_gpu/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="pt-br"
                 href="http://localhost:1313/posts/ollama_gpu/"
                 />
-  </url><url>
-    <loc>http://localhost:1313/tags/llm/</loc>
-    <lastmod>2026-04-16T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/en/tags/llm/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/llm/"
+                href="http://localhost:1313/en/posts/ollama_gpu/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/maria-lu%C3%ADsa-gomes/</loc>
@@ -283,13 +433,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/authors/maria-lu%C3%ADsa-gomes/"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/maria-lu%C3%ADsa-gomes/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/authors/maria-lu%C3%ADsa-gomes/"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/maria-lu%C3%ADsa-gomes/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/ollama/</loc>
@@ -298,13 +448,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/ollama/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/ollama/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/ollama/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/ollama/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/vllm_gpu/</loc>
@@ -313,28 +463,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/vllm_gpu/"
-                />
-    <xhtml:link
-                rel="alternate"
                 hreflang="pt-br"
                 href="http://localhost:1313/posts/vllm_gpu/"
                 />
-  </url><url>
-    <loc>http://localhost:1313/authors/lucas-pereira/</loc>
-    <lastmod>2026-04-10T00:00:00+00:00</lastmod>
-    <changefreq>hourly</changefreq>
-    <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="http://localhost:1313/en/authors/lucas-pereira/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/authors/lucas-pereira/"
+                href="http://localhost:1313/en/posts/vllm_gpu/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/vllm/</loc>
@@ -343,13 +478,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/vllm/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/vllm/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/vllm/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/vllm/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/almalinux/</loc>
@@ -358,13 +493,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/almalinux/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/almalinux/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/almalinux/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/almalinux/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/cont%C3%AAineres/</loc>
@@ -378,13 +513,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/docker/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/docker/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/docker/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/docker/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/gabrielly-lima/</loc>
@@ -393,13 +528,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/authors/gabrielly-lima/"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/gabrielly-lima/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/authors/gabrielly-lima/"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/gabrielly-lima/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/ollama_cpu/</loc>
@@ -408,13 +543,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/ollama_cpu/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/ollama_cpu/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/ollama_cpu/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/ollama_cpu/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/post_docker/</loc>
@@ -423,13 +558,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/post_docker/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/post_docker/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/post_docker/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/post_docker/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/kvm/</loc>
@@ -438,13 +573,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/kvm/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/kvm/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/kvm/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/kvm/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/libvirt/</loc>
@@ -453,13 +588,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/libvirt/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/libvirt/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/libvirt/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/libvirt/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/post_virtualization/</loc>
@@ -468,13 +603,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/post_virtualization/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/post_virtualization/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/post_virtualization/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/post_virtualization/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/post_humanevalx/</loc>
@@ -483,13 +618,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/post_humanevalx/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/post_humanevalx/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/post_humanevalx/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/post_humanevalx/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/benchmark/</loc>
@@ -498,13 +633,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/benchmark/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/benchmark/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/benchmark/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/benchmark/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/granite/</loc>
@@ -513,13 +648,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/granite/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/granite/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/granite/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/granite/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/humanevalx/</loc>
@@ -528,13 +663,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/humanevalx/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/humanevalx/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/humanevalx/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/humanevalx/"
                 />
   </url><url>
     <loc>http://localhost:1313/projects/llm-eval/</loc>
@@ -543,13 +678,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/projects/llm-eval/"
+                hreflang="pt-br"
+                href="http://localhost:1313/projects/llm-eval/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/projects/llm-eval/"
+                hreflang="en"
+                href="http://localhost:1313/en/projects/llm-eval/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/ronaldd-matias/</loc>
@@ -558,13 +693,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/authors/ronaldd-matias/"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/ronaldd-matias/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/authors/ronaldd-matias/"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/ronaldd-matias/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/contamina%C3%A7%C3%A3o/</loc>
@@ -588,13 +723,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/contribuicao_helm/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/contribuicao_helm/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/contribuicao_helm/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/contribuicao_helm/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/helm/</loc>
@@ -603,13 +738,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/helm/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/helm/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/helm/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/helm/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/ibm/</loc>
@@ -618,13 +753,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/ibm/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/ibm/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/ibm/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/ibm/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/jo%C3%A3o-brunet/</loc>
@@ -633,13 +768,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/authors/jo%C3%A3o-brunet/"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/jo%C3%A3o-brunet/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/authors/jo%C3%A3o-brunet/"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/jo%C3%A3o-brunet/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/api/</loc>
@@ -648,13 +783,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/api/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/api/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/api/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/api/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/tutorial_power9_pt4_en/</loc>
@@ -663,13 +798,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/tutorial_power9_pt4_en/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/tutorial_power9_pt4_en/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/tutorial_power9_pt4_en/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/tutorial_power9_pt4_en/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/caio-silva/</loc>
@@ -678,13 +813,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/authors/caio-silva/"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/caio-silva/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/authors/caio-silva/"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/caio-silva/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/tutorial_power9_pt3_en/</loc>
@@ -693,13 +828,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/tutorial_power9_pt3_en/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/tutorial_power9_pt3_en/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/tutorial_power9_pt3_en/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/tutorial_power9_pt3_en/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/fastapi/</loc>
@@ -708,13 +843,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/fastapi/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/fastapi/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/fastapi/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/fastapi/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/conda/</loc>
@@ -723,13 +858,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/conda/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/conda/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/conda/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/conda/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/tutorial_power9_pt2_en/</loc>
@@ -738,13 +873,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/tutorial_power9_pt2_en/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/tutorial_power9_pt2_en/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/tutorial_power9_pt2_en/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/tutorial_power9_pt2_en/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/pytorch/</loc>
@@ -753,13 +888,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/pytorch/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/pytorch/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/pytorch/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/pytorch/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/tutorial_power9_pt1_en/</loc>
@@ -768,13 +903,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/tutorial_power9_pt1_en/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/tutorial_power9_pt1_en/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/tutorial_power9_pt1_en/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/tutorial_power9_pt1_en/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/cuda/</loc>
@@ -783,13 +918,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/cuda/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/cuda/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/cuda/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/cuda/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/drivers/</loc>
@@ -798,13 +933,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/drivers/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/drivers/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/drivers/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/drivers/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/nvidia/</loc>
@@ -813,13 +948,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/nvidia/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/nvidia/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/nvidia/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/nvidia/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/experimentos_benchmarks_pt_br/</loc>
@@ -828,13 +963,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/experimentos_benchmarks_pt_br/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/experimentos_benchmarks_pt_br/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/experimentos_benchmarks_pt_br/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/experimentos_benchmarks_pt_br/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/andr%C3%A9-alves/</loc>
@@ -843,13 +978,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/authors/andr%C3%A9-alves/"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/andr%C3%A9-alves/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/authors/andr%C3%A9-alves/"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/andr%C3%A9-alves/"
                 />
   </url><url>
     <loc>http://localhost:1313/tags/power10/</loc>
@@ -858,13 +993,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/tags/power10/"
+                hreflang="pt-br"
+                href="http://localhost:1313/tags/power10/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/tags/power10/"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/power10/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/power10/</loc>
@@ -873,13 +1008,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/power10/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/power10/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/power10/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/power10/"
                 />
   </url><url>
     <loc>http://localhost:1313/posts/introducao/</loc>
@@ -888,13 +1023,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/introducao/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/introducao/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/introducao/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/introducao/"
                 />
   </url><url>
     <loc>http://localhost:1313/authors/jos%C3%A9-gama/</loc>
@@ -903,13 +1038,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/authors/jos%C3%A9-gama/"
+                hreflang="pt-br"
+                href="http://localhost:1313/authors/jos%C3%A9-gama/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/authors/jos%C3%A9-gama/"
+                hreflang="en"
+                href="http://localhost:1313/en/authors/jos%C3%A9-gama/"
                 />
   </url><url>
     <loc>http://localhost:1313/projects/5g/</loc>
@@ -917,13 +1052,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/projects/5g/"
+                hreflang="pt-br"
+                href="http://localhost:1313/projects/5g/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/projects/5g/"
+                hreflang="en"
+                href="http://localhost:1313/en/projects/5g/"
                 />
   </url><url>
     <loc>http://localhost:1313/projects/agents-ops/</loc>
@@ -931,13 +1066,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/projects/agents-ops/"
+                hreflang="pt-br"
+                href="http://localhost:1313/projects/agents-ops/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/projects/agents-ops/"
+                hreflang="en"
+                href="http://localhost:1313/en/projects/agents-ops/"
                 />
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
@@ -945,13 +1080,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/categories/"
+                hreflang="pt-br"
+                href="http://localhost:1313/categories/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/categories/"
+                hreflang="en"
+                href="http://localhost:1313/en/categories/"
                 />
   </url><url>
     <loc>http://localhost:1313/team/</loc>
@@ -959,13 +1094,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/team/"
+                hreflang="pt-br"
+                href="http://localhost:1313/team/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/team/"
+                hreflang="en"
+                href="http://localhost:1313/en/team/"
                 />
   </url><url>
     <loc>http://localhost:1313/projects/judo-ai/</loc>
@@ -973,13 +1108,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/projects/judo-ai/"
+                hreflang="pt-br"
+                href="http://localhost:1313/projects/judo-ai/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/projects/judo-ai/"
+                hreflang="en"
+                href="http://localhost:1313/en/projects/judo-ai/"
                 />
   </url>
 </urlset>

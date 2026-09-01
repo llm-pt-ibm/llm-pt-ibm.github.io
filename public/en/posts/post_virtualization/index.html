@@ -10,25 +10,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
 <meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/en/posts/post_virtualization/">
-  <meta property="og:site_name" content="IBM UFCG">
-  <meta property="og:title" content="Power9 Virtualization: how we structured an isolated environment with KVM and Libvirt">
-  <meta property="og:description" content="In this post, we explore how we built a virtualized environment using KVM and Libvirt on a Power9 server, focusing on isolation, reproducibility, and shared team usage.">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2026-03-27T00:00:00+00:00">
-    <meta property="article:modified_time" content="2026-03-27T00:00:00+00:00">
-    <meta property="article:tag" content="Virtualization">
-    <meta property="article:tag" content="Power9">
-    <meta property="article:tag" content="KVM">
-    <meta property="article:tag" content="Libvirt">
+	<meta property="og:site_name" content="IBM UFCG">
+	<meta property="og:title" content="Power9 Virtualization: how we structured an isolated environment with KVM and Libvirt">
+	<meta property="og:description" content="In this post, we explore how we built a virtualized environment using KVM and Libvirt on a Power9 server, focusing on isolation, reproducibility, and shared team usage.">
+	<meta property="og:locale" content="en">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-03-27T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-03-27T00:00:00+00:00">
+		<meta property="article:tag" content="Virtualization">
+		<meta property="article:tag" content="Power9">
+		<meta property="article:tag" content="KVM">
+		<meta property="article:tag" content="Libvirt">
 
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Power9 Virtualization: how we structured an isolated environment with KVM and Libvirt">
-  <meta name="twitter:description" content="In this post, we explore how we built a virtualized environment using KVM and Libvirt on a Power9 server, focusing on isolation, reproducibility, and shared team usage.">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Power9 Virtualization: how we structured an isolated environment with KVM and Libvirt">
+	<meta name="twitter:description" content="In this post, we explore how we built a virtualized environment using KVM and Libvirt on a Power9 server, focusing on isolation, reproducibility, and shared team usage.">
 
-<meta name="generator" content="Hugo 0.161.1">
+<meta name="generator" content="Hugo 0.165.0">
     
     <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
   
@@ -241,9 +241,9 @@
   <img src="/images/kvm_virtualization-en.png" style="max-width: 90%;">
 </div> -->
 <figure><img src="/images/kvm_virtualization-en.png"
-    alt="Figure 1: Diagram representing a 4-layer virtualization architecture."><figcaption>
-      <p>Figure 1: Diagram representing a 4-layer virtualization architecture.</p>
-    </figcaption>
+			alt="Figure 1: Diagram representing a 4-layer virtualization architecture."><figcaption>
+			<p>Figure 1: Diagram representing a 4-layer virtualization architecture.</p>
+		</figcaption>
 </figure>
 
 <p>In this work, we explore how to build a virtualized environment using KVM and Libvirt on a Power9 server, with focus on isolation, reproducibility, and shared team usage.</p>
@@ -405,22 +405,22 @@ To create a new VM from an already configured image, such as prebuilt NVIDIA-rea
 <li>
 <p><strong>Available images</strong>:</p>
 <table>
-  <thead>
-      <tr>
-          <th style="text-align: left">Image</th>
-          <th style="text-align: left">Contents</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left">AlmaLinux-8-Power9-NVIDIA-drivers.qcow2.xz</td>
-          <td style="text-align: left">AlmaLinux 8.10 + drivers NVIDIA 535 + CUDA 12.2 + cuDNN 9.0</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">InstructLab-Power9-0.25.0.qcow2.xz</td>
-          <td style="text-align: left">AlmaLinux 8.10 + InstructLab 0.25.0 + dependencies required for execution on Power9 (ppc64le).</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th style="text-align: left">Image</th>
+					<th style="text-align: left">Contents</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">AlmaLinux-8-Power9-NVIDIA-drivers.qcow2.xz</td>
+					<td style="text-align: left">AlmaLinux 8.10 + drivers NVIDIA 535 + CUDA 12.2 + cuDNN 9.0</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">InstructLab-Power9-0.25.0.qcow2.xz</td>
+					<td style="text-align: left">AlmaLinux 8.10 + InstructLab 0.25.0 + dependencies required for execution on Power9 (ppc64le).</td>
+			</tr>
+	</tbody>
 </table>
 </li>
 <li>
