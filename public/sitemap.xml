@@ -3,18 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2026-05-22T00:00:00+00:00</lastmod>
+    <lastmod>2026-08-31T00:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/posts/"
+                hreflang="pt-br"
+                href="http://localhost:1313/posts/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/posts/"
+                hreflang="en"
+                href="http://localhost:1313/en/posts/"
                 />
   </url><url>
     <loc>http://localhost:1313/team/</loc>
@@ -22,13 +22,13 @@
     <priority>0.8</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en"
-                href="http://localhost:1313/en/team/"
+                hreflang="pt-br"
+                href="http://localhost:1313/team/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="pt-br"
-                href="http://localhost:1313/team/"
+                hreflang="en"
+                href="http://localhost:1313/en/team/"
                 />
   </url>
 </urlset>

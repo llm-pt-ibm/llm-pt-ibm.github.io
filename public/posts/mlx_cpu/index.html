@@ -1,0 +1,405 @@
+<html lang="pt">
+
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><!doctype html>
+
+<html lang="pt">
+
+<head>
+  <title>Portando o MLX para a IBM Power9 (ppc64le): do build à inferência de LLM - IBM UFCG</title>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
+<meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/mlx_cpu/">
+	<meta property="og:site_name" content="IBM UFCG">
+	<meta property="og:title" content="Portando o MLX para a IBM Power9 (ppc64le): do build à inferência de LLM">
+	<meta property="og:description" content="Este post documenta o porte do MLX, o framework de arrays da Apple, para a arquitetura IBM POWER9 (ppc64le) — do build sem patches à inferência de um LLM real, passando pelos problemas de portabilidade encontrados e suas soluções.">
+	<meta property="og:locale" content="pt_br">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-08-31T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-08-31T00:00:00+00:00">
+		<meta property="article:tag" content="MLX">
+		<meta property="article:tag" content="Power9">
+		<meta property="article:tag" content="Ppc64le">
+		<meta property="article:tag" content="LLM">
+		<meta property="article:tag" content="Inferência">
+		<meta property="article:tag" content="Portabilidade">
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Portando o MLX para a IBM Power9 (ppc64le): do build à inferência de LLM">
+	<meta name="twitter:description" content="Este post documenta o porte do MLX, o framework de arrays da Apple, para a arquitetura IBM POWER9 (ppc64le) — do build sem patches à inferência de um LLM real, passando pelos problemas de portabilidade encontrados e suas soluções.">
+
+<meta name="generator" content="Hugo 0.165.0">
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-16x16.png" sizes="16x16" type="image/png">
+  
+  
+    <link rel="icon" href="http://localhost:1313/favicon-32x32.png" sizes="32x32" type="image/png">
+  
+  
+    <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+  
+
+  <link rel="stylesheet" href="/css/normalize.min.css" />
+  <link rel="stylesheet" href="http://localhost:1313/fontawesome/css/all.min.css" />
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" />
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/styles-light.css" />
+  <link rel='stylesheet' href='http://localhost:1313/css/custom.css'><link rel='stylesheet' href='http://localhost:1313/css/font.css'>
+  <style>
+    .site-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-top: 15px;
+    }
+    .site-header .logo-wrapper {
+      margin-left: 20px;  
+    }
+    .site-header .title-tagline-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .site-header img,
+    .site-header .logo-wrapper img,
+    .logo-wrapper img,
+    header img {
+      max-height: 70px;
+      width: auto;
+      display: block;
+      margin: 0;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+     
+    header {
+      margin-bottom: 0px;
+    }
+     
+    header h1 {
+      margin-bottom: 5px;  
+      margin-top: 0;
+    }
+     
+    .tagline {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <div class="site-header">
+        <div class="title-tagline-wrapper">
+          <h1>
+            <a href="http://localhost:1313/">IBM UFCG</a>
+          </h1>
+          
+          <p class="tagline"><em>Pesquisa e desenvolvimento em IA, hardware de alto desempenho e infraestrutura em parceria entre UFCG e IBM.</em></p>
+          
+        </div>
+        <div class="logo-wrapper">
+          
+<div class="site_logo featured_image">
+    <a href="http://localhost:1313/">
+        <img class="" 
+             src="/site_logo.png">
+    </a>
+</div>
+
+
+        </div>
+      </div>
+
+      <ul id="social-media">
+        
+      </ul>
+    </header>
+
+    
+<nav class="site-nav">
+
+    <div class="lang-switch">
+        
+              
+                <a class="lang-link" href="/en/posts/mlx_cpu/">
+                    <img src="/images/traducao.png" alt="Tradução">
+                    English Version
+                </a>
+              
+            
+    </div>
+    
+    <ul>
+        
+        <li>
+            <a class="" href="/">
+                <i class="fa-li fa  fa-lg"></i><span>Início</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags">
+                <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/projects">
+                <i class="fa-li fa  fa-lg"></i><span>Projetos</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/team/">
+                <i class="fa-li fa  fa-lg"></i><span>Equipe</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+<article>
+
+    <h1>Portando o MLX para a IBM Power9 (ppc64le): do build à inferência de LLM</h1>
+
+    
+      <aside>
+    <ul>
+        
+        <li>
+            <time class="post-date" datetime="2026-08-31T00:00:00Z">Aug 31, 2026</time>
+        </li>
+        
+        
+
+        
+        
+        <li>João Ramalho</li>
+        
+
+        
+        
+
+        
+        <li>
+            <em>
+                
+                    
+                    <a href="/tags/mlx">#MLX</a>
+                
+                    , 
+                    <a href="/tags/power9">#Power9</a>
+                
+                    , 
+                    <a href="/tags/ppc64le">#ppc64le</a>
+                
+                    , 
+                    <a href="/tags/llm">#LLM</a>
+                
+                    , 
+                    <a href="/tags/infer%C3%AAncia">#Inferência</a>
+                
+                    , 
+                    <a href="/tags/portabilidade">#Portabilidade</a>
+                
+            </em>
+        </li>
+        
+
+        <li></li>
+    </ul>
+</aside>
+    
+
+    
+      
+
+    
+
+    <h2 id="contexto">Contexto</h2>
+<p>Este post apresenta o processo de adaptação do <a href="https://github.com/ml-explore/mlx" rel="external">MLX</a> para a arquitetura IBM POWER9 (ppc64le). Serão abordados o funcionamento interno do framework, os problemas de portabilidade encontrados, as soluções aplicadas e o resultado final: um LLM gerando texto via MLX em uma máquina POWER9.</p>
+<p>O MLX é um framework de arrays para machine learning desenvolvido pela Apple, com API inspirada no NumPy e no PyTorch. Ele foi projetado para Apple Silicon — seu backend principal é Metal, a API de GPU da Apple — mas sua base é um core C++ com backends intercambiáveis (Metal, CUDA e CPU). Sobre esse core existe um ecossistema crescente de inferência, incluindo o <a href="https://github.com/ml-explore/mlx-lm" rel="external">mlx-lm</a> (inferência de LLMs) e projetos como o <a href="https://github.com/exo-explore/exo" rel="external">exo</a>, que usa o MLX como backend para inferência distribuída.</p>
+<p>A motivação surgiu justamente pelo exo: ao avaliar sua viabilidade no POWER9 do projeto Multiarq, identificamos que o MLX era a dependência crítica — e que portar o MLX diretamente seria mais valioso do que portar o exo, já que destravaria todo o ecossistema construído sobre ele.</p>
+<p>O desafio: o MLX <strong>não oferece suporte a ppc64le</strong>. Os caminhos otimizados do backend CPU assumem NEON (ARM) ou AVX (x86), o JIT de fusão de kernels compila código em tempo de execução assumindo um toolchain específico, e nenhum CI do projeto testa a arquitetura.</p>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>O core C++ do MLX (CPU-only) <strong>compilou em ppc64le sem nenhum patch de código</strong>, usando um ambiente conda-forge com GCC 14 e OpenBLAS.</li>
+<li>A suíte de testes C++ atingiu <strong>242/244</strong> (3236/3238 assertions) e a suíte Python <strong>721/722</strong> — as 3 falhas restantes foram atribuídas ao libstdc++, não à arquitetura.</li>
+<li>Foram necessárias adaptações no JIT em tempo de execução: um filtro de typedefs <code>_Float*</code> da glibc no preâmbulo pré-processado e um contorno para o <code>g++</code> hardcoded no código.</li>
+<li>Com o mlx-lm, um LLM real (SmolLM-135M-Instruct) gerou texto na POWER9 a <strong>~15 tokens/s</strong> em float32.</li>
+<li>O fp16 cai em fallback escalar em software (~130x mais lento que fp32), o que torna os modelos fp16 publicados impraticáveis — a mitigação é converter os modelos para float32.</li>
+<li>Cinco achados de portabilidade foram identificados, a maioria independente de arquitetura e potencialmente contribuível ao upstream.</li>
+</ul>
+<h2 id="ambiente-de-execução">Ambiente de Execução</h2>
+<ul>
+<li><strong>Arquitetura:</strong> Servidor IBM Power9 (ppc64le, AC922).</li>
+<li><strong>Sistema Operacional:</strong> AlmaLinux 8.10.</li>
+<li><strong>Toolchain:</strong> ambiente conda-forge com GCC 14, CMake, Ninja e OpenBLAS (o GCC 8.5 do sistema não atende ao requisito de C++17/20 do MLX).</li>
+<li><strong>Python:</strong> 3.12 (conda-forge).</li>
+<li><strong>MLX:</strong> compilado do fonte, CPU-only (<code>MLX_BUILD_METAL=OFF</code>, <code>MLX_BUILD_CUDA=OFF</code>).</li>
+</ul>
+<p>Criação do ambiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>conda create -n mlx-p9 --override-channels -c conda-forge <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  python<span style="color:#f92672">=</span>3.12 gcc_linux-ppc64le<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> gxx_linux-ppc64le<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  cmake ninja openblas
+</span></span></code></pre></div><h2 id="o-que-é-o-mlx-e-como-ele-funciona">O que é o MLX e como ele funciona</h2>
+<p>Três características do MLX importam para entender o porte:</p>
+<p><strong>Backends intercambiáveis.</strong> O core define as operações sobre arrays e delega a execução a um backend. No Apple Silicon é o Metal; em GPUs NVIDIA, o CUDA; e existe um backend CPU completo, que é o alvo deste trabalho. O backend CPU usa OpenBLAS para as operações de álgebra linear pesadas — e o OpenBLAS possui kernels otimizados para POWER9, o que garante desempenho competitivo em fp32.</p>
+<p><strong>Camada SIMD com fallback genérico.</strong> As operações elementwise do backend CPU passam por uma abstração <code>Simd&lt;T, N&gt;</code> com implementações NEON e AVX — e um fallback escalar genérico (<code>base_simd</code>) para arquiteturas sem caminho dedicado. É esse fallback que permite ao MLX compilar em ppc64le sem intrinsics VSX: tudo funciona, mas de forma escalar. A mesma camada implementa fp16/bf16 em software quando não há suporte nativo do compilador — um detalhe que se tornará central na análise de desempenho.</p>
+<p><strong>JIT de fusão de kernels.</strong> Para operações compostas (<code>mx.compile</code>, fusões automáticas), o MLX gera código C++ em tempo de execução e o compila em uma biblioteca compartilhada carregada dinamicamente. Para isso, no momento do build ele pré-processa um &ldquo;preâmbulo&rdquo; com os headers necessários e, em runtime, invoca um compilador para juntar preâmbulo e kernel gerado. Esse mecanismo — build em duas fases, com um compilador em tempo de execução — foi a origem dos problemas mais interessantes do porte.</p>
+<h2 id="desafios-e-adaptações">Desafios e Adaptações</h2>
+<h3 id="o-build-em-si-nenhum-patch-necessário">O build em si: nenhum patch necessário</h3>
+<p>A parte que costuma ser a mais dolorosa foi a mais tranquila: o core C++ compilou de primeira, sem nenhuma modificação de código. O fallback <code>base_simd</code> cobriu a ausência de caminho VSX, e o OpenBLAS do conda-forge forneceu o BLAS. Esse resultado diz algo sobre a qualidade da engenharia do MLX: a camada de abstração de arquitetura funciona mesmo em uma arquitetura que o projeto nunca testou.</p>
+<p>Os problemas apareceram depois — nos testes e em tempo de execução.</p>
+<h3 id="jit-1-o-compilador-errado-em-runtime">JIT (1): o compilador errado em runtime</h3>
+<p>Os primeiros testes de <code>compile</code>/fusão falharam com erros de compilação em cadeia. A causa: o MLX invoca <code>g++</code> <strong>puro, do PATH</strong>, em tempo de execução (hardcoded em <code>jit_compiler.cpp</code>). No nosso ambiente, isso significava o GCC 8.5 do sistema tentando consumir um preâmbulo pré-processado pelo GCC 14 do conda — headers de uma versão de compilador interpretados por outra.</p>
+<p>Este é um problema independente de arquitetura: qualquer instalação via conda, Spack ou environment modules — onde o compilador do build não é o <code>g++</code> do sistema — está sujeita a ele. O contorno foi um <em>shim</em> no PATH apontando <code>g++</code> para o compilador do conda (<code>powerpc64le-conda-linux-gnu-g++</code>). A correção adequada, candidata a PR, seria o MLX registrar em build time o compilador usado (via <code>CMAKE_CXX_COMPILER</code>) e invocá-lo em runtime.</p>
+<h3 id="jit-2-os-typedefs-_float-da-glibc">JIT (2): os typedefs <code>_Float*</code> da glibc</h3>
+<p>Resolvido o compilador, restou um erro genuinamente ppc64le: no preâmbulo pré-processado, a glibc emite typedefs para <code>_Float32</code>, <code>_Float64</code>, <code>_Float128</code>, <code>_Float32x</code> e <code>_Float64x</code> — que nessa arquitetura <strong>redeclaram tipos built-in do GCC</strong>, quebrando a compilação de todo kernel JIT.</p>
+<p>A primeira mitigação foi compilar os kernels com <code>-fpermissive</code>, que rebaixa o erro a warning. Funcionou, mas é a solução errada: silencia uma classe inteira de erros para contornar cinco linhas. A solução limpa foi filtrar os typedefs na geração do preâmbulo (<code>make_compiled_preamble.sh</code>), com um <code>sed</code> no pipe do pré-processamento (<code>-E -P</code>). Com o filtro, o <code>-fpermissive</code> foi revertido e o resultado se manteve: 242/244.</p>
+<h3 id="rpath-lib-vs-lib64">RPATH: <code>lib</code> vs <code>lib64</code></h3>
+<p>Nos bindings Python, o MLX assume RPATH <code>$ORIGIN/lib</code>, mas o <code>GNUInstallDirs</code> do CMake instala em <code>lib64</code> em sistemas da família Red Hat — a biblioteca é instalada num lugar e procurada em outro. Contornado com <code>-DCMAKE_INSTALL_LIBDIR=lib</code> nos <code>CMAKE_ARGS</code>. Também é um achado independente de arquitetura, que afeta qualquer distro RHEL-like.</p>
+<h3 id="as-três-falhas-que-não-são-do-mlx">As três falhas que não são do MLX</h3>
+<p>Ao final, restaram 3 falhas em 966 testes — duas em C++ (<code>exp</code> e <code>logaddexp</code> de complex64 com <code>-inf</code>) e uma em Python (<code>power(0j, nan)</code>). Todas de números complexos, todas com o mesmo padrão. A investigação isolou a causa fora do MLX e fora da arquitetura: <strong>no mesmo binário e mesma toolchain</strong>, o builtin do compilador acerta enquanto a libstdc++ erra:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Operação</th>
+					<th><code>__builtin_cexpf</code> / <code>__builtin_cpowf</code></th>
+					<th><code>std::exp</code> / <code>std::pow</code></th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>exp(-inf + 2i)</code></td>
+					<td><code>0, -0</code> (correto, Annex G)</td>
+					<td><code>nan</code></td>
+			</tr>
+			<tr>
+					<td><code>pow(0j, nan)</code></td>
+					<td><code>nan</code> (correto)</td>
+					<td><code>0</code></td>
+			</tr>
+	</tbody>
+</table>
+<p>O dump de macros mostrou <code>_GLIBCXX98_USE_C99_COMPLEX</code> definido, mas <strong>não</strong> <code>_GLIBCXX11_USE_C99_COMPLEX</code> — o que faz o <code>&lt;complex&gt;</code> da libstdc++ cair em implementações ingênuas (via <code>polar</code>) em vez de rotear para os builtins C99. Ou seja: MLX correto, arquitetura correta, biblioteca padrão com um modo de configuração degradado no build do conda-forge. Um controle em x86 com a mesma libstdc++ dirá se o problema é específico do build ppc64le.</p>
+<h2 id="resultados-um-llm-rodando-na-power9">Resultados: um LLM rodando na POWER9</h2>
+<p>Com o build validado, instalamos o mlx-lm (as dependências com componentes Rust — <code>tokenizers</code>, <code>safetensors</code> — vieram do conda-forge, já que o PyPI não tem wheels ppc64le) e rodamos um modelo real da mlx-community:</p>
+<pre tabindex="0"><code>$ python -m mlx_lm generate \
+    --model mlx-community/SmolLM-135M-Instruct-4bit \
+    --prompt &#34;...&#34; --max-tokens 50
+
+Generation: 50 tokens, 0.071 tokens-per-sec
+</code></pre><p>Funcionou — mas a 0,07 tokens/s, cerca de 14 segundos por token. Um microbenchmark isolou a causa em uma linha:</p>
+<table>
+	<thead>
+			<tr>
+					<th>Precisão</th>
+					<th>Matmul 1024×1024</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>float32</td>
+					<td><strong>169,91 GFLOP/s</strong></td>
+			</tr>
+			<tr>
+					<td>float16</td>
+					<td>1,31 GFLOP/s</td>
+			</tr>
+	</tbody>
+</table>
+<p>Uma diferença de <strong>130x</strong>. O fp32 vai para o OpenBLAS, com kernels POWER9 otimizados; o fp16 cai no fallback escalar em software da camada SIMD, elemento a elemento. E os modelos publicados na mlx-community usam fp16 nas ativações por padrão — mesmo os quantizados em 4 bits.</p>
+<p>A mitigação é direta: converter o modelo com as ativações em float32:</p>
+<pre tabindex="0"><code>$ python -m mlx_lm convert --hf-path HuggingFaceTB/SmolLM-135M-Instruct \
+    --mlx-path ~/models/smollm-135m-f32 --dtype float32
+
+$ python -m mlx_lm generate --model ~/models/smollm-135m-f32 \
+    --prompt &#34;...&#34; --max-tokens 50
+
+Generation: 50 tokens, 14.939 tokens-per-sec
+</code></pre><p><strong>De 0,07 para ~15 tokens/s — um ganho de ~210x</strong> trocando apenas o dtype. Para um modelo de 135M em CPU, é um desempenho perfeitamente utilizável, e confirma que o gargalo nunca foi a arquitetura: era um único caminho de código (fp16 em software) no meio de um pipeline saudável.</p>
+<h2 id="considerações-finais">Considerações Finais</h2>
+<p>O balanço do porte é incomum: <strong>zero patches para compilar, 963 de 966 testes passando, e inferência de LLM funcional</strong> — com os problemas reais concentrados não no código de computação, mas na infraestrutura ao redor (JIT em runtime, RPATH, biblioteca padrão) e em um caminho de desempenho (fp16).</p>
+<p>Cinco achados foram identificados, e a maioria beneficia outras plataformas além do POWER9:</p>
+<ol>
+<li><strong>Typedefs <code>_Float*</code> no preâmbulo do JIT</strong> — específico de ppc64le/glibc; correção limpa já implementada no <code>make_compiled_preamble.sh</code>.</li>
+<li><strong><code>g++</code> hardcoded no JIT</strong> — independente de arquitetura; quebra qualquer ambiente conda/Spack/modules.</li>
+<li><strong>RPATH <code>$ORIGIN/lib</code> vs <code>lib64</code></strong> — independente de arquitetura; afeta toda a família Red Hat.</li>
+<li><strong>Violação de strict-aliasing em <code>FromFP8</code></strong> — independente de arquitetura; visível como warning sob <code>-O3</code>.</li>
+<li><strong>fp16 em fallback de software</strong> — os modelos fp16 publicados ficam impraticáveis em arquiteturas sem caminho SIMD dedicado; a mitigação é a conversão para float32, e a otimização de longo prazo seria um caminho VSX na camada <code>Simd&lt;&gt;</code> ou conversão fp16↔fp32 vetorizada.</li>
+</ol>
+<h2 id="próximos-passos">Próximos Passos</h2>
+<ul>
+<li>Reportar os achados ao upstream (ml-explore/mlx) em formato de issues e PRs, começando pelo filtro dos typedefs <code>_Float*</code>;</li>
+<li>Medir a combinação quantização 4-bit + computação em float32, que deve unir a economia de memória do quantizado ao desempenho do fp32;</li>
+<li>Escalar para modelos maiores (Qwen2.5 0.5B/1.5B) e caracterizar o desempenho com o número de threads do OpenBLAS;</li>
+<li>Validar o exo — a motivação original — sobre o MLX portado;</li>
+<li>Explorar o backend CUDA do MLX com as V100 da máquina (sm_70), avaliando a cobertura dos kernels que assumem bf16 (sm_80+);</li>
+<li>Investigar um caminho VSX para a camada <code>Simd&lt;&gt;</code> como contribuição de desempenho ao upstream.</li>
+</ul>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>This work is not an official IBM release or software distribution and is not developed or supported by IBM.</p>
+<p>This work was developed by the Federal University of Campina Grande (UFCG), a Brazilian public university, as part of a Research, Development, and Innovation project conducted in partnership with IBM and Flex Brazil.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        <li>
+        
+            <a href="http://localhost:1313/posts/kubevirt-post/"><i class="fa fa-chevron-circle-left"></i> Executando VMs com KubeVirt na IBM Power9 (ppc64le)</a>
+        
+        </li>
+        <li>
+        
+            <a href="http://localhost:1313/posts/sdg_training_hub/">Compilando e Executando o SDG Hub e o Training Hub da Red Hat na IBM Power9 <i class="fa fa-chevron-circle-right"></i> </a>
+        
+        </li>
+    </ul>
+</section>
+  
+    
+    
+  
+
+
+
+
+
+<footer>
+    <ul>
+        <li>
+            <h6>IBM &amp; UFCG - 2025 
+                <a href="http://localhost:1313/index.xml"> </a></h6>
+        </li>
+        
+        
+    </ul>
+</footer>

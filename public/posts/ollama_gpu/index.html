@@ -10,26 +10,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
 <meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/ollama_gpu/">
-  <meta property="og:site_name" content="IBM UFCG">
-  <meta property="og:title" content="Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU">
-  <meta property="og:description" content="Este post documenta como executar inferência de LLMs com Ollama na IBM Power9 utilizando GPU, com foco em um fork compatível com NVIDIA Tesla V100 em POWER9.">
-  <meta property="og:locale" content="pt_br">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2026-04-16T00:00:00+00:00">
-    <meta property="article:modified_time" content="2026-04-16T00:00:00+00:00">
-    <meta property="article:tag" content="LLM">
-    <meta property="article:tag" content="Ollama">
-    <meta property="article:tag" content="Power9">
-    <meta property="article:tag" content="GPU">
-    <meta property="article:tag" content="Inferência">
+	<meta property="og:site_name" content="IBM UFCG">
+	<meta property="og:title" content="Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU">
+	<meta property="og:description" content="Este post documenta como executar inferência de LLMs com Ollama na IBM Power9 utilizando GPU, com foco em um fork compatível com NVIDIA Tesla V100 em POWER9.">
+	<meta property="og:locale" content="pt_br">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-04-16T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-04-16T00:00:00+00:00">
+		<meta property="article:tag" content="LLM">
+		<meta property="article:tag" content="Ollama">
+		<meta property="article:tag" content="Power9">
+		<meta property="article:tag" content="GPU">
+		<meta property="article:tag" content="Inferência">
 
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU">
-  <meta name="twitter:description" content="Este post documenta como executar inferência de LLMs com Ollama na IBM Power9 utilizando GPU, com foco em um fork compatível com NVIDIA Tesla V100 em POWER9.">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Inferência de LLMs com Ollama na IBM Power9 Utilizando GPU">
+	<meta name="twitter:description" content="Este post documenta como executar inferência de LLMs com Ollama na IBM Power9 utilizando GPU, com foco em um fork compatível com NVIDIA Tesla V100 em POWER9.">
 
-<meta name="generator" content="Hugo 0.161.1">
+<meta name="generator" content="Hugo 0.165.0">
     
     <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
   
@@ -313,39 +313,39 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nvidia-smi
 </span></span></code></pre></div><p>Na seção de processos, você deve ver o <code>ollama</code> com memória alocada em uma das GPUs:</p>
 <figure><img src="/images/ollama_gpu.png"
-    alt="Figura 1"><figcaption>
-      <p>Ollama usando a GPU</p>
-    </figcaption>
+			alt="Figura 1"><figcaption>
+			<p>Ollama usando a GPU</p>
+		</figcaption>
 </figure>
 
 <h2 id="considerações-finais">Considerações finais</h2>
 <p>Com os passos apresentados, foi possível configurar o ambiente para executar inferências de LLMs em uma máquina IBM POWER9, utilizando as GPUs NVIDIA Tesla V100. Com essa abordagem, a inferência de modelos possui um ganho de desempenho significativo em relação à execução via CPU. Utilizando o modelo Meta Llama 3.1 8B Instruct como referência, a execução via GPU atingiu uma maior geração de tokens por segundo em relação à execução via CPU.</p>
 <p>Vejamos os dados coletados para uma mesma requisição (<code>Me fale todos os números ímpares até 100</code>) com os dois tipos de execução:</p>
 <table>
-  <thead>
-      <tr>
-          <th></th>
-          <th>CPU</th>
-          <th>GPU</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Taxa de geração de <em>tokens</em></td>
-          <td>0.71 tokens/s</td>
-          <td>79.82 tokens/s</td>
-      </tr>
-      <tr>
-          <td>Duração total</td>
-          <td>3m49s</td>
-          <td>4.52s</td>
-      </tr>
-      <tr>
-          <td>Taxa de avaliação do <em>prompt</em></td>
-          <td>10.67 tokens/s</td>
-          <td>295.77 tokens/s</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th></th>
+					<th>CPU</th>
+					<th>GPU</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Taxa de geração de <em>tokens</em></td>
+					<td>0.71 tokens/s</td>
+					<td>79.82 tokens/s</td>
+			</tr>
+			<tr>
+					<td>Duração total</td>
+					<td>3m49s</td>
+					<td>4.52s</td>
+			</tr>
+			<tr>
+					<td>Taxa de avaliação do <em>prompt</em></td>
+					<td>10.67 tokens/s</td>
+					<td>295.77 tokens/s</td>
+			</tr>
+	</tbody>
 </table>
 <p>Com os dados apresentados na tabela, percebemos que a execução com GPU foi aproximadamente 112 vezes mais rápida na geração de <em>tokens</em>, com o tempo total de resposta reduzido de 3 minutos e 49 segundos para 4.52 segundos.</p>
 <h2 id="próximos-passos">Próximos Passos</h2>

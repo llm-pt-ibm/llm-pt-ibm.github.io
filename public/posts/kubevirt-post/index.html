@@ -10,26 +10,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Blog do projeto LLM-PT-IBM, desenvolvido em parceria entre a Universidade Federal de Campina Grande (UFCG) e a IBM." />
 <meta name="author" content="" /><meta property="og:url" content="http://localhost:1313/posts/kubevirt-post/">
-  <meta property="og:site_name" content="IBM UFCG">
-  <meta property="og:title" content="Executando VMs com KubeVirt na IBM Power9 (ppc64le)">
-  <meta property="og:description" content="Este post documenta como adaptamos o KubeVirt para criar e gerenciar máquinas virtuais via Kubernetes na IBM Power9 (ppc64le), uma arquitetura não suportada oficialmente pelo projeto.">
-  <meta property="og:locale" content="pt_br">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2026-05-22T00:00:00+00:00">
-    <meta property="article:modified_time" content="2026-05-22T00:00:00+00:00">
-    <meta property="article:tag" content="KubeVirt">
-    <meta property="article:tag" content="Power9">
-    <meta property="article:tag" content="Ppc64le">
-    <meta property="article:tag" content="Kubernetes">
-    <meta property="article:tag" content="Virtualização">
+	<meta property="og:site_name" content="IBM UFCG">
+	<meta property="og:title" content="Executando VMs com KubeVirt na IBM Power9 (ppc64le)">
+	<meta property="og:description" content="Este post documenta como adaptamos o KubeVirt para criar e gerenciar máquinas virtuais via Kubernetes na IBM Power9 (ppc64le), uma arquitetura não suportada oficialmente pelo projeto.">
+	<meta property="og:locale" content="pt_br">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-05-22T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-05-22T00:00:00+00:00">
+		<meta property="article:tag" content="KubeVirt">
+		<meta property="article:tag" content="Power9">
+		<meta property="article:tag" content="Ppc64le">
+		<meta property="article:tag" content="Kubernetes">
+		<meta property="article:tag" content="Virtualização">
 
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Executando VMs com KubeVirt na IBM Power9 (ppc64le)">
-  <meta name="twitter:description" content="Este post documenta como adaptamos o KubeVirt para criar e gerenciar máquinas virtuais via Kubernetes na IBM Power9 (ppc64le), uma arquitetura não suportada oficialmente pelo projeto.">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Executando VMs com KubeVirt na IBM Power9 (ppc64le)">
+	<meta name="twitter:description" content="Este post documenta como adaptamos o KubeVirt para criar e gerenciar máquinas virtuais via Kubernetes na IBM Power9 (ppc64le), uma arquitetura não suportada oficialmente pelo projeto.">
 
-<meta name="generator" content="Hugo 0.161.1">
+<meta name="generator" content="Hugo 0.165.0">
     
     <link rel="icon" href="http://localhost:1313/favicon.ico" type="image/x-icon">
   
@@ -239,7 +239,7 @@
     <h2 id="contexto">Contexto</h2>
 <p>Este post tem como objetivo apresentar o processo de adaptação do <a href="https://kubevirt.io/" rel="external">KubeVirt</a> para a arquitetura IBM POWER9 (ppc64le). Serão abordados os principais desafios encontrados, as modificações realizadas no código-fonte, o papel de cada componente e os resultados obtidos ao final do processo.</p>
 <p>O KubeVirt é um operador que estende o Kubernetes para gerenciar máquinas virtuais (VMs) como recursos nativos. Em ambientes tradicionais, VMs são gerenciadas por ferramentas como libvirt/virsh, separadas do ecossistema de containers. O KubeVirt elimina essa separação: com ele, é possível criar, iniciar, parar e monitorar VMs usando os mesmos comandos e workflows do Kubernetes — <code>kubectl</code>, YAML, namespaces e RBAC. As VMs rodam como processos QEMU/KVM reais dentro de pods gerenciados pelo Kubernetes.</p>
-<p>A motivação para este trabalho surgiu no contexto do projeto Frente Multiarq, que mantém uma infraestrutura compartilhada de HPC na IBM POWER9. A possibilidade de gerenciar VMs e containers no mesmo cluster Kubernetes simplifica a administração do ambiente e abre caminho para cenários como GPU passthrough para workloads de AI/ML dentro de VMs, isolamento de ambientes de pesquisa e testes de compatibilidade multi-arquitetura.</p>
+<p>A motivação para este trabalho surgiu no contexto do projeto Multiarq, que mantém uma infraestrutura compartilhada de HPC na IBM POWER9. A possibilidade de gerenciar VMs e containers no mesmo cluster Kubernetes simplifica a administração do ambiente e abre caminho para cenários como GPU passthrough para workloads de AI/ML dentro de VMs, isolamento de ambientes de pesquisa e testes de compatibilidade multi-arquitetura.</p>
 <p>O principal desafio é que o KubeVirt <strong>não oferece suporte oficial para ppc64le</strong>. Apenas x86_64 (amd64), arm64 e s390x são suportados. Isso significa que o sistema de build, as validações da API, os defaults de configuração e o pipeline de geração de domínios libvirt não reconhecem ppc64le, tratando tudo como amd64 por padrão.</p>
 <h2 id="tldr">TL;DR</h2>
 <ul>
@@ -291,6 +291,8 @@
 <p>Por fim, o <strong>CPU model</strong>: o KubeVirt usa <code>host-model</code> como default, que não funciona em virtualização aninhada no POWER9. A solução foi especificar <code>POWER9</code> como CPU model na VMI.</p>
 <h3 id="imagens-docker">Imagens Docker</h3>
 <p>Sem Dockerfiles no projeto (tudo é gerado pelo Bazel), criamos Dockerfiles customizados para cada componente. Os componentes mais simples (virt-operator, virt-api, virt-controller, virt-exportproxy) usam <code>ubi8/ubi-minimal</code> como base. O virt-handler requer ferramentas de sistema adicionais. O virt-launcher é o mais complexo, com <code>almalinux:8</code> como base e dependências de qemu-kvm, libvirt e o libnbd compilado. Um registry local (<code>registry:2</code> na porta 5000) serve as imagens para o minikube.</p>
+<h3 id="passo-a-passo-técnico">Passo a Passo Técnico</h3>
+<p>Devido à grande quantidade de etapas envolvidas, o passo a passo com os procedimentos detalhados, incluindo todos os patches no código Go, Dockerfiles, comandos de compilação e configuração, está disponível neste link: <a href="https://github.com/llm-pt-ibm/kubevirt-ppc64le" rel="external">guia-instalacao-kubevirt-ppc64le</a>.</p>
 <h2 id="resultados">Resultados</h2>
 <p>Com todas as adaptações aplicadas, foi possível executar uma VM CirrOS ppc64le via KubeVirt no POWER9, gerenciada inteiramente pelo Kubernetes:</p>
 <pre tabindex="0"><code>$ kubectl get vmi test-vmi -o wide
@@ -298,38 +300,38 @@ NAME       AGE     PHASE     IP               NODENAME   READY
 test-vmi   2m43s   Running   10.244.120.124   minikube   True
 </code></pre><p>Dados coletados de dentro da VM confirmam a execução correta:</p>
 <table>
-  <thead>
-      <tr>
-          <th></th>
-          <th>Valor</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Arquitetura</td>
-          <td>ppc64le</td>
-      </tr>
-      <tr>
-          <td>CPU</td>
-          <td>POWER9 (architected), altivec supported</td>
-      </tr>
-      <tr>
-          <td>Hypervisor</td>
-          <td>KVM</td>
-      </tr>
-      <tr>
-          <td>Plataforma</td>
-          <td>pSeries</td>
-      </tr>
-      <tr>
-          <td>Modelo</td>
-          <td>IBM pSeries (emulated by qemu)</td>
-      </tr>
-      <tr>
-          <td>Kernel</td>
-          <td>5.15.0-71-generic ppc64le</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th></th>
+					<th>Valor</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Arquitetura</td>
+					<td>ppc64le</td>
+			</tr>
+			<tr>
+					<td>CPU</td>
+					<td>POWER9 (architected), altivec supported</td>
+			</tr>
+			<tr>
+					<td>Hypervisor</td>
+					<td>KVM</td>
+			</tr>
+			<tr>
+					<td>Plataforma</td>
+					<td>pSeries</td>
+			</tr>
+			<tr>
+					<td>Modelo</td>
+					<td>IBM pSeries (emulated by qemu)</td>
+			</tr>
+			<tr>
+					<td>Kernel</td>
+					<td>5.15.0-71-generic ppc64le</td>
+			</tr>
+	</tbody>
 </table>
 <p>Esses dados confirmam que o KubeVirt está gerando o domínio libvirt correto para ppc64le, com machine type <code>pseries</code>, CPU POWER9 e virtualização KVM/QEMU com paravirtualização VirtIO.</p>
 <h2 id="considerações-finais">Considerações Finais</h2>
@@ -359,6 +361,8 @@ test-vmi   2m43s   Running   10.244.120.124   minikube   True
         
         </li>
         <li>
+        
+            <a href="http://localhost:1313/posts/mlx_cpu/">Portando o MLX para a IBM Power9 (ppc64le): do build à inferência de LLM <i class="fa fa-chevron-circle-right"></i> </a>
         
         </li>
     </ul>
